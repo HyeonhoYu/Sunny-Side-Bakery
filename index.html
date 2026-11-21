@@ -33,14 +33,16 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .tbar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#ffd36e,#ffb347);border-radius:9px}
 .hud .goal,.hud .wallet{display:flex;align-items:center;gap:5px;white-space:nowrap}
 .coin{display:inline-grid;place-items:center;width:20px;height:20px;flex:none;border-radius:50%;background:#7fb069;color:#fff;font:13px/1 Jua,sans-serif;vertical-align:-3px}
-.shop{position:relative;padding:58px 12px 0;background:linear-gradient(#fbe4a8,#f6d48a)}
+.shop{position:relative;padding:58px 12px 0;background:radial-gradient(120% 90% at 50% 0%,#fff1c4,#f3cf82 70%,#e2b465);box-shadow:inset 0 -18px 30px -18px #7a4a2c88}
+.win{position:absolute;left:6%;right:6%;top:64px;bottom:18px;border-radius:20px 20px 0 0;overflow:hidden;border:10px solid #8a5634;border-bottom:0;box-shadow:inset 0 0 0 3px #b77a4c,inset 0 10px 24px #0004,0 6px 0 #6b3f22,0 10px 20px #7a4a2c55;background:linear-gradient(#a4d4ee,#fff2d6)}
+.win::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0000 55%,#fde8b833);pointer-events:none}
+.scene{position:absolute;inset:0;width:100%;height:100%;display:block}
 .awning{position:absolute;inset:0 0 auto;height:46px;background:repeating-linear-gradient(90deg,var(--berry) 0 44px,var(--cream) 44px 88px);
  -webkit-mask:radial-gradient(circle 22px at 22px 24px,#000 98%,transparent) 0 22px/44px 46px repeat-x,linear-gradient(#000,#000) 0 0/100% 24px no-repeat;
  mask:radial-gradient(circle 22px at 22px 24px,#000 98%,transparent) 0 22px/44px 46px repeat-x,linear-gradient(#000,#000) 0 0/100% 24px no-repeat}
 .sign{position:absolute;top:6px;left:50%;transform:translateX(-50%);background:var(--cocoa);color:#ffd98a;font:16px Jua,sans-serif;padding:2px 14px;border-radius:10px;white-space:nowrap;z-index:1}
-.street{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;min-height:236px;align-items:end;position:relative}
-.street::before{content:"";position:absolute;inset:6px 6% 18px;border-radius:18px 18px 0 0;background:linear-gradient(#cfe8f3,#eaf6fa);border:6px solid var(--cocoa2);border-bottom:0;opacity:.75}
-.street::after{content:"OPEN";position:absolute;top:22px;right:9%;background:#e4505b;color:#fff;font:14px Jua,sans-serif;padding:3px 10px;border-radius:8px;transform:rotate(4deg);box-shadow:0 2px 0 #a8323b}
+.street{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;min-height:236px;align-items:end;position:relative;z-index:1}
+.street::after{content:"OPEN";position:absolute;top:22px;right:10%;z-index:2;background:#e4505b;color:#fff;font:14px Jua,sans-serif;padding:3px 10px;border-radius:8px;transform:rotate(4deg);box-shadow:0 2px 0 #a8323b}
 .spot{position:relative;display:flex;justify-content:center;align-items:flex-end;height:236px}
 .cust{position:relative;display:flex;flex-direction:column;align-items:center;width:100%;max-width:150px;animation:in .45s ease-out;cursor:pointer}
 .cust.out{animation:out .6s ease-in forwards;pointer-events:none}
@@ -63,37 +65,41 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .pat{width:74px;height:8px;background:#0002;border-radius:6px;overflow:hidden;margin-top:2px}
 .pat i{display:block;height:100%;background:var(--leaf);border-radius:6px}
 .pat i.low{background:var(--berry)}
-.counter{position:relative;background:linear-gradient(var(--cocoa2),var(--cocoa));padding:10px 12px 12px;border-top:8px solid #9a6440}
+.counter{position:relative;z-index:2;padding:12px 12px 14px;background:repeating-linear-gradient(90deg,#ffffff07 0 3px,#0000 3px 11px,#00000009 11px 13px,#0000 13px 23px),linear-gradient(#94592f,#6e3f20 60%,#5a321a);box-shadow:0 -4px 10px #0003,inset 0 -6px 12px #0003}
+.counter::before{content:"";position:absolute;left:0;right:0;top:-12px;height:14px;background:linear-gradient(#e7b07a,#b97845 45%,#8a5332);box-shadow:0 3px 4px #0004;border-radius:4px 4px 0 0}
 .lab{font:13px Jua,sans-serif;color:#ffd98a;margin:0 0 6px 4px}
-.tray{display:flex;gap:6px;flex-wrap:wrap;min-height:56px;background:#0003;border-radius:14px;padding:6px}
-.ti{width:58px;height:44px;background:#fff3;border-radius:10px;display:grid;place-items:center;position:relative}
-.ti.e{background:#ffffff12;border:2px dashed #fff3}
+.tray{position:relative;display:flex;gap:6px;flex-wrap:wrap;min-height:58px;border-radius:14px;padding:7px;background:linear-gradient(#fff3,#ffffff0d 40%,#0002);border:2px solid #ffffff40;box-shadow:inset 0 2px 0 #ffffff55,inset 0 -10px 18px #0003}
+.tray::after{content:"";position:absolute;inset:0;border-radius:12px;background:linear-gradient(115deg,#0000 30%,#ffffff2a 38%,#0000 46%,#0000 70%,#ffffff1c 76%,#0000 82%);pointer-events:none}
+.ti{width:58px;height:44px;background:radial-gradient(ellipse at 50% 80%,#ffffffb0,#fff6e6 70%);box-shadow:0 2px 0 #0003;border-radius:50%/40%;display:grid;place-items:center;position:relative}
+.ti.e{background:#ffffff14;border:2px dashed #fff4;box-shadow:none}
 .ti svg{width:52px;height:36px}
 .ti.pf::after{content:"";position:absolute;top:3px;right:4px;width:9px;height:9px;background:#fff6a8;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
-.kitchen{flex:1;padding:12px;background:#efe2cf;background-image:linear-gradient(#0000000d 2px,transparent 2px),linear-gradient(90deg,#0000000d 2px,transparent 2px);background-size:34px 34px}
-.kitchen .lab{color:var(--cocoa2)}
+.kitchen{flex:1;padding:16px 12px 14px;background:radial-gradient(120% 80% at 50% 0%,#fff8,#0000 60%),linear-gradient(#0000 70%,#7a4a2c22),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='%23f7f1e8' stroke='%23d8cbb8' stroke-width='2'%3E%3Crect x='1' y='1' width='62' height='30' rx='4'/%3E%3Crect x='-31' y='33' width='62' height='30' rx='4'/%3E%3Crect x='33' y='33' width='62' height='30' rx='4'/%3E%3C/g%3E%3C/svg%3E") 0 0/64px 64px,#efe5d6;box-shadow:inset 0 10px 16px -8px #0004}
+.kitchen .lab{color:var(--cocoa2);text-shadow:0 1px 0 #fff}
 .krow{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:12px}
 .doughs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-content:start}
-.dough{background:var(--cream);border-radius:16px;padding:6px 4px 8px;box-shadow:0 4px 0 #c9a77e;display:flex;flex-direction:column;align-items:center;min-height:96px}
+.dough{background:radial-gradient(120% 90% at 50% 0%,#fffdf6,#f5e7c9);border-radius:16px;padding:6px 4px 8px;box-shadow:0 4px 0 #c9a77e,0 8px 14px #7a4a2c33,inset 0 1px 0 #fff;display:flex;flex-direction:column;align-items:center;min-height:96px}
 .dough:active{transform:translateY(3px);box-shadow:0 1px 0 #c9a77e}
 .dough svg{width:56px;height:40px}
 .dough b{font:15px Jua,sans-serif;font-weight:400;color:var(--cocoa);line-height:1.15;text-align:center}
 .dough small{display:flex;align-items:center;gap:3px;font-size:13px;color:var(--cocoa2)}
 .dough small .coin{width:16px;height:16px;font-size:11px}
 .ovens{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;align-content:start}
-.oven{background:linear-gradient(#55402f,#3b2a20);border-radius:18px;padding:8px;box-shadow:0 5px 0 #24170f;color:#ffe3b0;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:150px}
-.oven::before{content:"";width:60%;height:6px;border-radius:4px;background:#8a6a52}
-.glass{width:100%;height:68px;border-radius:12px;background:#1d130d;display:grid;place-items:center;border:3px solid #8a6a52;transition:background .3s}
+.oven{background:linear-gradient(100deg,#eef1f4,#c3c9cf 35%,#e3e7eb 55%,#a9b0b7);border-radius:18px;padding:8px;box-shadow:0 6px 0 #7e858c,0 10px 16px #0003,inset 0 1px 0 #fff;color:#3a2214;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:150px}
+.oven::before{content:"";width:64%;height:8px;border-radius:5px;background:linear-gradient(#fafbfc,#8d949b);box-shadow:0 2px 2px #0003}
+.glass{position:relative;width:100%;height:68px;border-radius:12px;background:radial-gradient(circle at 50% 80%,#3a2a20,#120c08);display:grid;place-items:center;border:3px solid #6d747b;box-shadow:inset 0 4px 10px #000a;transition:background .3s;overflow:hidden}
+.glass::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,#0000 30%,#ffffff26 40%,#0000 50%);pointer-events:none}
 .oven.b .glass{background:radial-gradient(circle at 50% 70%,#ffa040,#a2370f 75%)}
 .oven.p .glass{background:radial-gradient(circle at 50% 70%,#fff0a0,#e07a1c 75%);box-shadow:0 0 18px #ffd36e}
 .oven.x .glass{background:radial-gradient(#5a5a5a,#222)}
 .glass svg{width:64px;height:46px}
 .oven.p .glass svg{animation:pulse .7s infinite}
-.obar{width:100%;height:8px;background:#0006;border-radius:5px;position:relative;overflow:hidden}
+.obar{width:100%;height:8px;background:#0003;box-shadow:inset 0 1px 2px #0004;border-radius:5px;position:relative;overflow:hidden}
 .obar::after{content:"";position:absolute;left:71.4%;width:10.7%;top:0;bottom:0;background:#9ef08f66}
 .obar i{display:block;height:100%;width:0;background:#ffb347;border-radius:5px}
 .olab{font:14px Jua,sans-serif;text-align:center;line-height:1.15;min-height:17px}
-.oven.p .olab{color:#fff6a8}
+.oven.p .olab{color:#2d7a2d}
+.oven.x .olab{color:#a8323b}
 .float{position:absolute;font:20px Jua,sans-serif;color:#2d7a2d;pointer-events:none;animation:fl 1s ease-out forwards;z-index:5;text-shadow:0 2px 0 #fff}
 .float.bad{color:var(--berry)}
 @keyframes fl{to{transform:translateY(-46px);opacity:0}}
@@ -155,6 +161,7 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
   </div>
   <section class="shop">
    <div class="awning"></div><div class="sign" id="sign">Sunny Side Bakery</div>
+   <div class="win"><svg class="scene" viewBox="0 0 800 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd3f0"/><stop offset=".7" stop-color="#dff1f7"/><stop offset="1" stop-color="#fff2d6"/></linearGradient><linearGradient id="brick" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c4613f"/><stop offset=".85" stop-color="#a94d31"/><stop offset="1" stop-color="#8a3c26"/></linearGradient><linearGradient id="creamB" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f5e6c8"/><stop offset=".85" stop-color="#e6d2ab"/><stop offset="1" stop-color="#cdb68d"/></linearGradient><linearGradient id="tealB" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5fa6a0"/><stop offset=".85" stop-color="#4b8d88"/><stop offset="1" stop-color="#3a726e"/></linearGradient><linearGradient id="mustB" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e3b04b"/><stop offset=".85" stop-color="#cf9a35"/><stop offset="1" stop-color="#b07f24"/></linearGradient><linearGradient id="win" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9f6fb"/><stop offset=".5" stop-color="#9cc6d8"/><stop offset="1" stop-color="#6f9fb6"/></linearGradient><radialGradient id="leafO" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#ffc96b"/><stop offset=".6" stop-color="#e8862f"/><stop offset="1" stop-color="#b9561c"/></radialGradient><radialGradient id="leafY" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fff0a0"/><stop offset=".6" stop-color="#f2c444"/><stop offset="1" stop-color="#c8901d"/></radialGradient><linearGradient id="road" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8b8f96"/><stop offset="1" stop-color="#6c7077"/></linearGradient><linearGradient id="walk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2d7c6"/><stop offset="1" stop-color="#c9bba5"/></linearGradient><g id="w"><rect width="26" height="34" rx="3" fill="#f7efe0"/><rect x="3" y="3" width="20" height="28" rx="2" fill="url(#win)"/><path d="M13 3V31M3 17H23" stroke="#f7efe0" stroke-width="2"/></g><g id="tree"><rect x="-5" y="20" width="10" height="60" rx="4" fill="#6b4329"/><circle cx="-22" cy="10" r="26" fill="url(#leafO)"/><circle cx="20" cy="6" r="28" fill="url(#leafY)"/><circle cx="0" cy="-16" r="30" fill="url(#leafO)"/></g></defs><rect width="800" height="260" fill="url(#sky)"/><ellipse cx="120" cy="40" rx="60" ry="16" fill="#fff" opacity=".75"/><ellipse cx="160" cy="34" rx="40" ry="14" fill="#fff" opacity=".75"/><ellipse cx="610" cy="56" rx="70" ry="15" fill="#fff" opacity=".6"/><rect x="10" y="60" width="190" height="140" fill="url(#brick)"/><rect x="4" y="52" width="202" height="12" rx="3" fill="#7a3422"/><rect x="200" y="86" width="170" height="114" fill="url(#creamB)"/><rect x="194" y="78" width="182" height="12" rx="3" fill="#b89c6c"/><rect x="370" y="46" width="200" height="154" fill="url(#tealB)"/><rect x="364" y="38" width="212" height="12" rx="3" fill="#2f5f5b"/><rect x="570" y="76" width="230" height="124" fill="url(#mustB)"/><rect x="564" y="68" width="236" height="12" rx="3" fill="#94681c"/><g><use href="#w" x="30" y="78"/><use href="#w" x="80" y="78"/><use href="#w" x="130" y="78"/><use href="#w" x="225" y="100"/><use href="#w" x="275" y="100"/><use href="#w" x="325" y="100"/><use href="#w" x="395" y="62"/><use href="#w" x="445" y="62"/><use href="#w" x="495" y="62"/><use href="#w" x="600" y="92"/><use href="#w" x="650" y="92"/><use href="#w" x="700" y="92"/><use href="#w" x="750" y="92"/></g><g><rect x="30" y="140" width="150" height="60" fill="#5a2a1a" opacity=".35"/><path d="M24 132H186L180 148H30Z" fill="#2f7d5b"/><path d="M24 132H186" stroke="#1f5c42" stroke-width="3"/><rect x="390" y="128" width="160" height="72" fill="#1f3e3c" opacity=".3"/><path d="M384 120H556L548 138H392Z" fill="#e8d9b8"/><g fill="#d24e4e"><path d="M392 120h20l-2 18h-16z"/><path d="M432 120h20l-1 18h-18z"/><path d="M472 120h20v18h-19z"/><path d="M512 120h20l1 18h-19z"/></g><rect x="595" y="140" width="190" height="60" fill="#5a3a10" opacity=".3"/><path d="M588 132H792L786 150H594Z" fill="#3c5fa0"/></g><rect y="196" width="800" height="16" fill="url(#walk)"/><rect y="212" width="800" height="48" fill="url(#road)"/><path d="M0 236H800" stroke="#f4e3a1" stroke-width="3" stroke-dasharray="34 26"/><use href="#tree" x="235" y="128"/><use href="#tree" x="610" y="124"/><g><rect x="402" y="120" width="6" height="80" fill="#2f3a3f"/><circle cx="405" cy="116" r="9" fill="#fff4c2" stroke="#2f3a3f" stroke-width="3"/></g><path d="M0 0L90 0L0 140Z M140 0H200L40 260H0Z" fill="#fff" opacity=".18"/><path d="M520 0H560L400 260H360Z" fill="#fff" opacity=".12"/></svg></div>
    <div class="street" id="street"></div>
   </section>
   <section class="counter">
@@ -180,12 +187,12 @@ const lang='en', muted=!!store.get('muted');
 const L={
 ko:{title:'써니 베이커리',sub:'허리를 다친 로즈 할머니 대신, 닷새 동안 메인 스트리트의 동네 빵집을 지켜 주세요.',start:'새로 시작',cont:n=>`이어하기 (${n}일차)`,day:n=>`${n}일차`,goal:'오늘',wallet:'지갑',tray:'진열장',dough:'반죽',oven:'오븐',
  empty:'비어 있음',baking:'굽는 중',now:'지금!',done:'완성',burnt:'탔어요',notYet:'아직 덜 익었어요',trayFull:'진열대가 가득 찼어요',ovensFull:'오븐이 모두 사용 중이에요',missing:'진열대에 주문한 빵이 없어요',
- next:'다음',startDay:'영업 시작',newBread:'새 메뉴',target:'목표 매출',results:n=>`${n}일차 영업 마감`,served:'모신 손님',missed:'놓친 손님',earned:'오늘 매출',shop:'가게 꾸미기',shopSub:'모은 돈으로 빵집을 업그레이드하세요.',toNext:'다음 날로',owned:'보유 중',
+ next:'다음',skip:'건너뛰기',startDay:'영업 시작',newBread:'새 메뉴',target:'목표 매출',results:n=>`${n}일차 영업 마감`,served:'모신 손님',missed:'놓친 손님',earned:'오늘 매출',shop:'가게 꾸미기',shopSub:'모은 돈으로 빵집을 업그레이드하세요.',toNext:'다음 날로',owned:'보유 중',
  pause:'잠깐 쉬는 중',resume:'계속하기',restart:'처음 화면으로',total:'모은 별',replay:'처음부터 다시',combo:n=>`콤보 ${n}!`,perfect:'완벽!',burntT:'빵이 탔어요',tossed:'버렸어요',
  how:'반죽을 누르면 오븐에 들어가요. 반짝일 때 오븐을 눌러 꺼내고, 손님을 눌러 빵을 건네주세요.',sndOn:'소리 켬',sndOff:'소리 끔',fin:'써니 베이커리 이야기 끝',finSub:'로즈 할머니의 빵집은 오늘도 따뜻합니다.',cof:'게임이 마음에 드셨다면 커피 한 잔 사주세요',lvl:['조금 아쉬워요','잘했어요','최고의 하루']},
 en:{title:'Sunny Side Bakery',sub:'Grandma Rose threw out her back. Keep her little Main Street bakery running for five days.',start:'New game',cont:n=>`Continue (Day ${n})`,day:n=>`Day ${n}`,goal:'Today',wallet:'Wallet',tray:'Display case',dough:'Dough',oven:'Ovens',
  empty:'Empty',baking:'Baking',now:'Now!',done:'Ready',burnt:'Burnt',notYet:'Not baked yet',trayFull:'The display case is full',ovensFull:'All ovens are busy',missing:'That order isn\'t in the display case yet',
- next:'Next',startDay:'Open shop',newBread:'New on the menu',target:'Sales goal',results:n=>`Day ${n} closed`,served:'Customers served',missed:'Customers missed',earned:'Today\'s sales',shop:'Fix up the shop',shopSub:'Spend your coins to upgrade the bakery.',toNext:'Next day',owned:'Owned',
+ next:'Next',skip:'Skip story',startDay:'Open shop',newBread:'New on the menu',target:'Sales goal',results:n=>`Day ${n} closed`,served:'Customers served',missed:'Customers missed',earned:'Today\'s sales',shop:'Fix up the shop',shopSub:'Spend your coins to upgrade the bakery.',toNext:'Next day',owned:'Owned',
  pause:'Taking a break',resume:'Resume',restart:'Title screen',total:'Stars earned',replay:'Play again',combo:n=>`Combo ${n}!`,perfect:'Perfect!',burntT:'Burnt bread',tossed:'Tossed',
  how:'Tap dough to put it in an oven. Tap the oven when it glows, then tap a customer to hand over the bread.',sndOn:'Sound on',sndOff:'Sound off',fin:'The end of Sunny Side Bakery',finSub:'The bell on Main Street is ringing again.',cof:'Enjoyed it? Buy me a coffee',lvl:['Could be better','Nice work','Best day ever']}};
 const T=k=>L[lang][k];
@@ -328,7 +335,7 @@ function floatAt(el,txt,bad){const g=$('game').getBoundingClientRect(),r=el.getB
 let tt;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),1700);}
 
 /* overlays */
-function showOv(h,acts){$('card').innerHTML=h;$('ov').classList.add('on');$('card').querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{snd('tap');acts[b.dataset.a]&&acts[b.dataset.a](b);});const f=$('card').querySelector('.btn:not(:disabled)');f&&f.focus({preventScroll:true});}
+function showOv(h,acts){$('card').innerHTML=h;$('ov').classList.add('on');$('card').querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{snd('tap');acts[b.dataset.a]&&acts[b.dataset.a](b);});const f=$('card').querySelector('.row .btn:last-child:not(:disabled)')||$('card').querySelector('.btn:not(:disabled)');f&&f.focus({preventScroll:true});}
 function hideOv(){$('ov').classList.remove('on');}
 function title(){S=null;applyLang();$('street').innerHTML='';$('tray').innerHTML='';$('doughs').innerHTML='';$('ovens').innerHTML='';$('hDay').textContent='';$('hGoal').textContent='';$('hWallet').innerHTML='';
  const sv=store.get('save');
@@ -336,7 +343,7 @@ function title(){S=null;applyLang();$('street').innerHTML='';$('tray').innerHTML
  {new:()=>{G={day:0,coins:0,up:{},stars:[]};story('intro',()=>dayCard());},cont:()=>{G=sv;dayCard();}});}
 function story(key,cb){const lines=STORY[key];let i=0;
  const show=()=>{const[w,ko,en,md]=lines[i];const who=w==='narr'?'':NAMES[w][lang];
-  showOv(`${key===4?duo:''}<div class="story${key===4?' wide':''}">${key===4?'':w==='narr'?face('me','mid'):face(w,md||'happy')}<div><div class="who">${who||'&nbsp;'}</div><div class="txt">${lang==='ko'?ko:en}</div></div></div><div class="row"><button class="btn" data-a="n">${T('next')}</button></div>`,{n:()=>{i++;i<lines.length?show():cb();}});};show();}
+  showOv(`${key===4?duo:''}<div class="story${key===4?' wide':''}">${key===4?'':w==='narr'?face('me','mid'):face(w,md||'happy')}<div><div class="who">${who||'&nbsp;'}</div><div class="txt">${lang==='ko'?ko:en}</div></div></div><div class="row">${i<lines.length-1?`<button class="btn alt" data-a="s">${T('skip')}</button>`:''}<button class="btn" data-a="n">${T('next')}</button></div>`,{n:()=>{i++;i<lines.length?show():cb();},s:()=>cb()});};show();}
 function dayCard(){const d=DAYS[G.day];const nb=d.nb;
  S={d:G.day,time:d.dur,ovens:Array(nOvens()).fill(null),tray:[],cust:[null,null,null],regs:[],earn:0,run:false};renderAll();
  showOv(`<h2>${T('day')(G.day+1)}</h2>${nb?`<div class="newb">${bread(nb,'gold')}<div><b>${T('newBread')}</b><br>${B[nb][lang]} ${coin.replace('class="coin"','class="coin" style="vertical-align:-3px"')} ${B[nb].price}</div></div>`:''}<div class="stat"><span>${T('target')}</span><b>${d.target}</b></div><p>${T('how')}</p><div class="row"><button class="btn" data-a="go">${T('startDay')}</button></div>`,{go:()=>startDay(G.day)});}
