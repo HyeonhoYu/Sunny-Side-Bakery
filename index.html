@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sunny Side Bakery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+/*
+VOICE: warm, cozy, playful; a storybook bakery for every age.
+IDEA: a little neighborhood bakery seen from the counter: shop front above, kitchen below.
+PICTURE: the playable shop itself, awning, customers, warm ovens, drawn breads.
+COLOUR and TYPE: honey wall, cocoa wood, strawberry awning accent; Jua for titles, Gowun Dodum for text.
+LAYOUT: one tall game housing, HUD, shop front, counter tray, kitchen; overlays for story and shop.
+*/
+:root{color-scheme:light dark;--bg:light-dark(#f4c25f,#24160d);--ink:#3a2214;--honey:#fbe4a8;--cocoa:#5a3420;--cocoa2:#7a4a2c;--berry:#e4505b;--cream:#fff7e6;--leaf:#5aa05a}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Gowun Dodum",system-ui,sans-serif;overflow-x:clip;min-height:100vh;
+ background-image:radial-gradient(light-dark(#f8d482,#3a2414) 2px,transparent 2.5px);background-size:26px 26px}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;-webkit-tap-highlight-color:transparent}
+button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
+.wrap{max-width:760px;margin:0 auto;padding:12px max(2vw,8px) 28px}
+.top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.top h1{font:32px/1.05 Jua,sans-serif;margin:0;color:light-dark(var(--cocoa),#ffd98a);flex:1}
+.ib{min-width:44px;height:44px;padding:0 12px;border-radius:14px;background:var(--cream);font:16px Jua,sans-serif;box-shadow:0 3px 0 var(--cocoa2);color:var(--cocoa)}
+.ib:active{transform:translateY(2px);box-shadow:0 1px 0 var(--cocoa2)}
+.game{position:relative;min-height:640px;display:flex;flex-direction:column;border-radius:26px;overflow:hidden;background:var(--honey);box-shadow:0 10px 0 var(--cocoa),0 18px 40px #0005}
+.hud{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:10px 16px;background:var(--cocoa);color:var(--cream);font-family:Jua,sans-serif}
+.hud .day{font-size:20px}
+.tbar{flex:1 1 160px;height:14px;background:#0004;border-radius:9px;overflow:hidden}
+.tbar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#ffd36e,#ffb347);border-radius:9px}
+.hud .goal,.hud .wallet{display:flex;align-items:center;gap:5px;white-space:nowrap}
+.coin{display:inline-grid;place-items:center;width:20px;height:20px;flex:none;border-radius:50%;background:#7fb069;color:#fff;font:13px/1 Jua,sans-serif;vertical-align:-3px}
+.shop{position:relative;padding:58px 12px 0;background:linear-gradient(#fbe4a8,#f6d48a)}
+.awning{position:absolute;inset:0 0 auto;height:46px;background:repeating-linear-gradient(90deg,var(--berry) 0 44px,var(--cream) 44px 88px);
+ -webkit-mask:radial-gradient(circle 22px at 22px 24px,#000 98%,transparent) 0 22px/44px 46px repeat-x,linear-gradient(#000,#000) 0 0/100% 24px no-repeat;
+ mask:radial-gradient(circle 22px at 22px 24px,#000 98%,transparent) 0 22px/44px 46px repeat-x,linear-gradient(#000,#000) 0 0/100% 24px no-repeat}
+.sign{position:absolute;top:6px;left:50%;transform:translateX(-50%);background:var(--cocoa);color:#ffd98a;font:16px Jua,sans-serif;padding:2px 14px;border-radius:10px;white-space:nowrap;z-index:1}
+.street{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;min-height:212px;align-items:end;position:relative}
+.street::before{content:"";position:absolute;inset:6px 6% 18px;border-radius:18px 18px 0 0;background:linear-gradient(#cfe8f3,#eaf6fa);border:6px solid var(--cocoa2);border-bottom:0;opacity:.75}
+.street::after{content:"OPEN";position:absolute;top:22px;right:9%;background:#e4505b;color:#fff;font:14px Jua,sans-serif;padding:3px 10px;border-radius:8px;transform:rotate(4deg);box-shadow:0 2px 0 #a8323b}
+.spot{position:relative;display:flex;justify-content:center;align-items:flex-end;height:212px}
+.cust{position:relative;display:flex;flex-direction:column;align-items:center;width:100%;max-width:150px;animation:in .45s ease-out;cursor:pointer}
+.cust.out{animation:out .6s ease-in forwards;pointer-events:none}
+@keyframes in{from{transform:translateY(40px);opacity:0}}
+@keyframes out{to{transform:translateY(30px);opacity:0}}
+.bubble{background:#fff;border-radius:16px;padding:4px 6px;display:flex;gap:2px;box-shadow:0 3px 0 #0002;position:relative;margin-bottom:6px;min-height:40px;align-items:center}
+.bubble::after{content:"";position:absolute;bottom:-8px;left:50%;margin-left:-8px;border:8px solid transparent;border-top-color:#fff;border-bottom:0}
+.bubble svg{width:40px;height:28px}
+.cust.ready .bubble{box-shadow:0 0 0 3px var(--leaf),0 3px 0 #0002;animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:scale(1.07)}}
+.face{width:86px;height:96px}
+.tag{position:absolute;top:-22px;background:var(--berry);color:#fff;font:13px Jua,sans-serif;padding:1px 9px;border-radius:9px;white-space:nowrap}
+.pat{width:74px;height:8px;background:#0002;border-radius:6px;overflow:hidden;margin-top:2px}
+.pat i{display:block;height:100%;background:var(--leaf);border-radius:6px}
+.pat i.low{background:var(--berry)}
+.counter{position:relative;background:linear-gradient(var(--cocoa2),var(--cocoa));padding:10px 12px 12px;border-top:8px solid #9a6440}
+.lab{font:13px Jua,sans-serif;color:#ffd98a;margin:0 0 6px 4px}
+.tray{display:flex;gap:6px;flex-wrap:wrap;min-height:56px;background:#0003;border-radius:14px;padding:6px}
+.ti{width:58px;height:44px;background:#fff3;border-radius:10px;display:grid;place-items:center;position:relative}
+.ti.e{background:#ffffff12;border:2px dashed #fff3}
+.ti svg{width:52px;height:36px}
+.ti.pf::after{content:"";position:absolute;top:3px;right:4px;width:9px;height:9px;background:#fff6a8;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+.kitchen{flex:1;padding:12px;background:#efe2cf;background-image:linear-gradient(#0000000d 2px,transparent 2px),linear-gradient(90deg,#0000000d 2px,transparent 2px);background-size:34px 34px}
+.kitchen .lab{color:var(--cocoa2)}
+.krow{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:12px}
+.doughs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-content:start}
+.dough{background:var(--cream);border-radius:16px;padding:6px 4px 8px;box-shadow:0 4px 0 #c9a77e;display:flex;flex-direction:column;align-items:center;min-height:96px}
+.dough:active{transform:translateY(3px);box-shadow:0 1px 0 #c9a77e}
+.dough svg{width:56px;height:40px}
+.dough b{font:15px Jua,sans-serif;font-weight:400;color:var(--cocoa);line-height:1.15;text-align:center}
+.dough small{display:flex;align-items:center;gap:3px;font-size:13px;color:var(--cocoa2)}
+.dough small .coin{width:16px;height:16px;font-size:11px}
+.ovens{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;align-content:start}
+.oven{background:linear-gradient(#55402f,#3b2a20);border-radius:18px;padding:8px;box-shadow:0 5px 0 #24170f;color:#ffe3b0;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:150px}
+.oven::before{content:"";width:60%;height:6px;border-radius:4px;background:#8a6a52}
+.glass{width:100%;height:68px;border-radius:12px;background:#1d130d;display:grid;place-items:center;border:3px solid #8a6a52;transition:background .3s}
+.oven.b .glass{background:radial-gradient(circle at 50% 70%,#ffa040,#a2370f 75%)}
+.oven.p .glass{background:radial-gradient(circle at 50% 70%,#fff0a0,#e07a1c 75%);box-shadow:0 0 18px #ffd36e}
+.oven.x .glass{background:radial-gradient(#5a5a5a,#222)}
+.glass svg{width:64px;height:46px}
+.oven.p .glass svg{animation:pulse .7s infinite}
+.obar{width:100%;height:8px;background:#0006;border-radius:5px;position:relative;overflow:hidden}
+.obar::after{content:"";position:absolute;left:71.4%;width:10.7%;top:0;bottom:0;background:#9ef08f66}
+.obar i{display:block;height:100%;width:0;background:#ffb347;border-radius:5px}
+.olab{font:14px Jua,sans-serif;text-align:center;line-height:1.15;min-height:17px}
+.oven.p .olab{color:#fff6a8}
+.float{position:absolute;font:20px Jua,sans-serif;color:#2d7a2d;pointer-events:none;animation:fl 1s ease-out forwards;z-index:5;text-shadow:0 2px 0 #fff}
+.float.bad{color:var(--berry)}
+@keyframes fl{to{transform:translateY(-46px);opacity:0}}
+.toast{position:absolute;left:50%;top:64px;transform:translate(-50%,-10px);background:var(--cocoa);color:var(--cream);padding:8px 16px;border-radius:14px;font:16px Jua,sans-serif;opacity:0;transition:.25s;pointer-events:none;z-index:6;text-align:center;max-width:90%}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.ov{position:absolute;inset:0;background:#3a2214b3;display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+.ov.on{display:flex}
+.card{background:var(--cream);border-radius:24px;padding:22px;width:min(520px,100%);max-height:100%;overflow:auto;box-shadow:0 8px 0 var(--cocoa2);animation:in .3s}
+.card h2{font:32px/1.05 Jua,sans-serif;margin:0 0 8px;color:var(--cocoa);text-wrap:balance}
+.card p{margin:0 0 12px}
+.story{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:start}
+.story .who{font:17px Jua,sans-serif;color:var(--berry);margin-bottom:4px}
+.story .txt{font-size:17px;min-height:78px}
+.story svg{width:96px;height:108px;background:var(--honey);border-radius:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:16px;background:var(--berry);color:#fff;font:19px Jua,sans-serif;box-shadow:0 4px 0 #a8323b}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #a8323b}
+.btn.alt{background:var(--cocoa2);box-shadow:0 4px 0 var(--cocoa)}
+.btn:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:14px}
+.stars{display:flex;gap:8px;justify-content:center;margin:8px 0 12px}
+.stars svg{width:54px;height:54px}
+.stat{display:grid;grid-template-columns:1fr auto;gap:4px 12px;font-size:17px;margin-bottom:6px}
+.stat b{font-family:Jua,sans-serif;font-weight:400;text-align:right}
+.up{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-top:2px dashed #e6cfa8}
+.up b{font:18px Jua,sans-serif;font-weight:400;color:var(--cocoa)}
+.up small{display:block;color:var(--cocoa2)}
+.up .btn{min-height:44px;font-size:16px;padding:0 14px;gap:4px}
+.hero{display:block;width:100%;height:auto;max-height:230px;margin:-6px 0 10px}
+.cof{display:block;text-align:center;margin-top:14px;font-size:14px;color:var(--cocoa2)}
+.newb{display:flex;align-items:center;gap:10px;background:var(--honey);border-radius:14px;padding:8px 12px;margin-bottom:10px}
+.newb svg{width:56px;height:40px}
+@media(max-width:560px){
+ .top h1{font-size:26px}
+ .krow{grid-template-columns:minmax(0,1fr)}
+ .doughs{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .dough{min-height:88px}.dough svg{width:46px;height:34px}.dough b{font-size:13px}
+ .street,.spot{min-height:186px;height:186px}
+ .face{width:66px;height:76px}.bubble svg{width:30px;height:22px}
+ .story{grid-template-columns:70px minmax(0,1fr)}.story svg{width:70px;height:80px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="top">
+  <h1 id="ttl">Sunny Side Bakery</h1>
+  <button class="ib" id="bSnd" aria-label="Sound">소리 켬</button>
+  <button class="ib" id="bPause" aria-label="Pause">II</button>
+ </div>
+ <div class="game" id="game">
+  <div class="hud">
+   <span class="day" id="hDay">1일차</span>
+   <div class="tbar"><i id="tFill"></i></div>
+   <span class="goal" id="hGoal"></span>
+   <span class="wallet" id="hWallet"></span>
+  </div>
+  <section class="shop">
+   <div class="awning"></div><div class="sign" id="sign">Sunny Side Bakery</div>
+   <div class="street" id="street"></div>
+  </section>
+  <section class="counter">
+   <p class="lab" id="lTray">진열대</p>
+   <div class="tray" id="tray"></div>
+  </section>
+  <section class="kitchen">
+   <div class="krow">
+    <div><p class="lab" id="lDough">반죽</p><div class="doughs" id="doughs"></div></div>
+    <div><p class="lab" id="lOven">오븐</p><div class="ovens" id="ovens"></div></div>
+   </div>
+  </section>
+  <div class="toast" id="toast"></div>
+  <div class="ov" id="ov"><div class="card" id="card"></div></div>
+ </div>
+</div>
+<script>
+{
+const $=id=>document.getElementById(id);
+const store={get(k){try{return JSON.parse(localStorage.getItem('sunbake_'+k))}catch(e){return null}},set(k,v){try{localStorage.setItem('sunbake_'+k,JSON.stringify(v))}catch(e){}}};
+const lang='en', muted=!!store.get('muted');
+
+const L={
+ko:{title:'써니 베이커리',sub:'허리를 다친 로즈 할머니 대신, 닷새 동안 메인 스트리트의 동네 빵집을 지켜 주세요.',start:'새로 시작',cont:n=>`이어하기 (${n}일차)`,day:n=>`${n}일차`,goal:'오늘',wallet:'지갑',tray:'진열장',dough:'반죽',oven:'오븐',
+ empty:'비어 있음',baking:'굽는 중',now:'지금!',done:'완성',burnt:'탔어요',notYet:'아직 덜 익었어요',trayFull:'진열대가 가득 찼어요',ovensFull:'오븐이 모두 사용 중이에요',missing:'진열대에 주문한 빵이 없어요',
+ next:'다음',startDay:'영업 시작',newBread:'새 메뉴',target:'목표 매출',results:n=>`${n}일차 영업 마감`,served:'모신 손님',missed:'놓친 손님',earned:'오늘 매출',shop:'가게 꾸미기',shopSub:'모은 돈으로 빵집을 업그레이드하세요.',toNext:'다음 날로',owned:'보유 중',
+ pause:'잠깐 쉬는 중',resume:'계속하기',restart:'처음 화면으로',total:'모은 별',replay:'처음부터 다시',combo:n=>`콤보 ${n}!`,perfect:'완벽!',burntT:'빵이 탔어요',tossed:'버렸어요',
+ how:'반죽을 누르면 오븐에 들어가요. 반짝일 때 오븐을 눌러 꺼내고, 손님을 눌러 빵을 건네주세요.',sndOn:'소리 켬',sndOff:'소리 끔',fin:'써니 베이커리 이야기 끝',finSub:'로즈 할머니의 빵집은 오늘도 따뜻합니다.',cof:'게임이 마음에 드셨다면 커피 한 잔 사주세요',lvl:['조금 아쉬워요','잘했어요','최고의 하루']},
+en:{title:'Sunny Side Bakery',sub:'Grandma Rose threw out her back. Keep her little Main Street bakery running for five days.',start:'New game',cont:n=>`Continue (Day ${n})`,day:n=>`Day ${n}`,goal:'Today',wallet:'Wallet',tray:'Display case',dough:'Dough',oven:'Ovens',
+ empty:'Empty',baking:'Baking',now:'Now!',done:'Ready',burnt:'Burnt',notYet:'Not baked yet',trayFull:'The display case is full',ovensFull:'All ovens are busy',missing:'That order isn\'t in the display case yet',
+ next:'Next',startDay:'Open shop',newBread:'New on the menu',target:'Sales goal',results:n=>`Day ${n} closed`,served:'Customers served',missed:'Customers missed',earned:'Today\'s sales',shop:'Fix up the shop',shopSub:'Spend your coins to upgrade the bakery.',toNext:'Next day',owned:'Owned',
+ pause:'Taking a break',resume:'Resume',restart:'Title screen',total:'Stars earned',replay:'Play again',combo:n=>`Combo ${n}!`,perfect:'Perfect!',burntT:'Burnt bread',tossed:'Tossed',
+ how:'Tap dough to put it in an oven. Tap the oven when it glows, then tap a customer to hand over the bread.',sndOn:'Sound on',sndOff:'Sound off',fin:'The end of Sunny Side Bakery',finSub:'The bell on Main Street is ringing again.',cof:'Enjoyed it? Buy me a coffee',lvl:['Could be better','Nice work','Best day ever']}};
+const T=k=>L[lang][k];
+
+const B={
+ donut:{price:6,time:4,ko:'글레이즈 도넛',en:'Glazed donut'},
+ muffin:{price:8,time:5,ko:'블루베리 머핀',en:'Blueberry muffin'},
+ roll:{price:10,time:6,ko:'시나몬 롤',en:'Cinnamon roll'},
+ pie:{price:18,time:8,ko:'애플파이',en:'Apple pie'}};
+const DAYS=[
+ {breads:['muffin','donut'],dur:60,spawn:5.5,target:70,multi:0,pat:20,regs:[['park',.3]]},
+ {breads:['muffin','donut','roll'],dur:65,spawn:5,target:115,multi:.3,pat:20,regs:[['jiu',.35]],nb:'roll'},
+ {breads:['muffin','donut','roll'],dur:70,spawn:4.5,target:165,multi:.45,pat:19,regs:[['mina',.35]]},
+ {breads:['muffin','donut','roll','pie'],dur:75,spawn:4.3,target:220,multi:.5,pat:20,regs:[['park2',.5]],nb:'pie'},
+ {breads:['muffin','donut','roll','pie'],dur:80,spawn:3.7,target:290,multi:.6,pat:19,regs:[['park',.2],['jiu',.45],['mina',.7]]}];
+const LOOK={
+ grandma:{skin:'#f6d2b0',hair:'#e2ddd5',st:2,shirt:'#d9535c',gl:1},
+ park:{skin:'#c98e63',hair:'#d8d3cb',st:3,shirt:'#3f6b9a',gl:1},
+ jiu:{skin:'#f8d9bd',hair:'#e0b04a',st:4,shirt:'#ff8fb1',kid:1},
+ mina:{skin:'#a8714c',hair:'#2a1a12',st:1,shirt:'#5aa05a'},
+ me:{skin:'#f3ccaa',hair:'#6a3a1c',st:0,shirt:'#fff'}};
+const REG={
+ park:{look:'park',order:['muffin'],name:{ko:'월터 할아버지',en:'Mr. Walter'},line:{ko:'바로 이 맛이지. 오십 년째 똑같아.',en:'That\'s the one. Same as fifty years ago.'}},
+ park2:{look:'park',order:['pie'],name:{ko:'월터 할아버지',en:'Mr. Walter'},line:{ko:'이건... 로즈의 애플파이 맛이군.',en:'Well, I\'ll be. That\'s Rose\'s apple pie.'}},
+ jiu:{look:'jiu',order:['donut','donut'],name:{ko:'꼬마 릴리',en:'Little Lily'},line:{ko:'도넛이다! 하나는 내일 스펠링 시험용!',en:'Donuts! One is for my spelling test tomorrow!'}},
+ mina:{look:'mina',order:['roll'],name:{ko:'꽃집 마리아',en:'Maria the florist'},line:{ko:'시나몬 향 덕분에 아침이 행복해요.',en:'That cinnamon smell makes my whole morning.'}}};
+const NAMES={grandma:{ko:'로즈 할머니',en:'Grandma Rose'},park:{ko:'월터 할아버지',en:'Mr. Walter'},jiu:{ko:'꼬마 릴리',en:'Little Lily'},mina:{ko:'꽃집 마리아',en:'Maria the florist'},narr:{ko:'',en:''},me:{ko:'나',en:'Me'}};
+const STORY={
+ intro:[['grandma','사랑하는 손주야. 할미가 허리를 삐끗해서 며칠 쉬어야 한단다.','Hi sweetheart. I threw out my back, so the doctor says I need a few days off.'],
+  ['grandma','그동안 메인 스트리트의 우리 빵집을 맡아 주겠니? 딱 닷새면 된단다.','Could you run the bakery on Main Street for me? Just five days.'],
+  ['grandma','반죽을 눌러 오븐에 넣고, 노릇하게 반짝일 때 오븐을 눌러 꺼내렴.','Tap the dough to pop it in the oven. When it glows golden, tap the oven to take it out.'],
+  ['grandma','그다음 손님을 누르면 주문한 걸 건네준단다. 너무 오래 두면 타 버리니 조심하고.','Then tap a customer to hand over their order. Leave it in too long and it burns, so keep an eye on it.'],
+  ['grandma','단골손님들께 안부도 전해 주렴. 할미는 너를 믿는다.','Say hi to my regulars for me. I know you\'ll do great.']],
+ 0:[['park','자네가 로즈의 손주로구먼. 이 가게 블루베리 머핀은 내가 오십 년째 먹고 있지.','So you\'re Rose\'s grandkid. I\'ve had a blueberry muffin here every morning for fifty years.'],
+  ['park','로즈는... 아니, 할머니는 좀 괜찮으신가? 무리하지 말라고 꼭 전해 주게.','Is Rose... I mean, is your grandma doing all right? Tell her not to overdo it.'],
+  ['narr','할아버지는 종이봉투를 한참 만지작거리다 문을 나섰다.','He fiddles with the paper bag for a long while before heading out the door.']],
+ 1:[['jiu','할머니 도넛 먹으면 스펠링 시험 백 점 맞아요! 진짜예요.','When I eat Grandma Rose\'s donuts, I ace my spelling test! It\'s true!'],
+  ['jiu','근데요, 월터 할아버지가 매일 아침 할머니 언제 오시냐고 물어봐요.','And guess what? Mr. Walter asks every single morning when she\'s coming back.'],
+  ['narr','릴리가 크레용 그림 한 장을 건넸다. 빵집 창문 안에 할머니와 할아버지가 나란히 웃고 있다.','Lily hands you a crayon drawing. In the bakery window, Grandma Rose and Mr. Walter are smiling side by side.']],
+ 2:[['mina','옆집 꽃집이에요. 월터 할아버지가 매년 할머니 생신에 노란 장미를 사 가세요.','I run the flower shop next door. Every year on Rose\'s birthday, Mr. Walter buys yellow roses.'],
+  ['mina','카드엔 이름을 절대 안 쓰시고요. 할머니는 아마 모르실걸요.','He never signs the card. I bet she has no idea.'],
+  ['narr','가게를 정리하다 낡은 레시피 카드를 찾았다. "애플파이. 1974년 카운티 페어, 그가 좋아하던 맛."','While tidying up, you find an old recipe card: "Apple pie. County fair, 1974. His favorite."'],
+  ['narr','새 메뉴가 열렸다: 애플파이!','New menu item unlocked: Apple pie!']],
+ 3:[['grandma','얘야, 온 동네에 소문이 다 났더라. 우리 손주 빵이 맛있다고.','Honey, the whole town is talking. They say my grandkid\'s baking is the real deal.'],
+  ['grandma','내일은 가을 축제란다. 할미도 잠깐 나가 보마.','Tomorrow is the Fall Festival. I might stop by for a little while.'],
+  ['grandma','...월터도 오려나? 아니다, 아무것도 아니다. 호호.','...Do you think Walter will be there? Oh, never mind me.']],
+ 4:[['narr','축제가 끝나 갈 무렵, 할머니가 지팡이를 짚고 빵집 문을 열었다. 종이 딸랑 울렸다.','As the festival winds down, the bell over the door jingles. Grandma Rose walks in with her cane.'],
+  ['park','로즈. 오십 년 동안 하고 싶던 말이 있소. 당신 빵이 세상에서 제일 맛있소.','Rose. I\'ve wanted to say this for fifty years. Your baking is the best in the world.'],
+  ['grandma','그 말 하는 데 오십 년이나 걸렸어요? 파이나 드세요, 노란 장미 아저씨.','Fifty years to say that? Sit down and have some pie, Mr. Yellow Roses.'],
+  ['grandma','고맙다, 우리 손주. 이 빵집은 이제 너의 빵집이기도 하단다.','Thank you, sweetheart. This bakery is yours now, too.']]};
+const UP=[
+ {id:'shelf',cost:35,ko:['큰 진열장','진열장이 4칸에서 7칸으로'],en:['Bigger display case','Holds 7 treats instead of 4']},
+ {id:'cozy',cost:45,ko:['커피 머신','손님이 35% 더 오래 기다려요'],en:['Free coffee','Customers wait 35% longer']},
+ {id:'fast',cost:60,ko:['화력 좋은 오븐','굽는 속도가 33% 빨라져요'],en:['Hotter ovens','Bread bakes 33% faster']},
+ {id:'oven3',cost:70,ko:['세 번째 오븐','한 번에 3개를 구워요'],en:['Third oven','Bake three at once']}];
+
+/* drawing */
+const COL={raw:'#f1dcae',gold:'#d98b2b',burnt:'#4a2a17'};
+function bread(type,st){const c=COL[st],raw=st==='raw',bt=st==='burnt',hl=bt?'#6b4029':raw?'#fbefd2':'#f2b25a';
+ if(type==='donut')return`<svg viewBox="0 0 64 46"><ellipse cx="32" cy="42" rx="23" ry="3" fill="#0002"/><ellipse cx="32" cy="27" rx="23" ry="14" fill="${c}"/>${raw||bt?'':`<path d="M12 24Q14 12 32 12Q50 12 52 24Q50 30 46 28Q42 34 36 30Q30 34 26 30Q20 34 16 29Q12 30 12 24Z" fill="#f59ab8"/><g stroke-width="2.2" stroke-linecap="round"><path d="M20 20l3 -1" stroke="#fff"/><path d="M42 18l2 2" stroke="#5bc0be"/><path d="M27 15l3 1" stroke="#ffd36e"/><path d="M45 25l2 -2" stroke="#fff"/><path d="M18 26l2 2" stroke="#5bc0be"/></g>`}<ellipse cx="32" cy="23" rx="7" ry="4" fill="#5a3420" opacity=".55"/></svg>`;
+ if(type==='muffin')return`<svg viewBox="0 0 64 46"><ellipse cx="32" cy="43" rx="18" ry="2.5" fill="#0002"/><path d="M16 24H48L44 42H20Z" fill="#6aa8d8"/><path d="M22 25L24 41M30 25V41M38 25L36 41M44 26L41 41" stroke="#4d86b8" stroke-width="2"/><path d="M12 25Q10 6 32 6Q54 6 52 25Q32 29 12 25Z" fill="${c}"/>${bt?'':'<g fill="#3d4a9e"><circle cx="24" cy="16" r="2.6"/><circle cx="36" cy="12" r="2.6"/><circle cx="41" cy="20" r="2.6"/><circle cx="30" cy="21" r="2.4"/></g>'}<path d="M18 13Q24 9 30 10" stroke="${hl}" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`;
+ if(type==='roll')return`<svg viewBox="0 0 64 46"><ellipse cx="32" cy="42" rx="22" ry="3" fill="#0002"/><ellipse cx="32" cy="26" rx="22" ry="15" fill="${c}"/><path d="M32 26m-2 0a3 3 0 1 1 5 1a7 6 0 1 1 -11 -3a11 9 0 1 1 18 6a15 12 0 1 1 -24 -8" stroke="${bt?'#2a160b':'#8a4a1c'}" stroke-width="3" fill="none" stroke-linecap="round"/>${raw||bt?'':'<path d="M16 20Q24 26 30 18Q36 28 44 20Q46 28 50 24" stroke="#fffaf0" stroke-width="3" fill="none" stroke-linecap="round"/>'}</svg>`;
+ return`<svg viewBox="0 0 64 46"><ellipse cx="32" cy="42" rx="27" ry="3" fill="#0002"/><path d="M5 26L10 38Q32 44 54 38L59 26Z" fill="#cfd8e0"/><ellipse cx="32" cy="26" rx="27" ry="12" fill="${c}"/><ellipse cx="32" cy="25" rx="21" ry="8.5" fill="${bt?'#3a2010':raw?'#e8c98a':'#c8682a'}"/><g stroke="${c}" stroke-width="4" stroke-linecap="round"><path d="M18 18L28 33M28 17L38 33M38 17L46 30M14 24L20 32"/><path d="M14 27L28 17M20 32L40 17M32 33L48 21"/></g>${bt?'':'<g stroke="'+hl+'" stroke-width="1.4" opacity=".7"><path d="M19 19L27 31M29 18L37 31"/></g>'}</svg>`;}
+function face(k,mood){const l=typeof k==='string'?LOOK[k]:k;let back='',front='';const h=l.hair;
+ const cap=`<path d="M18 42Q18 18 40 18Q62 18 62 42Q56 28 40 28Q24 28 18 42Z" fill="${h}"/>`;
+ if(l.st===0)front=cap;
+ if(l.st===1){back=`<path d="M17 42Q14 78 26 82H54Q66 78 63 42Z" fill="${h}"/>`;front=cap;}
+ if(l.st===2)front=`<circle cx="40" cy="15" r="9" fill="${h}"/>`+cap;
+ if(l.st===3)front=`<path d="M18 46Q17 32 23 30L25 46ZM62 46Q63 32 57 30L55 46Z" fill="${h}"/><path d="M33 51Q40 48 47 51Q40 54 33 51Z" fill="${h}"/>`;
+ if(l.st===4){back=`<circle cx="15" cy="44" r="8" fill="${h}"/><circle cx="65" cy="44" r="8" fill="${h}"/>`;front=cap;}
+ const m=mood==='sad'?'M33 58Q40 52 47 58':mood==='mid'?'M35 56H45':'M33 54Q40 61 47 54';
+ const gl=l.gl?'<g fill="none" stroke="#3a2214" stroke-width="1.8"><circle cx="32" cy="44" r="6"/><circle cx="48" cy="44" r="6"/><path d="M38 44H42"/></g>':'';
+ return`<svg viewBox="${l.kid?'-10 -16 100 116':'0 0 80 100'}" aria-hidden="true"><path d="M12 100Q12 70 40 68Q68 70 68 100Z" fill="${l.shirt}"/><rect x="34" y="60" width="12" height="10" fill="${l.skin}"/>${back}<circle cx="40" cy="42" r="22" fill="${l.skin}"/>${front}<circle cx="32" cy="44" r="2.6" fill="#2b1d14"/><circle cx="48" cy="44" r="2.6" fill="#2b1d14"/><circle cx="27" cy="51" r="3.5" fill="#f28b8b" opacity=".45"/><circle cx="53" cy="51" r="3.5" fill="#f28b8b" opacity=".45"/><path d="${m}" stroke="#2b1d14" stroke-width="2.4" fill="none" stroke-linecap="round"/>${gl}</svg>`;}
+const coin='<span class="coin">$</span>';
+const star=on=>`<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.6 1.5 6.8L12 17l-6.1 3.4 1.5-6.8L2.2 9l6.9-.7z" fill="${on?'#ffc83d':'#e6d7bd'}" stroke="${on?'#c98a10':'#cbb995'}" stroke-width="1.2" stroke-linejoin="round"/></svg>`;
+const hero=`<svg class="hero" viewBox="0 0 480 230" aria-hidden="true"><rect x="70" y="60" width="340" height="160" rx="10" fill="#f6d48a"/><rect x="70" y="200" width="340" height="20" fill="#7a4a2c"/><path d="M56 40H424V74H56Z" fill="#e4505b"/><g fill="#fff7e6">${[0,1,2,3].map(i=>`<rect x="${102+i*92}" y="40" width="46" height="34"/>`).join('')}</g><g fill="#e4505b">${[0,1,2,3,4,5,6,7].map(i=>`<circle cx="${79+i*46}" cy="74" r="23"/>`).join('')}</g><g fill="#fff7e6">${[1,3,5,7].map(i=>`<circle cx="${79+i*46}" cy="74" r="23"/>`).join('')}</g><rect x="125" y="10" width="230" height="32" rx="10" fill="#5a3420"/><text x="240" y="34" text-anchor="middle" font-family="Jua" font-size="20" fill="#ffd98a">${T('title')}</text><rect x="96" y="110" width="170" height="90" rx="8" fill="#cfe8f3" stroke="#7a4a2c" stroke-width="6"/><rect x="300" y="110" width="80" height="110" rx="6" fill="#7a4a2c"/><circle cx="364" cy="168" r="4" fill="#ffd36e"/><g transform="translate(104 150) scale(.8)">${bread('muffin','gold').replace(/<\/?svg[^>]*>/g,'')}</g><g transform="translate(152 152) scale(.8)">${bread('roll','gold').replace(/<\/?svg[^>]*>/g,'')}</g><g transform="translate(204 150) scale(.8)">${bread('pie','gold').replace(/<\/?svg[^>]*>/g,'')}</g><circle cx="430" cy="40" r="22" fill="#ffd36e"/></svg>`;
+
+/* sound */
+let AC;function snd(k){if(muted)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const seq={put:[[520,.06]],ding:[[880,.08],[1320,.14]],coin:[[988,.06],[1319,.12]],bad:[[170,.22]],tap:[[360,.04]]}[k];let t=AC.currentTime;for(const[f,d]of seq){const o=AC.createOscillator(),g=AC.createGain();o.type=k==='bad'?'sawtooth':'triangle';o.frequency.value=f;g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d+.02);t+=d*.85;}}catch(e){}}
+
+/* state */
+let G=null,S=null,paused=false,cid=0;
+const D=()=>DAYS[S.d];
+const nOvens=()=>G.up.oven3?3:2, cap=()=>G.up.shelf?7:4, speed=()=>G.up.fast?1.33:1;
+function stage(o){const p=o.t/o.total;return p<1?'b':p<1.15?'p':p<1.45?'d':'x';}
+
+function startDay(d){S={d,time:DAYS[d].dur,ovens:Array(nOvens()).fill(null),tray:[],cust:[null,null,null],spawnT:1,regs:DAYS[d].regs.map(r=>({k:r[0],at:r[1],done:false})),earn:0,served:0,lost:0,combo:0,run:true};paused=false;renderAll();hideOv();}
+function renderAll(){applyLang();if(!S)return;renderDoughs();renderOvens();renderTray();for(let i=0;i<3;i++)renderSlot(i);hud();}
+function applyLang(){document.documentElement.lang=lang;$('ttl').textContent=T('title');$('sign').textContent=T('title');document.title=T('title');$('bSnd').textContent=muted?T('sndOff'):T('sndOn');$('lTray').textContent=T('tray');$('lDough').textContent=T('dough');$('lOven').textContent=T('oven');}
+function hud(){if(!S)return;$('hDay').textContent=T('day')(S.d+1);$('hGoal').innerHTML=`${T('goal')} ${S.earn} / ${D().target}`;$('hWallet').innerHTML=`${coin}${G.coins}`;}
+function renderDoughs(){$('doughs').innerHTML=D().breads.map(b=>`<button class="dough" data-b="${b}">${bread(b,'raw')}<b>${B[b][lang]}</b><small>${coin}${B[b].price}</small></button>`).join('');}
+function renderOvens(){$('ovens').innerHTML=S.ovens.map((_,i)=>`<button class="oven" data-o="${i}"></button>`).join('');S.ovens.forEach((_,i)=>renderOven(i));}
+function renderOven(i){const el=document.querySelector(`.oven[data-o="${i}"]`);if(!el)return;const o=S.ovens[i];const st=o?stage(o):'e';o&&(o.st=st);
+ el.className='oven '+st;const look=st==='b'?'raw':st==='x'?'burnt':'gold';
+ const lab={e:T('empty'),b:T('baking'),p:T('now'),d:T('done'),x:T('burnt')}[st];
+ el.innerHTML=`<div class="glass">${o?bread(o.type,look):''}</div><div class="obar"><i></i></div><div class="olab">${lab}</div>`;}
+function renderTray(){const t=$('tray');let h='';for(let i=0;i<cap();i++){const it=S.tray[i];h+=it?`<div class="ti${it.pf?' pf':''}">${bread(it.type,'gold')}</div>`:'<div class="ti e"></div>';}t.innerHTML=h;markReady();}
+function markReady(){document.querySelectorAll('.spot').forEach((s,i)=>{const c=S.cust[i],el=s.querySelector('.cust');if(el)el.classList.toggle('ready',!!(c&&!c.leaving&&canServe(c.order)));});}
+function renderSlot(i){const street=$('street');if(street.children.length!==3)street.innerHTML=[0,1,2].map(j=>`<div class="spot" data-c="${j}"></div>`).join('');
+ const s=street.children[i],c=S.cust[i];
+ if(!c){s.innerHTML='';return;}
+ const mood=c.leaving?(c.happy?'happy':'sad'):'mid';
+ s.innerHTML=`<div class="cust${c.leaving?' out':''}">${c.reg?`<span class="tag">${REG[c.reg].name[lang]}</span>`:''}<div class="bubble">${c.order.map(b=>bread(b,'gold')).join('')}</div><div class="face">${face(c.look,c.leaving?mood:'happy')}</div><div class="pat"><i></i></div></div>`;markReady();}
+
+function canServe(order){const pool=S.tray.map(x=>x.type);for(const b of order){const k=pool.indexOf(b);if(k<0)return false;pool.splice(k,1);}return true;}
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+function randLook(){return{skin:rnd(['#f6d2b0','#e8b98f','#c98e63','#8d5a3b','#f3ccaa']),hair:rnd(['#2e1d12','#5a3420','#c88a3a','#1a1a1a','#8a3a2a','#d9b56a']),st:rnd([0,0,1,1,4]),shirt:rnd(['#4f8fd6','#e07a5f','#7fb069','#b07ad6','#f2c14e','#5bc0be','#e4505b']),gl:Math.random()<.2,kid:Math.random()<.18};}
+function spawn(reg){const i=S.cust.findIndex(c=>!c);if(i<0)return false;const d=D();let order;
+ if(reg)order=REG[reg].order.slice();else{const n=Math.random()<d.multi?(S.d===4&&Math.random()<.3?3:2):1;order=[];for(let k=0;k<n;k++){let b=rnd(d.breads);if(b==='pie'&&(order.length||Math.random()<.5))b=rnd(d.breads.filter(x=>x!=='pie'));order.push(b);}}
+ const max=(d.pat+order.length*4)*(G.up.cozy?1.35:1)*(reg?1.3:1);
+ S.cust[i]={id:++cid,order,pat:max,max,look:reg?REG[reg].look:randLook(),reg};renderSlot(i);return true;}
+function leave(i,happy){const c=S.cust[i];if(!c||c.leaving)return;c.leaving=true;c.happy=happy;renderSlot(i);setTimeout(()=>{if(S&&S.cust[i]===c){S.cust[i]=null;renderSlot(i);}},620);}
+
+/* loop */
+let last=performance.now();
+function step(dt){S.time-=dt;
+ S.ovens.forEach((o,i)=>{if(!o)return;o.t+=dt*speed();const st=stage(o);if(st!==o.st){if(st==='p')snd('ding');if(st==='x'){snd('bad');toast(T('burntT'));}renderOven(i);}});
+ S.cust.forEach((c,i)=>{if(!c||c.leaving)return;c.pat-=dt;if(c.pat<=0){S.lost++;S.combo=0;snd('bad');leave(i,false);}});
+ const el=D().dur-S.time;
+ for(const r of S.regs)if(!r.done&&el>=r.at*D().dur){if(spawn(r.k))r.done=true;}
+ S.spawnT-=dt;if(S.spawnT<=0&&S.time>4){spawn();S.spawnT=D().spawn*(.75+Math.random()*.5);}
+ if(S.time<=0)endDay();}
+function update(){if(!S)return;$('tFill').style.width=Math.max(0,S.time/D().dur*100)+'%';
+ S.ovens.forEach((o,i)=>{const b=document.querySelector(`.oven[data-o="${i}"] .obar i`);if(b)b.style.width=o?Math.min(100,o.t/o.total/1.4*100)+'%':'0';});
+ document.querySelectorAll('.spot').forEach((s,i)=>{const c=S.cust[i],b=s.querySelector('.pat i');if(c&&b){const r=Math.max(0,c.pat/c.max);b.style.width=r*100+'%';b.classList.toggle('low',r<.3);}});}
+function frame(now){const dt=Math.min(.1,(now-last)/1000);last=now;if(S&&S.run&&!paused)step(dt);update();requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+
+/* input */
+$('game').addEventListener('click',e=>{if(!S||!S.run||paused)return;
+ const dg=e.target.closest('.dough'),ov=e.target.closest('.oven'),cu=e.target.closest('.spot');
+ if(dg){const i=S.ovens.findIndex(o=>!o);if(i<0){toast(T('ovensFull'));snd('tap');return;}const b=dg.dataset.b;S.ovens[i]={type:b,t:0,total:B[b].time};snd('put');renderOven(i);return;}
+ if(ov){const i=+ov.dataset.o,o=S.ovens[i];if(!o)return;const st=stage(o);
+  if(st==='b'){toast(T('notYet'));snd('tap');return;}
+  if(st==='x'){S.ovens[i]=null;renderOven(i);toast(T('tossed'));return;}
+  if(S.tray.length>=cap()){toast(T('trayFull'));snd('tap');return;}
+  S.tray.push({type:o.type,pf:st==='p'});if(st==='p')floatAt(ov,T('perfect'));S.ovens[i]=null;snd('put');renderOven(i);renderTray();return;}
+ if(cu){const i=+cu.dataset.c,c=S.cust[i];if(!c||c.leaving)return;
+  if(!canServe(c.order)){toast(T('missing'));snd('tap');return;}
+  let pay=0;for(const b of c.order){const ks=S.tray.map((x,k)=>x.type===b?k:-1).filter(k=>k>=0);const k=ks.find(k=>S.tray[k].pf)??ks[0];if(S.tray[k].pf)pay+=2;S.tray.splice(k,1);pay+=B[b].price;}
+  pay+=Math.ceil(c.pat/c.max*3);S.combo++;if(S.combo>=3){pay+=Math.min(5,S.combo-2);toast(T('combo')(S.combo));}
+  S.earn+=pay;G.coins+=pay;S.served++;snd('coin');floatAt(cu,'+'+pay);
+  if(c.reg)setTimeout(()=>toast(REG[c.reg].name[lang]+': '+REG[c.reg].line[lang]),S.combo>=3?900:0);
+  leave(i,true);renderTray();hud();}});
+function floatAt(el,txt,bad){const g=$('game').getBoundingClientRect(),r=el.getBoundingClientRect();const f=document.createElement('div');f.className='float'+(bad?' bad':'');f.textContent=txt;f.style.left=(r.left-g.left+r.width/2-20)+'px';f.style.top=(r.top-g.top+10)+'px';$('game').appendChild(f);setTimeout(()=>f.remove(),1000);}
+let tt;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),1700);}
+
+/* overlays */
+function showOv(h,acts){$('card').innerHTML=h;$('ov').classList.add('on');$('card').querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{snd('tap');acts[b.dataset.a]&&acts[b.dataset.a](b);});const f=$('card').querySelector('.btn:not(:disabled)');f&&f.focus({preventScroll:true});}
+function hideOv(){$('ov').classList.remove('on');}
+function title(){S=null;applyLang();$('street').innerHTML='';$('tray').innerHTML='';$('doughs').innerHTML='';$('ovens').innerHTML='';$('hDay').textContent='';$('hGoal').textContent='';$('hWallet').innerHTML='';
+ const sv=store.get('save');
+ showOv(`${hero}<h2>${T('title')}</h2><p>${T('sub')}</p><div class="row">${sv&&sv.day>0&&sv.day<5?`<button class="btn alt" data-a="cont">${T('cont')(sv.day+1)}</button>`:''}<button class="btn" data-a="new">${T('start')}</button></div><a class="cof" href="https://buymeacoffee.com/henryyu" target="_blank" rel="noopener">${T('cof')}</a>`,
+ {new:()=>{G={day:0,coins:0,up:{},stars:[]};story('intro',()=>dayCard());},cont:()=>{G=sv;dayCard();}});}
+function story(key,cb){const lines=STORY[key];let i=0;
+ const show=()=>{const[w,ko,en]=lines[i];const who=w==='narr'?'':NAMES[w][lang];
+  showOv(`<div class="story">${w==='narr'?face('me','happy'):face(w,'happy')}<div><div class="who">${who||'&nbsp;'}</div><div class="txt">${lang==='ko'?ko:en}</div></div></div><div class="row"><button class="btn" data-a="n">${T('next')}</button></div>`,{n:()=>{i++;i<lines.length?show():cb();}});};show();}
+function dayCard(){const d=DAYS[G.day];const nb=d.nb;
+ S={d:G.day,time:d.dur,ovens:Array(nOvens()).fill(null),tray:[],cust:[null,null,null],regs:[],earn:0,run:false};renderAll();
+ showOv(`<h2>${T('day')(G.day+1)}</h2>${nb?`<div class="newb">${bread(nb,'gold')}<div><b>${T('newBread')}</b><br>${B[nb][lang]} ${coin.replace('class="coin"','class="coin" style="vertical-align:-3px"')} ${B[nb].price}</div></div>`:''}<div class="stat"><span>${T('target')}</span><b>${d.target}</b></div><p>${T('how')}</p><div class="row"><button class="btn" data-a="go">${T('startDay')}</button></div>`,{go:()=>startDay(G.day)});}
+function endDay(){S.run=false;S.cust.forEach((c,i)=>c&&leave(i,false));
+ const d=D(),s=S.earn>=d.target*1.5?3:S.earn>=d.target?2:S.served>0?1:0;G.stars[S.d]=Math.max(G.stars[S.d]||0,s);
+ showOv(`<h2>${T('results')(S.d+1)}</h2><div class="stars">${[1,2,3].map(k=>star(k<=s)).join('')}</div><p style="text-align:center;font:20px Jua,sans-serif">${T('lvl')[Math.max(0,s-1)]}</p><div class="stat"><span>${T('earned')}</span><b>${S.earn} / ${d.target}</b><span>${T('served')}</span><b>${S.served}</b><span>${T('missed')}</span><b>${S.lost}</b></div><div class="row"><button class="btn" data-a="n">${T('next')}</button></div>`,
+ {n:()=>story(S.d,()=>{if(S.d<4)shop();else ending();})});}
+function shop(){const h=`<h2>${T('shop')}</h2><p>${T('shopSub')}</p><div class="stat"><span>${T('wallet')}</span><b>${G.coins}</b></div>${UP.map(u=>{const own=G.up[u.id];return`<div class="up"><div><b>${u[lang][0]}</b><small>${u[lang][1]}</small></div><button class="btn ${own?'alt':''}" data-a="buy" data-id="${u.id}" ${own||G.coins<u.cost?'disabled':''}>${own?T('owned'):coin+u.cost}</button></div>`;}).join('')}<div class="row"><button class="btn" data-a="n">${T('toNext')}</button></div>`;
+ showOv(h,{buy:b=>{const u=UP.find(x=>x.id===b.dataset.id);if(G.coins>=u.cost&&!G.up[u.id]){G.coins-=u.cost;G.up[u.id]=1;snd('coin');shop();hud();}},n:()=>{G.day=S.d+1;store.set('save',G);dayCard();}});}
+function ending(){store.set('save',null);const tot=G.stars.reduce((a,b)=>a+(b||0),0);
+ showOv(`<div class="story">${face('grandma','happy')}<div><h2>${T('fin')}</h2><p>${T('finSub')}</p></div></div><div class="stat"><span>${T('total')}</span><b>${tot} / 15</b></div><div class="stars">${G.stars.map(s=>`<span style="display:flex;flex-direction:column;align-items:center;font:13px Jua,sans-serif">${star(s>=2)}${s||0}/3</span>`).join('')}</div><div class="row"><button class="btn" data-a="r">${T('replay')}</button></div><a class="cof" href="https://buymeacoffee.com/henryyu" target="_blank" rel="noopener">${T('cof')}</a>`,{r:title});}
+
+/* top buttons */
+$('bSnd').onclick=()=>{muted=!muted;store.set('muted',muted);applyLang();snd('tap');};
+$('bPause').onclick=()=>{if(!S||!S.run)return;paused=true;showOv(`<h2>${T('pause')}</h2><div class="row"><button class="btn alt" data-a="q">${T('restart')}</button><button class="btn" data-a="r">${T('resume')}</button></div>`,{r:()=>{paused=false;hideOv();},q:()=>{paused=false;title();}});};
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&S&&S.run&&!paused)$('bPause').click();});
+title();
+}
+</script>
+</body>
+</html>
