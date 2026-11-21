@@ -38,10 +38,10 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
  -webkit-mask:radial-gradient(circle 22px at 22px 24px,#000 98%,transparent) 0 22px/44px 46px repeat-x,linear-gradient(#000,#000) 0 0/100% 24px no-repeat;
  mask:radial-gradient(circle 22px at 22px 24px,#000 98%,transparent) 0 22px/44px 46px repeat-x,linear-gradient(#000,#000) 0 0/100% 24px no-repeat}
 .sign{position:absolute;top:6px;left:50%;transform:translateX(-50%);background:var(--cocoa);color:#ffd98a;font:16px Jua,sans-serif;padding:2px 14px;border-radius:10px;white-space:nowrap;z-index:1}
-.street{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;min-height:212px;align-items:end;position:relative}
+.street{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;min-height:236px;align-items:end;position:relative}
 .street::before{content:"";position:absolute;inset:6px 6% 18px;border-radius:18px 18px 0 0;background:linear-gradient(#cfe8f3,#eaf6fa);border:6px solid var(--cocoa2);border-bottom:0;opacity:.75}
 .street::after{content:"OPEN";position:absolute;top:22px;right:9%;background:#e4505b;color:#fff;font:14px Jua,sans-serif;padding:3px 10px;border-radius:8px;transform:rotate(4deg);box-shadow:0 2px 0 #a8323b}
-.spot{position:relative;display:flex;justify-content:center;align-items:flex-end;height:212px}
+.spot{position:relative;display:flex;justify-content:center;align-items:flex-end;height:236px}
 .cust{position:relative;display:flex;flex-direction:column;align-items:center;width:100%;max-width:150px;animation:in .45s ease-out;cursor:pointer}
 .cust.out{animation:out .6s ease-in forwards;pointer-events:none}
 @keyframes in{from{transform:translateY(40px);opacity:0}}
@@ -51,7 +51,14 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .bubble svg{width:40px;height:28px}
 .cust.ready .bubble{box-shadow:0 0 0 3px var(--leaf),0 3px 0 #0002;animation:pulse 1s infinite}
 @keyframes pulse{50%{transform:scale(1.07)}}
-.face{width:86px;height:96px}
+.face{width:104px;height:124px;display:flex;align-items:flex-end;justify-content:center}
+.pt{max-width:100%;max-height:100%;object-fit:contain;object-position:bottom;user-select:none;-webkit-user-drag:none}
+.cust.sad .face{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.cust.yay .face{animation:hop .45s}
+@keyframes hop{50%{transform:translateY(-12px)}}
+.cast{display:flex;justify-content:center;gap:4px;margin:-46px 0 6px;position:relative}
+.cast img{height:120px;width:auto}
 .tag{position:absolute;top:-22px;background:var(--berry);color:#fff;font:13px Jua,sans-serif;padding:1px 9px;border-radius:9px;white-space:nowrap}
 .pat{width:74px;height:8px;background:#0002;border-radius:6px;overflow:hidden;margin-top:2px}
 .pat i{display:block;height:100%;background:var(--leaf);border-radius:6px}
@@ -98,9 +105,11 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .card h2{font:32px/1.05 Jua,sans-serif;margin:0 0 8px;color:var(--cocoa);text-wrap:balance}
 .card p{margin:0 0 12px}
 .story{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:start}
+.duo{display:block;width:100%;max-height:240px;object-fit:contain;margin:-8px auto 10px}
+.story.wide{grid-template-columns:minmax(0,1fr)}
 .story .who{font:17px Jua,sans-serif;color:var(--berry);margin-bottom:4px}
 .story .txt{font-size:17px;min-height:78px}
-.story svg{width:96px;height:108px;background:var(--honey);border-radius:18px}
+.story .pt{width:96px;height:112px;object-fit:cover;object-position:top;background:var(--honey);border-radius:18px;max-height:none}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:16px;background:var(--berry);color:#fff;font:19px Jua,sans-serif;box-shadow:0 4px 0 #a8323b}
 .btn:active{transform:translateY(3px);box-shadow:0 1px 0 #a8323b}
 .btn.alt{background:var(--cocoa2);box-shadow:0 4px 0 var(--cocoa)}
@@ -123,9 +132,9 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
  .krow{grid-template-columns:minmax(0,1fr)}
  .doughs{grid-template-columns:repeat(4,minmax(0,1fr))}
  .dough{min-height:88px}.dough svg{width:46px;height:34px}.dough b{font-size:13px}
- .street,.spot{min-height:186px;height:186px}
- .face{width:66px;height:76px}.bubble svg{width:30px;height:22px}
- .story{grid-template-columns:70px minmax(0,1fr)}.story svg{width:70px;height:80px}
+ .street,.spot{min-height:204px;height:204px}
+ .face{width:80px;height:98px}.bubble svg{width:30px;height:22px}
+ .story{grid-template-columns:70px minmax(0,1fr)}.story .pt{width:72px;height:86px}.cast img{height:84px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -205,24 +214,24 @@ const REG={
  mina:{look:'mina',order:['roll'],name:{ko:'꽃집 마리아',en:'Maria the florist'},line:{ko:'시나몬 향 덕분에 아침이 행복해요.',en:'That cinnamon smell makes my whole morning.'}}};
 const NAMES={grandma:{ko:'로즈 할머니',en:'Grandma Rose'},park:{ko:'월터 할아버지',en:'Mr. Walter'},jiu:{ko:'꼬마 릴리',en:'Little Lily'},mina:{ko:'꽃집 마리아',en:'Maria the florist'},narr:{ko:'',en:''},me:{ko:'나',en:'Me'}};
 const STORY={
- intro:[['grandma','사랑하는 손주야. 할미가 허리를 삐끗해서 며칠 쉬어야 한단다.','Hi sweetheart. I threw out my back, so the doctor says I need a few days off.'],
-  ['grandma','그동안 메인 스트리트의 우리 빵집을 맡아 주겠니? 딱 닷새면 된단다.','Could you run the bakery on Main Street for me? Just five days.'],
+ intro:[['grandma','사랑하는 손주야. 할미가 허리를 삐끗해서 며칠 쉬어야 한단다.','Hi sweetheart. I threw out my back, so the doctor says I need a few days off.','sad'],
+  ['grandma','그동안 메인 스트리트의 우리 빵집을 맡아 주겠니? 딱 닷새면 된단다.','Could you run the bakery on Main Street for me? Just five days.','mid'],
   ['grandma','반죽을 눌러 오븐에 넣고, 노릇하게 반짝일 때 오븐을 눌러 꺼내렴.','Tap the dough to pop it in the oven. When it glows golden, tap the oven to take it out.'],
   ['grandma','그다음 손님을 누르면 주문한 걸 건네준단다. 너무 오래 두면 타 버리니 조심하고.','Then tap a customer to hand over their order. Leave it in too long and it burns, so keep an eye on it.'],
   ['grandma','단골손님들께 안부도 전해 주렴. 할미는 너를 믿는다.','Say hi to my regulars for me. I know you\'ll do great.']],
  0:[['park','자네가 로즈의 손주로구먼. 이 가게 블루베리 머핀은 내가 오십 년째 먹고 있지.','So you\'re Rose\'s grandkid. I\'ve had a blueberry muffin here every morning for fifty years.'],
-  ['park','로즈는... 아니, 할머니는 좀 괜찮으신가? 무리하지 말라고 꼭 전해 주게.','Is Rose... I mean, is your grandma doing all right? Tell her not to overdo it.'],
+  ['park','로즈는... 아니, 할머니는 좀 괜찮으신가? 무리하지 말라고 꼭 전해 주게.','Is Rose... I mean, is your grandma doing all right? Tell her not to overdo it.','sad'],
   ['narr','할아버지는 종이봉투를 한참 만지작거리다 문을 나섰다.','He fiddles with the paper bag for a long while before heading out the door.']],
  1:[['jiu','할머니 도넛 먹으면 스펠링 시험 백 점 맞아요! 진짜예요.','When I eat Grandma Rose\'s donuts, I ace my spelling test! It\'s true!'],
-  ['jiu','근데요, 월터 할아버지가 매일 아침 할머니 언제 오시냐고 물어봐요.','And guess what? Mr. Walter asks every single morning when she\'s coming back.'],
+  ['jiu','근데요, 월터 할아버지가 매일 아침 할머니 언제 오시냐고 물어봐요.','And guess what? Mr. Walter asks every single morning when she\'s coming back.','mid'],
   ['narr','릴리가 크레용 그림 한 장을 건넸다. 빵집 창문 안에 할머니와 할아버지가 나란히 웃고 있다.','Lily hands you a crayon drawing. In the bakery window, Grandma Rose and Mr. Walter are smiling side by side.']],
  2:[['mina','옆집 꽃집이에요. 월터 할아버지가 매년 할머니 생신에 노란 장미를 사 가세요.','I run the flower shop next door. Every year on Rose\'s birthday, Mr. Walter buys yellow roses.'],
-  ['mina','카드엔 이름을 절대 안 쓰시고요. 할머니는 아마 모르실걸요.','He never signs the card. I bet she has no idea.'],
+  ['mina','카드엔 이름을 절대 안 쓰시고요. 할머니는 아마 모르실걸요.','He never signs the card. I bet she has no idea.','mid'],
   ['narr','가게를 정리하다 낡은 레시피 카드를 찾았다. "애플파이. 1974년 카운티 페어, 그가 좋아하던 맛."','While tidying up, you find an old recipe card: "Apple pie. County fair, 1974. His favorite."'],
   ['narr','새 메뉴가 열렸다: 애플파이!','New menu item unlocked: Apple pie!']],
  3:[['grandma','얘야, 온 동네에 소문이 다 났더라. 우리 손주 빵이 맛있다고.','Honey, the whole town is talking. They say my grandkid\'s baking is the real deal.'],
   ['grandma','내일은 가을 축제란다. 할미도 잠깐 나가 보마.','Tomorrow is the Fall Festival. I might stop by for a little while.'],
-  ['grandma','...월터도 오려나? 아니다, 아무것도 아니다. 호호.','...Do you think Walter will be there? Oh, never mind me.']],
+  ['grandma','...월터도 오려나? 아니다, 아무것도 아니다. 호호.','...Do you think Walter will be there? Oh, never mind me.','mid']],
  4:[['narr','축제가 끝나 갈 무렵, 할머니가 지팡이를 짚고 빵집 문을 열었다. 종이 딸랑 울렸다.','As the festival winds down, the bell over the door jingles. Grandma Rose walks in with her cane.'],
   ['park','로즈. 오십 년 동안 하고 싶던 말이 있소. 당신 빵이 세상에서 제일 맛있소.','Rose. I\'ve wanted to say this for fifty years. Your baking is the best in the world.'],
   ['grandma','그 말 하는 데 오십 년이나 걸렸어요? 파이나 드세요, 노란 장미 아저씨.','Fifty years to say that? Sit down and have some pie, Mr. Yellow Roses.'],
@@ -240,19 +249,13 @@ function bread(type,st){const c=COL[st],raw=st==='raw',bt=st==='burnt',hl=bt?'#6
  if(type==='muffin')return`<svg viewBox="0 0 64 46"><ellipse cx="32" cy="43" rx="18" ry="2.5" fill="#0002"/><path d="M16 24H48L44 42H20Z" fill="#6aa8d8"/><path d="M22 25L24 41M30 25V41M38 25L36 41M44 26L41 41" stroke="#4d86b8" stroke-width="2"/><path d="M12 25Q10 6 32 6Q54 6 52 25Q32 29 12 25Z" fill="${c}"/>${bt?'':'<g fill="#3d4a9e"><circle cx="24" cy="16" r="2.6"/><circle cx="36" cy="12" r="2.6"/><circle cx="41" cy="20" r="2.6"/><circle cx="30" cy="21" r="2.4"/></g>'}<path d="M18 13Q24 9 30 10" stroke="${hl}" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`;
  if(type==='roll')return`<svg viewBox="0 0 64 46"><ellipse cx="32" cy="42" rx="22" ry="3" fill="#0002"/><ellipse cx="32" cy="26" rx="22" ry="15" fill="${c}"/><path d="M32 26m-2 0a3 3 0 1 1 5 1a7 6 0 1 1 -11 -3a11 9 0 1 1 18 6a15 12 0 1 1 -24 -8" stroke="${bt?'#2a160b':'#8a4a1c'}" stroke-width="3" fill="none" stroke-linecap="round"/>${raw||bt?'':'<path d="M16 20Q24 26 30 18Q36 28 44 20Q46 28 50 24" stroke="#fffaf0" stroke-width="3" fill="none" stroke-linecap="round"/>'}</svg>`;
  return`<svg viewBox="0 0 64 46"><ellipse cx="32" cy="42" rx="27" ry="3" fill="#0002"/><path d="M5 26L10 38Q32 44 54 38L59 26Z" fill="#cfd8e0"/><ellipse cx="32" cy="26" rx="27" ry="12" fill="${c}"/><ellipse cx="32" cy="25" rx="21" ry="8.5" fill="${bt?'#3a2010':raw?'#e8c98a':'#c8682a'}"/><g stroke="${c}" stroke-width="4" stroke-linecap="round"><path d="M18 18L28 33M28 17L38 33M38 17L46 30M14 24L20 32"/><path d="M14 27L28 17M20 32L40 17M32 33L48 21"/></g>${bt?'':'<g stroke="'+hl+'" stroke-width="1.4" opacity=".7"><path d="M19 19L27 31M29 18L37 31"/></g>'}</svg>`;}
-function face(k,mood){const l=typeof k==='string'?LOOK[k]:k;let back='',front='';const h=l.hair;
- const cap=`<path d="M18 42Q18 18 40 18Q62 18 62 42Q56 28 40 28Q24 28 18 42Z" fill="${h}"/>`;
- if(l.st===0)front=cap;
- if(l.st===1){back=`<path d="M17 42Q14 78 26 82H54Q66 78 63 42Z" fill="${h}"/>`;front=cap;}
- if(l.st===2)front=`<circle cx="40" cy="15" r="9" fill="${h}"/>`+cap;
- if(l.st===3)front=`<path d="M18 46Q17 32 23 30L25 46ZM62 46Q63 32 57 30L55 46Z" fill="${h}"/><path d="M33 51Q40 48 47 51Q40 54 33 51Z" fill="${h}"/>`;
- if(l.st===4){back=`<circle cx="15" cy="44" r="8" fill="${h}"/><circle cx="65" cy="44" r="8" fill="${h}"/>`;front=cap;}
- const m=mood==='sad'?'M33 58Q40 52 47 58':mood==='mid'?'M35 56H45':'M33 54Q40 61 47 54';
- const gl=l.gl?'<g fill="none" stroke="#3a2214" stroke-width="1.8"><circle cx="32" cy="44" r="6"/><circle cx="48" cy="44" r="6"/><path d="M38 44H42"/></g>':'';
- return`<svg viewBox="${l.kid?'-10 -16 100 116':'0 0 80 100'}" aria-hidden="true"><path d="M12 100Q12 70 40 68Q68 70 68 100Z" fill="${l.shirt}"/><rect x="34" y="60" width="12" height="10" fill="${l.skin}"/>${back}<circle cx="40" cy="42" r="22" fill="${l.skin}"/>${front}<circle cx="32" cy="44" r="2.6" fill="#2b1d14"/><circle cx="48" cy="44" r="2.6" fill="#2b1d14"/><circle cx="27" cy="51" r="3.5" fill="#f28b8b" opacity=".45"/><circle cx="53" cy="51" r="3.5" fill="#f28b8b" opacity=".45"/><path d="${m}" stroke="#2b1d14" stroke-width="2.4" fill="none" stroke-linecap="round"/>${gl}</svg>`;}
+const IMG={grandma:'grandma',me:'me',park:'walter',jiu:'lily',mina:'maria'};
+function face(k,mood){const m=mood==='sad'||mood==='mid'?mood:'happy';return`<img class="pt" src="img/${IMG[k]||k}-${m}.webp" alt="" draggable="false">`;}
+const duo='<img class="duo" src="img/ending-couple.webp" alt="Grandma Rose laughing as Mr. Walter offers her yellow roses">';
+['happy','mid','sad'].forEach(m=>['walter','lily','maria','c1','c2','c3','c4','c5','c6'].forEach(n=>{const i=new Image();i.src=`img/${n}-${m}.webp`;}));
 const coin='<span class="coin">$</span>';
 const star=on=>`<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.6 1.5 6.8L12 17l-6.1 3.4 1.5-6.8L2.2 9l6.9-.7z" fill="${on?'#ffc83d':'#e6d7bd'}" stroke="${on?'#c98a10':'#cbb995'}" stroke-width="1.2" stroke-linejoin="round"/></svg>`;
-const hero=`<svg class="hero" viewBox="0 0 480 230" aria-hidden="true"><rect x="70" y="60" width="340" height="160" rx="10" fill="#f6d48a"/><rect x="70" y="200" width="340" height="20" fill="#7a4a2c"/><path d="M56 40H424V74H56Z" fill="#e4505b"/><g fill="#fff7e6">${[0,1,2,3].map(i=>`<rect x="${102+i*92}" y="40" width="46" height="34"/>`).join('')}</g><g fill="#e4505b">${[0,1,2,3,4,5,6,7].map(i=>`<circle cx="${79+i*46}" cy="74" r="23"/>`).join('')}</g><g fill="#fff7e6">${[1,3,5,7].map(i=>`<circle cx="${79+i*46}" cy="74" r="23"/>`).join('')}</g><rect x="125" y="10" width="230" height="32" rx="10" fill="#5a3420"/><text x="240" y="34" text-anchor="middle" font-family="Jua" font-size="20" fill="#ffd98a">${T('title')}</text><rect x="96" y="110" width="170" height="90" rx="8" fill="#cfe8f3" stroke="#7a4a2c" stroke-width="6"/><rect x="300" y="110" width="80" height="110" rx="6" fill="#7a4a2c"/><circle cx="364" cy="168" r="4" fill="#ffd36e"/><g transform="translate(104 150) scale(.8)">${bread('muffin','gold').replace(/<\/?svg[^>]*>/g,'')}</g><g transform="translate(152 152) scale(.8)">${bread('roll','gold').replace(/<\/?svg[^>]*>/g,'')}</g><g transform="translate(204 150) scale(.8)">${bread('pie','gold').replace(/<\/?svg[^>]*>/g,'')}</g><circle cx="430" cy="40" r="22" fill="#ffd36e"/></svg>`;
+const hero=`<svg class="hero" viewBox="0 0 480 230" aria-hidden="true"><rect x="70" y="60" width="340" height="160" rx="10" fill="#f6d48a"/><rect x="70" y="200" width="340" height="20" fill="#7a4a2c"/><path d="M56 40H424V74H56Z" fill="#e4505b"/><g fill="#fff7e6">${[0,1,2,3].map(i=>`<rect x="${102+i*92}" y="40" width="46" height="34"/>`).join('')}</g><g fill="#e4505b">${[0,1,2,3,4,5,6,7].map(i=>`<circle cx="${79+i*46}" cy="74" r="23"/>`).join('')}</g><g fill="#fff7e6">${[1,3,5,7].map(i=>`<circle cx="${79+i*46}" cy="74" r="23"/>`).join('')}</g><rect x="125" y="10" width="230" height="32" rx="10" fill="#5a3420"/><text x="240" y="34" text-anchor="middle" font-family="Jua, sans-serif" font-size="20" fill="#ffd98a">${T('title')}</text><rect x="96" y="110" width="170" height="90" rx="8" fill="#cfe8f3" stroke="#7a4a2c" stroke-width="6"/><rect x="300" y="110" width="80" height="110" rx="6" fill="#7a4a2c"/><circle cx="364" cy="168" r="4" fill="#ffd36e"/><g transform="translate(104 150) scale(.8)">${bread('muffin','gold').replace(/<\/?svg[^>]*>/g,'')}</g><g transform="translate(152 152) scale(.8)">${bread('roll','gold').replace(/<\/?svg[^>]*>/g,'')}</g><g transform="translate(204 150) scale(.8)">${bread('pie','gold').replace(/<\/?svg[^>]*>/g,'')}</g><circle cx="430" cy="40" r="22" fill="#ffd36e"/></svg>`;
 
 /* sound */
 let AC;function snd(k){if(muted)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const seq={put:[[520,.06]],ding:[[880,.08],[1320,.14]],coin:[[988,.06],[1319,.12]],bad:[[170,.22]],tap:[[360,.04]]}[k];let t=AC.currentTime;for(const[f,d]of seq){const o=AC.createOscillator(),g=AC.createGain();o.type=k==='bad'?'sawtooth':'triangle';o.frequency.value=f;g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d+.02);t+=d*.85;}}catch(e){}}
@@ -279,11 +282,11 @@ function renderSlot(i){const street=$('street');if(street.children.length!==3)st
  const s=street.children[i],c=S.cust[i];
  if(!c){s.innerHTML='';return;}
  const mood=c.leaving?(c.happy?'happy':'sad'):'mid';
- s.innerHTML=`<div class="cust${c.leaving?' out':''}">${c.reg?`<span class="tag">${REG[c.reg].name[lang]}</span>`:''}<div class="bubble">${c.order.map(b=>bread(b,'gold')).join('')}</div><div class="face">${face(c.look,c.leaving?mood:'happy')}</div><div class="pat"><i></i></div></div>`;markReady();}
+ s.innerHTML=`<div class="cust${c.leaving?(c.happy?' out yay':' out sad'):''}">${c.reg?`<span class="tag">${REG[c.reg].name[lang]}</span>`:''}<div class="bubble">${c.leaving?(c.happy?'<svg viewBox="0 0 24 24" style="width:30px;height:28px"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z" fill="#e4505b"/></svg>':'<svg viewBox="0 0 32 24" style="width:36px;height:28px"><path d="M8 18a6 6 0 0 1 1-11.9A7 7 0 0 1 22 5a5.5 5.5 0 0 1 2 10.6V18z" fill="#9aa3ad"/><path d="M10 20l-1 3M16 20l-1 3M22 20l-1 3" stroke="#6aa8d8" stroke-width="2" stroke-linecap="round"/></svg>'):c.order.map(b=>bread(b,'gold')).join('')}</div><div class="face">${face(c.look,c.leaving?mood:'mid')}</div><div class="pat"><i></i></div></div>`;markReady();}
 
 function canServe(order){const pool=S.tray.map(x=>x.type);for(const b of order){const k=pool.indexOf(b);if(k<0)return false;pool.splice(k,1);}return true;}
 const rnd=a=>a[Math.floor(Math.random()*a.length)];
-function randLook(){return{skin:rnd(['#f6d2b0','#e8b98f','#c98e63','#8d5a3b','#f3ccaa']),hair:rnd(['#2e1d12','#5a3420','#c88a3a','#1a1a1a','#8a3a2a','#d9b56a']),st:rnd([0,0,1,1,4]),shirt:rnd(['#4f8fd6','#e07a5f','#7fb069','#b07ad6','#f2c14e','#5bc0be','#e4505b']),gl:Math.random()<.2,kid:Math.random()<.18};}
+function randLook(){const used=S.cust.filter(Boolean).map(c=>c.look);const pool=['c1','c2','c3','c4','c5','c6'].filter(x=>!used.includes(x));return rnd(pool.length?pool:['c1','c2','c3','c4','c5','c6']);}
 function spawn(reg){const i=S.cust.findIndex(c=>!c);if(i<0)return false;const d=D();let order;
  if(reg)order=REG[reg].order.slice();else{const n=Math.random()<d.multi?(S.d===4&&Math.random()<.3?3:2):1;order=[];for(let k=0;k<n;k++){let b=rnd(d.breads);if(b==='pie'&&(order.length||Math.random()<.5))b=rnd(d.breads.filter(x=>x!=='pie'));order.push(b);}}
  const max=(d.pat+order.length*4)*(G.up.cozy?1.35:1)*(reg?1.3:1);
@@ -329,11 +332,11 @@ function showOv(h,acts){$('card').innerHTML=h;$('ov').classList.add('on');$('car
 function hideOv(){$('ov').classList.remove('on');}
 function title(){S=null;applyLang();$('street').innerHTML='';$('tray').innerHTML='';$('doughs').innerHTML='';$('ovens').innerHTML='';$('hDay').textContent='';$('hGoal').textContent='';$('hWallet').innerHTML='';
  const sv=store.get('save');
- showOv(`${hero}<h2>${T('title')}</h2><p>${T('sub')}</p><div class="row">${sv&&sv.day>0&&sv.day<5?`<button class="btn alt" data-a="cont">${T('cont')(sv.day+1)}</button>`:''}<button class="btn" data-a="new">${T('start')}</button></div><a class="cof" href="https://buymeacoffee.com/henryyu" target="_blank" rel="noopener">${T('cof')}</a>`,
+ showOv(`${hero}<div class="cast">${['grandma','park','jiu','mina'].map(k=>face(k)).join('')}</div><h2>${T('title')}</h2><p>${T('sub')}</p><div class="row">${sv&&sv.day>0&&sv.day<5?`<button class="btn alt" data-a="cont">${T('cont')(sv.day+1)}</button>`:''}<button class="btn" data-a="new">${T('start')}</button></div><a class="cof" href="https://buymeacoffee.com/henryyu" target="_blank" rel="noopener">${T('cof')}</a>`,
  {new:()=>{G={day:0,coins:0,up:{},stars:[]};story('intro',()=>dayCard());},cont:()=>{G=sv;dayCard();}});}
 function story(key,cb){const lines=STORY[key];let i=0;
- const show=()=>{const[w,ko,en]=lines[i];const who=w==='narr'?'':NAMES[w][lang];
-  showOv(`<div class="story">${w==='narr'?face('me','happy'):face(w,'happy')}<div><div class="who">${who||'&nbsp;'}</div><div class="txt">${lang==='ko'?ko:en}</div></div></div><div class="row"><button class="btn" data-a="n">${T('next')}</button></div>`,{n:()=>{i++;i<lines.length?show():cb();}});};show();}
+ const show=()=>{const[w,ko,en,md]=lines[i];const who=w==='narr'?'':NAMES[w][lang];
+  showOv(`${key===4?duo:''}<div class="story${key===4?' wide':''}">${key===4?'':w==='narr'?face('me','mid'):face(w,md||'happy')}<div><div class="who">${who||'&nbsp;'}</div><div class="txt">${lang==='ko'?ko:en}</div></div></div><div class="row"><button class="btn" data-a="n">${T('next')}</button></div>`,{n:()=>{i++;i<lines.length?show():cb();}});};show();}
 function dayCard(){const d=DAYS[G.day];const nb=d.nb;
  S={d:G.day,time:d.dur,ovens:Array(nOvens()).fill(null),tray:[],cust:[null,null,null],regs:[],earn:0,run:false};renderAll();
  showOv(`<h2>${T('day')(G.day+1)}</h2>${nb?`<div class="newb">${bread(nb,'gold')}<div><b>${T('newBread')}</b><br>${B[nb][lang]} ${coin.replace('class="coin"','class="coin" style="vertical-align:-3px"')} ${B[nb].price}</div></div>`:''}<div class="stat"><span>${T('target')}</span><b>${d.target}</b></div><p>${T('how')}</p><div class="row"><button class="btn" data-a="go">${T('startDay')}</button></div>`,{go:()=>startDay(G.day)});}
@@ -344,7 +347,7 @@ function endDay(){S.run=false;S.cust.forEach((c,i)=>c&&leave(i,false));
 function shop(){const h=`<h2>${T('shop')}</h2><p>${T('shopSub')}</p><div class="stat"><span>${T('wallet')}</span><b>${G.coins}</b></div>${UP.map(u=>{const own=G.up[u.id];return`<div class="up"><div><b>${u[lang][0]}</b><small>${u[lang][1]}</small></div><button class="btn ${own?'alt':''}" data-a="buy" data-id="${u.id}" ${own||G.coins<u.cost?'disabled':''}>${own?T('owned'):coin+u.cost}</button></div>`;}).join('')}<div class="row"><button class="btn" data-a="n">${T('toNext')}</button></div>`;
  showOv(h,{buy:b=>{const u=UP.find(x=>x.id===b.dataset.id);if(G.coins>=u.cost&&!G.up[u.id]){G.coins-=u.cost;G.up[u.id]=1;snd('coin');shop();hud();}},n:()=>{G.day=S.d+1;store.set('save',G);dayCard();}});}
 function ending(){store.set('save',null);const tot=G.stars.reduce((a,b)=>a+(b||0),0);
- showOv(`<div class="story">${face('grandma','happy')}<div><h2>${T('fin')}</h2><p>${T('finSub')}</p></div></div><div class="stat"><span>${T('total')}</span><b>${tot} / 15</b></div><div class="stars">${G.stars.map(s=>`<span style="display:flex;flex-direction:column;align-items:center;font:13px Jua,sans-serif">${star(s>=2)}${s||0}/3</span>`).join('')}</div><div class="row"><button class="btn" data-a="r">${T('replay')}</button></div><a class="cof" href="https://buymeacoffee.com/henryyu" target="_blank" rel="noopener">${T('cof')}</a>`,{r:title});}
+ showOv(`${duo}<div class="story wide"><div><h2>${T('fin')}</h2><p>${T('finSub')}</p></div></div><div class="stat"><span>${T('total')}</span><b>${tot} / 15</b></div><div class="stars">${G.stars.map(s=>`<span style="display:flex;flex-direction:column;align-items:center;font:13px Jua,sans-serif">${star(s>=2)}${s||0}/3</span>`).join('')}</div><div class="row"><button class="btn" data-a="r">${T('replay')}</button></div><a class="cof" href="https://buymeacoffee.com/henryyu" target="_blank" rel="noopener">${T('cof')}</a>`,{r:title});}
 
 /* top buttons */
 $('bSnd').onclick=()=>{muted=!muted;store.set('muted',muted);applyLang();snd('tap');};
