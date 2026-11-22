@@ -50,8 +50,15 @@
 .fl svg.f{width:78px;height:78px}
 .fl .bee{position:absolute;right:-6px;top:-10px;width:44px;height:36px}
 .opts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.bowl{width:240px;height:190px}
-.bowl .rise{transform-origin:120px 130px;transition:transform 2s cubic-bezier(.3,1.4,.5,1)}
+.tile.ico{display:flex;align-items:center;gap:8px;padding:6px 14px 6px 8px;text-align:left}
+.tile.ico .art{width:40px;height:44px;flex:none}
+.tile.ico small{display:block;font-size:13px;opacity:.75}
+.bowlbox{height:190px;display:flex;align-items:flex-end;justify-content:center}
+.bowlimg{height:180px;width:auto}
+.bowlimg.wait{animation:wob 1s ease-in-out infinite}
+@keyframes wob{25%{transform:rotate(-2deg)}75%{transform:rotate(2deg)}}
+.bowlimg.grow{animation:grow .7s cubic-bezier(.3,1.6,.5,1)}
+@keyframes grow{from{transform:scale(.85)}}
 .meter{position:relative;width:min(440px,92%);height:36px;background:#eadfcb;border-radius:18px;overflow:hidden;box-shadow:inset 0 2px 4px #0002}
 .zone{position:absolute;top:0;bottom:0;background:#9ee08f}
 .needle{position:absolute;top:-2px;bottom:-2px;width:8px;margin-left:-4px;background:var(--berry);border-radius:4px}
@@ -211,13 +218,13 @@ function pBees(){const pb=panel('apiary','Copy the bee dance');const COLS=['#f59
   else{busy=true;snd('bad');pb.querySelector('.garden').classList.add('shake');msg.textContent='Oops! Watch the dance again.';later(()=>{pb.querySelector('.garden').classList.remove('shake');watch();},900);}});
  pb.querySelector('#replay').onclick=()=>{if(!busy){snd('tap');watch();}};round();}
 function pYeast(){const pb=panel('cellar','Wake up the yeast');let temp=null,food=null;
- const RES={'warm-sugar':[1.75,'The dough puffed up big and bubbly! Warm water and sugar make yeast happy.',true],'warm-salt':[1.12,'Barely any rise. Salt slows yeast down. Yeast needs food like sugar.'],'cold-sugar':[1.22,'A slow, small rise. Cold water makes yeast sleepy.'],'cold-salt':[1.05,'Almost nothing happened. Too cold, and no food.'],'hot-sugar':[1,'Nothing happened. Water that hot is too much for yeast.'],'hot-salt':[1,'Nothing happened. That water was far too hot.']};
- const draw=(s=1,txt='Pick the water and the food, then mix.')=>{pb.innerHTML=`<p class="ask">Gus's yeast needs the right water and the right food. Run an experiment!</p><div class="opts">${[['cold','Cold water (50°F)'],['warm','Warm water (105°F)'],['hot','Hot water (160°F)']].map(([k,l])=>`<button class="tile ${temp===k?'on':''}" data-t="${k}">${l}</button>`).join('')}</div><div class="opts">${[['sugar','A spoon of sugar'],['salt','A spoon of salt']].map(([k,l])=>`<button class="tile ${food===k?'on':''}" data-f="${k}">${l}</button>`).join('')}</div><svg class="bowl" viewBox="0 0 240 190"><g class="rise" style="transform:scale(${s})"><path d="M60 130Q56 70 120 66Q184 70 180 130Z" fill="#f4e2bd"/>${s>1.5?'<g fill="#e8d2a4"><circle cx="96" cy="100" r="5"/><circle cx="132" cy="88" r="4"/><circle cx="150" cy="110" r="5"/><circle cx="110" cy="118" r="3"/></g>':''}<ellipse cx="100" cy="84" rx="16" ry="6" fill="#fff7e4"/></g><path d="M30 120H210Q204 180 120 180Q36 180 30 120Z" fill="#6aa8d8"/><ellipse cx="120" cy="120" rx="90" ry="12" fill="#8cc0e6"/></svg><p class="now" style="font-size:18px">${txt}</p><div class="row" style="justify-content:center"><button class="btn" id="mix" ${temp&&food?'':'disabled'}>Mix and wait</button></div>`;
+ const RES={'warm-sugar':['big','The dough puffed up big and bubbly! Warm water and sugar make yeast happy.',true],'warm-salt':['mid','A small rise. Salt slows yeast down. Yeast needs food like sugar.'],'cold-sugar':['mid','A slow, small rise. Cold water makes yeast sleepy.'],'cold-salt':['flat','Almost nothing happened. Too cold, and no food.'],'hot-sugar':['flat','Nothing happened. Water that hot is too much for yeast.'],'hot-salt':['flat','Nothing happened. That water was far too hot.']};
+ const lab=(n,c='')=>`<img class="art ${c}" src="img/lab/${n}.webp" alt="" draggable="false">`;
+ const draw=(st='flat',txt='Pick the water and the food, then mix.',anim='')=>{pb.innerHTML=`<p class="ask">Gus's yeast needs the right water and the right food. Run an experiment!</p><div class="opts">${[['cold','Cold water','50°F','w-cold'],['warm','Warm water','105°F','w-warm'],['hot','Hot water','160°F','w-hot']].map(([k,l,t,im])=>`<button class="tile ico ${temp===k?'on':''}" data-t="${k}">${lab(im)}<span>${l}<small>${t}</small></span></button>`).join('')}</div><div class="opts">${[['sugar','A spoon of sugar','spoon-sugar'],['salt','A spoon of salt','spoon-salt']].map(([k,l,im])=>`<button class="tile ico ${food===k?'on':''}" data-f="${k}">${lab(im)}<span>${l}</span></button>`).join('')}</div><div class="bowlbox">${lab('bowl-'+st,'bowlimg '+anim)}</div><p class="now" style="font-size:18px">${txt}</p><div class="row" style="justify-content:center"><button class="btn" id="mix" ${temp&&food?'':'disabled'}>Mix and wait</button></div>`;
   pb.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{temp=b.dataset.t;snd('tap');draw();});
   pb.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{food=b.dataset.f;snd('tap');draw();});
-  pb.querySelector('#mix').onclick=()=>{const[sc,t,ok]=RES[temp+'-'+food];draw(1,'Waiting...');pb.querySelector('#mix').disabled=true;
-   later(()=>{pb.querySelector('.rise').style.transform=`scale(${sc})`;},60);
-   later(()=>{draw(sc,t);if(ok){snd('good');const m=pb.querySelector('#mix');m.textContent='Take the yeast';m.disabled=false;m.onclick=()=>win('cellar');}else snd('bad');},2200);};};draw();}
+  pb.querySelector('#mix').onclick=()=>{const[res,t,ok]=RES[temp+'-'+food];draw('flat','Waiting while the yeast works...','wait');pb.querySelector('#mix').disabled=true;
+   later(()=>{draw(res,t,'grow');if(ok){snd('good');const m=pb.querySelector('#mix');m.textContent='Take the yeast';m.disabled=false;m.onclick=()=>win('cellar');}else snd('bad');},2200);};};draw();}
 function pChurn(){const pb=panel('dairy','Churn the cream into butter');let hits=0,w=26,t=0,last=performance.now();const NEED=6;
  pb.innerHTML=`<p class="ask">Tap <b>Churn!</b> when the red marker is in the green zone. You need ${NEED} good churns.</p><svg class="churn" viewBox="0 0 150 170"><g class="plunger" id="pl"><rect x="71" y="2" width="8" height="90" rx="3" fill="#a66a3c"/><rect x="50" y="86" width="50" height="8" rx="3" fill="#8a5634"/></g><path d="M35 60H115L108 160Q107 166 100 166H50Q43 166 42 160Z" fill="#c98a52" stroke="#8a5634" stroke-width="4"/><path d="M40 90H110M38 130H112" stroke="#8a5634" stroke-width="5"/><ellipse cx="75" cy="60" rx="40" ry="8" fill="#fff6dc"/></svg><div class="meter"><span class="zone" id="zone"></span><span class="needle" id="needle"></span></div><div class="prog"><i id="prog" style="width:0"></i></div><button class="btn leaf" id="churn" style="min-width:180px">Churn!</button>`;
  const zone=pb.querySelector('#zone'),needle=pb.querySelector('#needle');let x=0;
