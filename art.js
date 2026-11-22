@@ -16,7 +16,10 @@ window.ART = (() => {
     }
     return '';
   }
-  const bread = (type, st, cls) => wrap(breadInner(type, st), cls);
+  const FOOD3 = ['muffin', 'donut', 'roll', 'pie'], FOOD1 = ['loaf', 'cro', 'pancake', 'cake'];
+  const IMGS = new Set(['wheat','water','milk','egg','cane','berry','apple','flour','butter','sugar','dough','sweet','batter','yeast','honey','cinnamon','choc','sprk']);
+  const pic = (src, cls) => `<img class="art ${cls || ''}" src="${src}" alt="" draggable="false">`;
+  const bread = (type, st, cls) => FOOD3.includes(type) ? pic(`img/food/${type}-${st || 'gold'}.webp`, cls) : FOOD1.includes(type) ? pic(`img/food/${type}.webp`, cls) : wrap(breadInner(type, st), cls);
   const ITEMS = {
     wheat: `<ellipse cx="32" cy="43" rx="14" ry="2.5" fill="#0002"/><path d="M32 42V10M26 42L30 16M38 42L34 16" stroke="#b98a2c" stroke-width="2.4" stroke-linecap="round"/><g fill="#e8b84a">${[0,1,2,3].map(i=>`<ellipse cx="29" cy="${12+i*6}" rx="3" ry="4.5" transform="rotate(-25 29 ${12+i*6})"/><ellipse cx="35" cy="${12+i*6}" rx="3" ry="4.5" transform="rotate(25 35 ${12+i*6})"/>`).join('')}</g>`,
     water: `<ellipse cx="32" cy="43" rx="12" ry="2.5" fill="#0002"/><path d="M32 4Q46 22 46 30A14 14 0 0 1 18 30Q18 22 32 4Z" fill="#4fa8e0"/><path d="M25 28Q25 22 30 16" stroke="#cfeaff" stroke-width="3" fill="none" stroke-linecap="round"/>`,
@@ -37,13 +40,7 @@ window.ART = (() => {
     powder: `<ellipse cx="32" cy="43" rx="13" ry="2.5" fill="#0002"/><rect x="21" y="12" width="22" height="30" rx="3" fill="#e4505b"/><rect x="21" y="20" width="22" height="12" fill="#fff"/><circle cx="32" cy="26" r="3.5" fill="#e4505b"/>`,
     cinnamon: `<ellipse cx="32" cy="43" rx="16" ry="2.5" fill="#0002"/><g stroke-linecap="round"><path d="M18 38L42 12" stroke="#8a4a1c" stroke-width="7"/><path d="M24 40L48 16" stroke="#a65a24" stroke-width="7"/></g><path d="M18 38L42 12" stroke="#c97a3a" stroke-width="2"/>`
   };
-  const item = (id, cls) => wrap(ITEMS[id] || breadInner(id), cls);
-  const FACE_DY = { loaf: 0, cro: 2, donut: 8, muffin: -9, roll: 0, pie: 1, pancake: -6, cake: 6 };
-  function buddy(type, cls, mood = 'happy') {
-    const dy = FACE_DY[type] || 0;
-    const mouth = mood === 'sleep' ? 'M28 31H36' : 'M28 30Q32 35 36 30';
-    const face = `<g transform="translate(0 ${dy})"><circle cx="25" cy="25" r="2.8" fill="#3a2214"/><circle cx="39" cy="25" r="2.8" fill="#3a2214"/><circle cx="26" cy="24" r="1" fill="#fff"/><circle cx="40" cy="24" r="1" fill="#fff"/><path d="${mouth}" stroke="#3a2214" stroke-width="2.2" fill="none" stroke-linecap="round"/><ellipse cx="20" cy="30" rx="3" ry="1.8" fill="#f27b8b" opacity=".6"/><ellipse cx="44" cy="30" rx="3" ry="1.8" fill="#f27b8b" opacity=".6"/></g>`;
-    return wrap(breadInner(type) + face, cls);
-  }
+  const item = (id, cls) => IMGS.has(id) ? pic(`img/item/${id}.webp`, cls) : (FOOD3.includes(id) || FOOD1.includes(id)) ? bread(id, 'gold', cls) : wrap(ITEMS[id] || '', cls);
+  const buddy = (type, cls) => pic(`img/buddy/${type}.webp`, cls);
   return { bread, item, buddy, breadInner };
 })();

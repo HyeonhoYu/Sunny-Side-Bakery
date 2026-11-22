@@ -17,6 +17,7 @@ LAYOUT: one tall game housing, HUD, shop front, counter tray, kitchen; overlays 
 :root{color-scheme:light dark;--bg:light-dark(#f4c25f,#24160d);--ink:#3a2214;--honey:#fbe4a8;--cocoa:#5a3420;--cocoa2:#7a4a2c;--berry:#e4505b;--cream:#fff7e6;--leaf:#5aa05a}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
+img.art{display:block;object-fit:contain;user-select:none;-webkit-user-drag:none}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Gowun Dodum",system-ui,sans-serif;overflow-x:clip;min-height:100vh;
  background-image:radial-gradient(light-dark(#f8d482,#3a2414) 2px,transparent 2.5px);background-size:26px 26px}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;-webkit-tap-highlight-color:transparent}
@@ -50,7 +51,7 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 @keyframes out{to{transform:translateY(30px);opacity:0}}
 .bubble{background:#fff;border-radius:16px;padding:4px 6px;display:flex;gap:2px;box-shadow:0 3px 0 #0002;position:relative;margin-bottom:6px;min-height:40px;align-items:center}
 .bubble::after{content:"";position:absolute;bottom:-8px;left:50%;margin-left:-8px;border:8px solid transparent;border-top-color:#fff;border-bottom:0}
-.bubble svg{width:40px;height:28px}
+.bubble :is(svg,.art){width:40px;height:28px}
 .cust.ready .bubble{box-shadow:0 0 0 3px var(--leaf),0 3px 0 #0002;animation:pulse 1s infinite}
 @keyframes pulse{50%{transform:scale(1.07)}}
 .face{width:104px;height:124px;display:flex;align-items:flex-end;justify-content:center}
@@ -72,7 +73,7 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .tray::after{content:"";position:absolute;inset:0;border-radius:12px;background:linear-gradient(115deg,#0000 30%,#ffffff2a 38%,#0000 46%,#0000 70%,#ffffff1c 76%,#0000 82%);pointer-events:none}
 .ti{width:58px;height:44px;background:radial-gradient(ellipse at 50% 80%,#ffffffb0,#fff6e6 70%);box-shadow:0 2px 0 #0003;border-radius:50%/40%;display:grid;place-items:center;position:relative}
 .ti.e{background:#ffffff14;border:2px dashed #fff4;box-shadow:none}
-.ti svg{width:52px;height:36px}
+.ti :is(svg,.art){width:52px;height:36px}
 .ti.pf::after{content:"";position:absolute;top:3px;right:4px;width:9px;height:9px;background:#fff6a8;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
 .kitchen{flex:1;padding:16px 12px 14px;background:linear-gradient(#fff8ec66,#fff8ec99),url("img/bg-kitchen.webp") 50% 30%/cover,#efe5d6;box-shadow:inset 0 10px 16px -8px #0004}
 .kitchen .lab{display:inline-block;color:var(--cocoa);background:#fff8ecd9;padding:1px 8px;border-radius:8px}
@@ -80,7 +81,7 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .doughs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-content:start}
 .dough{background:radial-gradient(120% 90% at 50% 0%,#fffdf6,#f5e7c9);border-radius:16px;padding:6px 4px 8px;box-shadow:0 4px 0 #c9a77e,0 8px 14px #7a4a2c33,inset 0 1px 0 #fff;display:flex;flex-direction:column;align-items:center;min-height:96px}
 .dough:active{transform:translateY(3px);box-shadow:0 1px 0 #c9a77e}
-.dough svg{width:56px;height:40px}
+.dough :is(svg,.art){width:56px;height:40px}
 .dough b{font:15px Jua,sans-serif;font-weight:400;color:var(--cocoa);line-height:1.15;text-align:center}
 .dough small{display:flex;align-items:center;gap:3px;font-size:13px;color:var(--cocoa2)}
 .dough small .coin{width:16px;height:16px;font-size:11px}
@@ -92,8 +93,8 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .oven.b .glass{background:radial-gradient(circle at 50% 70%,#ffa040,#a2370f 75%)}
 .oven.p .glass{background:radial-gradient(circle at 50% 70%,#fff0a0,#e07a1c 75%);box-shadow:0 0 18px #ffd36e}
 .oven.x .glass{background:radial-gradient(#5a5a5a,#222)}
-.glass svg{width:64px;height:46px}
-.oven.p .glass svg{animation:pulse .7s infinite}
+.glass :is(svg,.art){width:64px;height:46px}
+.oven.p .glass :is(svg,.art){animation:pulse .7s infinite}
 .obar{width:100%;height:8px;background:#0003;box-shadow:inset 0 1px 2px #0004;border-radius:5px;position:relative;overflow:hidden}
 .obar::after{content:"";position:absolute;left:71.4%;width:10.7%;top:0;bottom:0;background:#9ef08f66}
 .obar i{display:block;height:100%;width:0;background:#ffb347;border-radius:5px}
@@ -123,7 +124,7 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .btn:disabled{opacity:.45;cursor:default}
 .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:14px}
 .stars{display:flex;gap:8px;justify-content:center;margin:8px 0 12px}
-.stars svg{width:54px;height:54px}
+.stars :is(svg,.art){width:54px;height:54px}
 .stat{display:grid;grid-template-columns:1fr auto;gap:4px 12px;font-size:17px;margin-bottom:6px}
 .stat b{font-family:Jua,sans-serif;font-weight:400;text-align:right}
 .up{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-top:2px dashed #e6cfa8}
@@ -135,19 +136,19 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
 .mode{display:flex;gap:10px;align-items:center;background:#fff;border-radius:16px;padding:10px;box-shadow:0 4px 0 #e6cfa8;text-decoration:none;color:var(--ink)}
 .mode:hover{transform:translateY(-2px)}
-.mode svg{width:60px;height:44px;flex:none}
+.mode :is(svg,.art){width:60px;height:44px;flex:none}
 .mode b{display:block;font:17px Jua,sans-serif;font-weight:400;color:var(--cocoa)}
 .mode small{display:block;font-size:13px;color:var(--cocoa2);line-height:1.3}
 .cof{display:block;text-align:center;margin-top:14px;font-size:14px;color:var(--cocoa2)}
 .newb{display:flex;align-items:center;gap:10px;background:var(--honey);border-radius:14px;padding:8px 12px;margin-bottom:10px}
-.newb svg{width:56px;height:40px}
+.newb :is(svg,.art){width:56px;height:40px}
 @media(max-width:560px){
  .top h1{font-size:26px}
  .krow{grid-template-columns:minmax(0,1fr)}
  .doughs{grid-template-columns:repeat(4,minmax(0,1fr))}
- .dough{min-height:88px}.dough svg{width:46px;height:34px}.dough b{font-size:13px}
+ .dough{min-height:88px}.dough :is(svg,.art){width:46px;height:34px}.dough b{font-size:13px}
  .street,.spot{min-height:204px;height:204px}
- .face{width:80px;height:98px}.bubble svg{width:30px;height:22px}
+ .face{width:80px;height:98px}.bubble :is(svg,.art){width:30px;height:22px}
  .story{grid-template-columns:70px minmax(0,1fr)}.story .pt{width:72px;height:86px}.cast img{height:84px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -259,18 +260,13 @@ const UP=[
 
 /* drawing */
 const COL={raw:'#f1dcae',gold:'#d98b2b',burnt:'#4a2a17'};
-function bread(type,st){const c=COL[st],raw=st==='raw',bt=st==='burnt',hl=bt?'#6b4029':raw?'#fbefd2':'#f2b25a';
- if(type==='donut')return`<svg viewBox="0 0 64 46"><ellipse cx="32" cy="42" rx="23" ry="3" fill="#0002"/><ellipse cx="32" cy="27" rx="23" ry="14" fill="${c}"/>${raw||bt?'':`<path d="M12 24Q14 12 32 12Q50 12 52 24Q50 30 46 28Q42 34 36 30Q30 34 26 30Q20 34 16 29Q12 30 12 24Z" fill="#f59ab8"/><g stroke-width="2.2" stroke-linecap="round"><path d="M20 20l3 -1" stroke="#fff"/><path d="M42 18l2 2" stroke="#5bc0be"/><path d="M27 15l3 1" stroke="#ffd36e"/><path d="M45 25l2 -2" stroke="#fff"/><path d="M18 26l2 2" stroke="#5bc0be"/></g>`}<ellipse cx="32" cy="23" rx="7" ry="4" fill="#5a3420" opacity=".55"/></svg>`;
- if(type==='muffin')return`<svg viewBox="0 0 64 46"><ellipse cx="32" cy="43" rx="18" ry="2.5" fill="#0002"/><path d="M16 24H48L44 42H20Z" fill="#6aa8d8"/><path d="M22 25L24 41M30 25V41M38 25L36 41M44 26L41 41" stroke="#4d86b8" stroke-width="2"/><path d="M12 25Q10 6 32 6Q54 6 52 25Q32 29 12 25Z" fill="${c}"/>${bt?'':'<g fill="#3d4a9e"><circle cx="24" cy="16" r="2.6"/><circle cx="36" cy="12" r="2.6"/><circle cx="41" cy="20" r="2.6"/><circle cx="30" cy="21" r="2.4"/></g>'}<path d="M18 13Q24 9 30 10" stroke="${hl}" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`;
- if(type==='roll')return`<svg viewBox="0 0 64 46"><ellipse cx="32" cy="42" rx="22" ry="3" fill="#0002"/><ellipse cx="32" cy="26" rx="22" ry="15" fill="${c}"/><path d="M32 26m-2 0a3 3 0 1 1 5 1a7 6 0 1 1 -11 -3a11 9 0 1 1 18 6a15 12 0 1 1 -24 -8" stroke="${bt?'#2a160b':'#8a4a1c'}" stroke-width="3" fill="none" stroke-linecap="round"/>${raw||bt?'':'<path d="M16 20Q24 26 30 18Q36 28 44 20Q46 28 50 24" stroke="#fffaf0" stroke-width="3" fill="none" stroke-linecap="round"/>'}</svg>`;
- return`<svg viewBox="0 0 64 46"><ellipse cx="32" cy="42" rx="27" ry="3" fill="#0002"/><path d="M5 26L10 38Q32 44 54 38L59 26Z" fill="#cfd8e0"/><ellipse cx="32" cy="26" rx="27" ry="12" fill="${c}"/><ellipse cx="32" cy="25" rx="21" ry="8.5" fill="${bt?'#3a2010':raw?'#e8c98a':'#c8682a'}"/><g stroke="${c}" stroke-width="4" stroke-linecap="round"><path d="M18 18L28 33M28 17L38 33M38 17L46 30M14 24L20 32"/><path d="M14 27L28 17M20 32L40 17M32 33L48 21"/></g>${bt?'':'<g stroke="'+hl+'" stroke-width="1.4" opacity=".7"><path d="M19 19L27 31M29 18L37 31"/></g>'}</svg>`;}
+function bread(type,st){return`<img class="art food" src="img/food/${type}-${st||'gold'}.webp" alt="" draggable="false">`;}
 const IMG={grandma:'grandma',me:'me',park:'walter',jiu:'lily',mina:'maria'};
 function face(k,mood){const m=mood==='sad'||mood==='mid'?mood:'happy';return`<img class="pt" src="img/${IMG[k]||k}-${m}.webp" alt="" draggable="false">`;}
 const duo='<div class="fest"><img class="duo" src="img/ending-couple.webp" alt="Grandma Rose laughing as Mr. Walter offers her yellow roses"></div>';
 ['happy','mid','sad'].forEach(m=>['walter','lily','maria','c1','c2','c3','c4','c5','c6'].forEach(n=>{const i=new Image();i.src=`img/${n}-${m}.webp`;}));
 const coin='<span class="coin">$</span>';
 const star=on=>`<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.6 1.5 6.8L12 17l-6.1 3.4 1.5-6.8L2.2 9l6.9-.7z" fill="${on?'#ffc83d':'#e6d7bd'}" stroke="${on?'#c98a10':'#cbb995'}" stroke-width="1.2" stroke-linejoin="round"/></svg>`;
-const hero=`<svg class="hero" viewBox="0 0 480 230" aria-hidden="true"><rect x="70" y="60" width="340" height="160" rx="10" fill="#f6d48a"/><rect x="70" y="200" width="340" height="20" fill="#7a4a2c"/><path d="M56 40H424V74H56Z" fill="#e4505b"/><g fill="#fff7e6">${[0,1,2,3].map(i=>`<rect x="${102+i*92}" y="40" width="46" height="34"/>`).join('')}</g><g fill="#e4505b">${[0,1,2,3,4,5,6,7].map(i=>`<circle cx="${79+i*46}" cy="74" r="23"/>`).join('')}</g><g fill="#fff7e6">${[1,3,5,7].map(i=>`<circle cx="${79+i*46}" cy="74" r="23"/>`).join('')}</g><rect x="125" y="10" width="230" height="32" rx="10" fill="#5a3420"/><text x="240" y="34" text-anchor="middle" font-family="Jua, sans-serif" font-size="20" fill="#ffd98a">${T('title')}</text><rect x="96" y="110" width="170" height="90" rx="8" fill="#cfe8f3" stroke="#7a4a2c" stroke-width="6"/><rect x="300" y="110" width="80" height="110" rx="6" fill="#7a4a2c"/><circle cx="364" cy="168" r="4" fill="#ffd36e"/><g transform="translate(104 150) scale(.8)">${bread('muffin','gold').replace(/<\/?svg[^>]*>/g,'')}</g><g transform="translate(152 152) scale(.8)">${bread('roll','gold').replace(/<\/?svg[^>]*>/g,'')}</g><g transform="translate(204 150) scale(.8)">${bread('pie','gold').replace(/<\/?svg[^>]*>/g,'')}</g><circle cx="430" cy="40" r="22" fill="#ffd36e"/></svg>`;
 
 /* sound */
 let AC;function snd(k){if(muted)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const seq={put:[[520,.06]],ding:[[880,.08],[1320,.14]],coin:[[988,.06],[1319,.12]],bad:[[170,.22]],tap:[[360,.04]]}[k];let t=AC.currentTime;for(const[f,d]of seq){const o=AC.createOscillator(),g=AC.createGain();o.type=k==='bad'?'sawtooth':'triangle';o.frequency.value=f;g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d+.02);t+=d*.85;}}catch(e){}}

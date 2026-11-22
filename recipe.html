@@ -11,26 +11,25 @@
 .basket{display:flex;gap:6px;padding:8px 12px;background:linear-gradient(#f8dc98,#f0cc7c);min-height:58px;align-items:center;flex-wrap:wrap;border-bottom:3px solid #e2b465}
 .basket .lab{font:15px Jua,sans-serif;color:var(--cocoa2);margin-right:4px}
 .basket .it{width:46px;height:38px;background:#fff9;border-radius:12px;display:grid;place-items:center;box-shadow:0 2px 0 #c9a77e}
-.basket .it svg{width:40px;height:30px}
+.basket .it :is(svg,.art){width:40px;height:30px}
 .basket .none{color:var(--cocoa2);font-size:14px}
 .view{flex:1;position:relative;display:flex;flex-direction:column}
 .goal{background:var(--cream);padding:8px 14px;font:16px Jua,sans-serif;color:var(--cocoa);text-align:center;border-bottom:3px solid #e2b465}
-.map{position:relative;flex:1;min-height:540px;overflow:hidden;background:radial-gradient(120% 80% at 50% 0%,#c6e89a,#8fcb63 55%,#6fae4c)}
-.roads{position:absolute;inset:0;width:100%;height:100%}
-.deco{position:absolute;transform:translate(-50%,-60%);pointer-events:none}
-.loc{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:5px;width:130px;z-index:2}
-.badge{position:relative;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fffdf6,#f3dfb4);box-shadow:0 6px 0 #b98f5f,0 12px 18px #0004;display:grid;place-items:center;transition:transform .2s}
+.map{position:relative;width:100%;aspect-ratio:1300/976;background:url('img/bg-map.webp') 50% 50%/cover,#8fcb63;overflow:hidden}
+.map.tall{aspect-ratio:825/1100;background-image:url('img/bg-map-tall.webp')}
+.loc{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:3px;width:130px;z-index:2}
+.badge{position:relative;width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fffdf6,#f3dfb4);box-shadow:0 6px 0 #b98f5f,0 12px 18px #0004;display:grid;place-items:center;transition:transform .2s}
 .loc:hover .badge{transform:translateY(-3px)}
-.badge svg{width:62px;height:46px}
+.badge :is(svg,.art){width:44px;height:36px}
 .loc.open .badge{animation:glow 1.4s infinite}
-@keyframes glow{50%{box-shadow:0 6px 0 #b98f5f,0 0 0 9px #fff6a8bb,0 12px 18px #0004}}
+@keyframes glow{50%{box-shadow:0 6px 0 #b98f5f,0 0 0 8px #fff6a8dd,0 0 24px 10px #fff6a8aa}}
 .loc.locked .badge{filter:grayscale(1) brightness(.9);opacity:.8}
 .loc .nm{background:var(--cocoa);color:#ffe9b8;font:14px Jua,sans-serif;padding:2px 10px;border-radius:10px;white-space:nowrap;box-shadow:0 2px 0 #0003}
-.mark{position:absolute;right:-4px;top:-4px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center}
-.mark svg{width:16px;height:16px}
+.mark{position:absolute;right:-6px;top:-6px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center}
+.mark :is(svg,.art){width:16px;height:16px}
 .mark.ok{background:var(--leaf)}.mark.lk{background:#8a8f96}
-.panel{flex:1;display:flex;flex-direction:column;background:var(--cream)}
-.ph{display:flex;align-items:center;gap:12px;padding:10px 14px;background:linear-gradient(#fbe4a8,#f3cf82);border-bottom:3px solid #e2b465}
+.panel{flex:1;display:flex;flex-direction:column;background:linear-gradient(#fff7e6d0,#fff7e6e8),var(--bg) 50% 50%/cover,var(--cream)}
+.ph{display:flex;align-items:center;gap:12px;padding:16px 14px;background:linear-gradient(90deg,#fff7e6f2 0,#fff7e6c0 45%,#fff7e600 80%),var(--bg) 50% 50%/cover;border-bottom:3px solid #e2b465;min-height:96px}
 .ph img{width:56px;height:64px;object-fit:cover;object-position:top;border-radius:14px;background:#fff7}
 .ph b{font:21px Jua,sans-serif;font-weight:400;color:var(--cocoa);display:block;line-height:1.1}
 .ph small{color:var(--cocoa2);font-size:14px}
@@ -63,7 +62,7 @@
 .stalls{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;width:100%;max-width:660px}
 .stall{background:#fff;border-radius:16px;padding:8px;box-shadow:0 4px 0 #c9a77e;display:flex;flex-direction:column;align-items:center;gap:2px;border:3px solid transparent;color:var(--ink)}
 .stall.on{border-color:var(--leaf);background:#eef8ea}
-.stall svg{width:56px;height:40px}
+.stall :is(svg,.art){width:56px;height:40px}
 .stall b{font:16px Jua,sans-serif;font-weight:400;line-height:1.15}
 .stall small{color:var(--cocoa2);font-size:13px}
 .stall .pr{font:20px Jua,sans-serif;color:var(--cocoa)}
@@ -80,16 +79,16 @@
 .step.done{background:#eef8ea;box-shadow:0 4px 0 #9cc98a}
 .step.done .n{background:var(--leaf);color:#fff}
 .got{display:flex;justify-content:center;gap:10px;margin:6px 0}
-.got svg{width:96px;height:70px}
+.got :is(svg,.art){width:96px;height:70px}
 .book{display:grid;gap:10px}
 .rc{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px;align-items:center;background:#fff;border-radius:16px;padding:10px;box-shadow:0 3px 0 #e6cfa8}
-.rc svg{width:90px;height:64px}
+.rc :is(svg,.art){width:90px;height:64px}
 .rc b{font:18px Jua,sans-serif;font-weight:400;color:var(--cocoa)}
 .rc .ing{display:flex;gap:2px;flex-wrap:wrap}
-.rc .ing svg{width:34px;height:26px}
-.rc.lock{opacity:.55}.rc.lock svg{filter:grayscale(1)}
+.rc .ing :is(svg,.art){width:34px;height:26px}
+.rc.lock{opacity:.55}.rc.lock :is(svg,.art){filter:grayscale(1)}
 .letter{background:#fffdf3;border:2px dashed #d9c39a;border-radius:14px;padding:12px 14px;font-style:italic;margin:6px 0}
-@media(max-width:560px){.map{min-height:660px}.loc{width:110px}.badge{width:68px;height:68px}.badge svg{width:52px;height:38px}.garden{grid-template-columns:repeat(3,minmax(0,84px))}.fl{width:84px;height:84px}.fl svg.f{width:66px;height:66px}}
+@media(max-width:560px){.loc{width:100px}.badge{width:42px;height:42px}.badge :is(svg,.art){width:34px;height:28px}.loc .nm{font-size:11px;padding:1px 6px}.mark{width:18px;height:18px}.mark svg{width:11px;height:11px}.garden{grid-template-columns:repeat(3,minmax(0,84px))}.fl{width:84px;height:84px}.fl svg.f{width:66px;height:66px}}
 </style>
 </head>
 <body>
@@ -125,14 +124,14 @@ const LOCK='<svg viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="7" rx=
 const NAMES={grandma:'Grandma Rose',walter:'Mr. Walter',lily:'Little Lily',maria:'Maria the florist',c1:'Jess from the orchard',c4:'Dot the mail carrier',c5:'Sam the dairy farmer',me:'',gus:'Old Gus'};
 const ITEMN={flour:'Flour',honey:'Honey',yeast:'Yeast',butter:'Butter',sugar:'Sugar',egg:'Eggs',milk:'Milk',apple:'Apples',cinnamon:'Cinnamon'};
 const LOC={
- bakery:{name:'Sunny Side Bakery',icon:'loaf',d:[50,47],m:[50,45]},
- mill:{name:'Old Mill',icon:'flour',npc:'walter',gives:['flour'],d:[14,17],m:[25,9]},
- apiary:{name:'Honey Hill',icon:'honey',npc:'lily',gives:['honey'],d:[86,17],m:[75,9]},
- cellar:{name:'Bakery Cellar',icon:'yeast',npc:'grandma',gives:['yeast'],d:[30,40],m:[25,27]},
- dairy:{name:'Meadow Dairy',icon:'butter',npc:'c5',gives:['butter'],d:[14,74],m:[25,63]},
- market:{name:'Farmers Market',icon:'egg',npc:'maria',gives:['sugar','egg','milk'],d:[86,64],m:[75,63]},
- orchard:{name:'Apple Orchard',icon:'apple',npc:'c1',gives:['apple'],d:[36,84],m:[25,86]},
- post:{name:'Post Office',icon:'cinnamon',npc:'c4',gives:['cinnamon'],d:[66,84],m:[75,86]}};
+ bakery:{name:'Sunny Side Bakery',icon:'loaf',d:[53,60],m:[52,58]},
+ mill:{name:'Old Mill',icon:'flour',npc:'walter',gives:['flour'],d:[25,33],m:[25,30]},
+ apiary:{name:'Honey Hill',icon:'honey',npc:'lily',gives:['honey'],d:[73,28],m:[78,26]},
+ cellar:{name:'Bakery Cellar',icon:'yeast',npc:'grandma',gives:['yeast'],d:[35,49],m:[16,52]},
+ dairy:{name:'Meadow Dairy',icon:'butter',npc:'c5',gives:['butter'],d:[14,61],m:[17,71]},
+ market:{name:'Farmers Market',icon:'egg',npc:'maria',gives:['sugar','egg','milk'],d:[85,58],m:[76,73]},
+ orchard:{name:'Apple Orchard',icon:'apple',npc:'c1',gives:['apple'],d:[30,86],m:[25,90]},
+ post:{name:'Post Office',icon:'cinnamon',npc:'c4',gives:['cinnamon'],d:[75,90],m:[80,93]}};
 const CH=[['mill','apiary','cellar'],['dairy','market'],['orchard','post']];
 const RECIPES=[
  {name:'Honey Wheat Bread',bread:'loaf',needs:['flour','honey','yeast'],steps:['Measure the flour and honey','Mix them with warm water and yeast','Knead the dough until smooth','Let the dough rise for an hour','Bake until golden brown']},
@@ -160,8 +159,8 @@ const FACT={
 function showOv(h,acts){$('card').innerHTML=h;$('ov').classList.add('on');$('card').querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{snd('tap');acts[b.dataset.a]&&acts[b.dataset.a](b);});const f=$('card').querySelector('.row .btn:last-child');f&&f.focus({preventScroll:true});}
 const hideOv=()=>$('ov').classList.remove('on');
 function story(lines,cb){let i=0;const show=()=>{const[w,txt,md]=lines[i];
- const face=w==='gus'?'':w==='narr'?pic('me','mid'):pic(w,md||'happy');
- showOv(`<div class="story" style="${w==='gus'?'grid-template-columns:minmax(0,1fr)':''}">${face}<div><div class="who">${w==='narr'?'&nbsp;':NAMES[w]}</div><div class="txt">${w==='gus'?`<div class="letter">${txt}</div>`:txt}</div></div></div><div class="row">${i<lines.length-1?'<button class="btn alt" data-a="s">Skip story</button>':''}<button class="btn" data-a="n">Next</button></div>`,{n:()=>{i++;i<lines.length?show():(hideOv(),cb&&cb());},s:()=>{hideOv();cb&&cb();}});};show();}
+ const face=w==='narr'?pic('me','mid'):pic(w,md||'happy');
+ showOv(`<div class="story">${face}<div><div class="who">${w==='narr'?'&nbsp;':NAMES[w]}</div><div class="txt">${w==='gus'?`<div class="letter">${txt}</div>`:txt}</div></div></div><div class="row">${i<lines.length-1?'<button class="btn alt" data-a="s">Skip story</button>':''}<button class="btn" data-a="n">Next</button></div>`,{n:()=>{i++;i<lines.length?show():(hideOv(),cb&&cb());},s:()=>{hideOv();cb&&cb();}});};show();}
 
 /* ---------- map ---------- */
 const chapter=()=>P.recipes.length;
@@ -172,19 +171,17 @@ function goalText(){const c=chapter();if(c>=3)return 'You found every recipe! Vi
  return `Page ${c+1} of 3: visit the glowing places to collect ingredients.`;}
 function basket(){const have=[...new Set(P.items)];$('basket').innerHTML='<span class="lab">Basket</span>'+(have.length?have.map(i=>`<span class="it" title="${ITEMN[i]}">${ART.item(i)}</span>`).join(''):'<span class="none">Empty for now</span>');$('hPages').textContent=`Recipe pages: ${P.recipes.length} / 3`;}
 const narrow=()=>matchMedia('(max-width:560px)').matches;
-const TREES=[[6,40],[22,56],[94,40],[60,24],[42,64],[78,44],[8,92],[94,88],[50,96],[40,12],[64,6]];
-function renderMap(){stop();basket();const k=narrow()?'m':'d';const b=LOC.bakery[k];
- const roads=Object.keys(LOC).filter(x=>x!=='bakery').map(x=>{const[p,q]=LOC[x][k];const mx=(p+b[0])/2+(q-b[1])*.15,my=(q+b[1])/2-(p-b[0])*.15;return`M${b[0]} ${b[1]}Q${mx} ${my} ${p} ${q}`;}).join(' ');
- const tree='<svg viewBox="0 0 54 64" width="54" height="64"><ellipse cx="27" cy="60" rx="16" ry="4" fill="#0002"/><rect x="23" y="38" width="8" height="22" rx="3" fill="#7a4a2c"/><circle cx="16" cy="32" r="14" fill="#e8862f"/><circle cx="38" cy="30" r="14" fill="#f2c444"/><circle cx="27" cy="18" r="16" fill="#e8862f"/><circle cx="22" cy="14" r="5" fill="#ffc96b"/></svg>';
- $('view').innerHTML=`<div class="goal">${goalText()}</div><div class="map"><svg class="roads" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="${roads}" fill="none" stroke="#c9a46a" stroke-width="22" stroke-linecap="round" vector-effect="non-scaling-stroke"/><path d="${roads}" fill="none" stroke="#f3dfb4" stroke-width="16" stroke-linecap="round" vector-effect="non-scaling-stroke"/><path d="${roads}" fill="none" stroke="#fff6dc" stroke-width="2" stroke-dasharray="6 10" vector-effect="non-scaling-stroke"/></svg>${TREES.map(([x,y])=>`<span class="deco" style="left:${x}%;top:${y}%">${tree}</span>`).join('')}${Object.entries(LOC).map(([id,l])=>{const s=state(id);const[x,y]=l[k];return`<button class="loc ${s}" data-loc="${id}" style="left:${x}%;top:${y}%"><span class="badge">${ART.item(l.icon)}${s==='done'?`<span class="mark ok">${CHECK}</span>`:s==='locked'?`<span class="mark lk">${LOCK}</span>`:''}</span><span class="nm">${l.name}</span></button>`;}).join('')}</div>`;
+function renderMap(){stop();basket();const k=narrow()?'m':'d';
+ $('view').innerHTML=`<div class="goal">${goalText()}</div><div class="map ${k==='m'?'tall':''}">${Object.entries(LOC).map(([id,l])=>{const s=state(id);const[x,y]=l[k];return`<button class="loc ${s}" data-loc="${id}" style="left:${x}%;top:${y}%"><span class="badge">${ART.item(l.icon)}${s==='done'?`<span class="mark ok">${CHECK}</span>`:s==='locked'?`<span class="mark lk">${LOCK}</span>`:''}</span><span class="nm">${l.name}</span></button>`;}).join('')}</div>`;
  $('view').querySelectorAll('.loc').forEach(el=>el.onclick=()=>visit(el.dataset.loc));}
 function visit(id){const s=state(id);snd('tap');
  if(id==='bakery'){if(s==='open'){const c=chapter();story([['grandma',`You found everything for page ${c+1}: ${RECIPES[c].name}! Gus's steps got mixed up, though. Put them back in order.`,'happy']],()=>pSteps(c));}else toast(chapter()>=3?'The ovens are warm and the recipe book is full!':'Collect the ingredients first.');return;}
  if(s==='locked'){toast('Finish the earlier recipe pages first.');return;}
  if(s==='done'){toast('You already visited here.');return;}
  const[line,md]=NPC[id];story([[LOC[id].npc,line,md]],()=>PZ[id]());}
+const BG={mill:'mill',apiary:'apiary',cellar:'cellar',dairy:'dairy',market:'market',orchard:'orchard',post:'post',bakery:'kitchen'};
 function panel(id,sub){const l=LOC[id]||LOC.bakery;const npc=l.npc||'grandma';
- $('view').innerHTML=`<div class="panel"><div class="ph">${pic(npc,'happy').replace('class="pt"','')}<div class="grow"><b>${l.name}</b><small>${sub}</small></div><button class="ib" id="back">Map</button></div><div class="pb" id="pb"></div></div>`;
+ $('view').innerHTML=`<div class="panel" style="--bg:url('img/bg-${BG[id]}.webp')"><div class="ph">${pic(npc,'happy').replace('class="pt"','')}<div class="grow"><b>${l.name}</b><small>${sub}</small></div><button class="ib" id="back">Map</button></div><div class="pb" id="pb"></div></div>`;
  $('back').onclick=()=>{snd('tap');renderMap();};return $('pb');}
 let timers=[],raf=0;function stop(){timers.forEach(clearTimeout);timers=[];cancelAnimationFrame(raf);document.onkeydown=null;}
 const later=(f,ms)=>timers.push(setTimeout(f,ms));
@@ -231,7 +228,7 @@ function pChurn(){const pb=panel('dairy','Churn the cream into butter');let hits
   else{snd('bad');toast(x<50?'A little too early!':'A little too late!');}};
  pb.querySelector('#churn').onclick=go;document.onkeydown=e=>{if(e.code==='Space'){e.preventDefault();go();}};}
 function pMarket(){const pb=panel('market','Shop for eggs, sugar, and milk with $8');
- const S=[{k:'egg',n:'Eggs, one dozen',p:3,shop:'Big Box Store'},{k:'egg',n:'Farm fresh eggs',p:4,shop:'Farmer Joe',local:1},{k:'sugar',n:'Sugar',p:2,shop:'Big Box Store'},{k:'sugar',n:'Cane sugar',p:3,shop:'Main Street Co-op',local:1},{k:'milk',n:'Milk',p:2,shop:'Big Box Store'},{k:'milk',n:'Meadow milk',p:3,shop:'Meadow Dairy',local:1},{k:'choc',n:'Chocolate chips',p:4,shop:'Big Box Store',art:'cake'},{k:'sprk',n:'Sprinkles',p:2,shop:'Candy Corner',art:'donut'}];
+ const S=[{k:'egg',n:'Eggs, one dozen',p:3,shop:'Big Box Store'},{k:'egg',n:'Farm fresh eggs',p:4,shop:'Farmer Joe',local:1},{k:'sugar',n:'Sugar',p:2,shop:'Big Box Store'},{k:'sugar',n:'Cane sugar',p:3,shop:'Main Street Co-op',local:1},{k:'milk',n:'Milk',p:2,shop:'Big Box Store'},{k:'milk',n:'Meadow milk',p:3,shop:'Meadow Dairy',local:1},{k:'choc',n:'Chocolate chips',p:4,shop:'Big Box Store'},{k:'sprk',n:'Sprinkles',p:2,shop:'Candy Corner'}];
  const on=new Set();
  const draw=(note='')=>{const tot=[...on].reduce((a,i)=>a+S[i].p,0);pb.innerHTML=`<p class="ask">Gus's croissants need <b>eggs</b>, <b>sugar</b>, and <b>milk</b>. You have <b>$8</b>. Tap items to put them in your bag.</p><div class="stalls">${S.map((s,i)=>`<button class="stall ${on.has(i)?'on':''}" data-i="${i}">${ART.item(s.art||s.k)}<b>${s.n}</b><small>${s.shop} ${s.local?'<span class="local">local</span>':''}</small><span class="pr">$${s.p}</span></button>`).join('')}</div><p class="total ${tot>8?'over':''}">Bag total: $${tot} of $8</p>${note?`<p class="now" style="font-size:17px">${note}</p>`:''}<button class="btn" id="pay">Pay</button>`;
   pb.querySelectorAll('.stall').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;on.has(i)?on.delete(i):on.add(i);snd('tap');draw();});
