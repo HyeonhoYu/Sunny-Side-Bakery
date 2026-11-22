@@ -25,7 +25,7 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .wrap{max-width:760px;margin:0 auto;padding:12px max(2vw,8px) 28px}
 .top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
 .top h1{font:32px/1.05 Jua,sans-serif;margin:0;color:light-dark(var(--cocoa),#ffd98a);flex:1}
-.ib{min-width:44px;height:44px;padding:0 12px;border-radius:14px;background:var(--cream);font:16px Jua,sans-serif;box-shadow:0 3px 0 var(--cocoa2);color:var(--cocoa)}
+.ib{display:inline-flex;align-items:center;gap:6px;min-width:44px;height:44px;padding:0 12px;border-radius:14px;background:var(--cream);font:16px Jua,sans-serif;box-shadow:0 3px 0 var(--cocoa2);color:var(--cocoa)}
 .ib:active{transform:translateY(2px);box-shadow:0 1px 0 var(--cocoa2)}
 .game{position:relative;min-height:640px;display:flex;flex-direction:column;border-radius:26px;overflow:hidden;background:var(--honey);box-shadow:0 10px 0 var(--cocoa),0 18px 40px #0005}
 .hud{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:10px 16px;background:var(--cocoa);color:var(--cream);font-family:Jua,sans-serif}
@@ -159,7 +159,7 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
  <div class="top">
   <h1 id="ttl">Sunny Side Bakery</h1>
   <button class="ib" id="bSnd" aria-label="Sound">소리 켬</button>
-  <button class="ib" id="bPause" aria-label="Pause">II</button>
+  <button class="ib" id="bHome" aria-label="Home"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 9.5L10 3l7 6.5V17a1 1 0 0 1-1 1h-4v-5H8v5H4a1 1 0 0 1-1-1z" fill="currentColor"/></svg><span>Home</span></button>
  </div>
  <div class="game" id="game">
   <div class="hud">
@@ -362,8 +362,9 @@ function ending(){store.set('save',null);const tot=G.stars.reduce((a,b)=>a+(b||0
 
 /* top buttons */
 $('bSnd').onclick=()=>{muted=!muted;store.set('muted',muted);applyLang();snd('tap');};
-$('bPause').onclick=()=>{if(!S||!S.run)return;paused=true;showOv(`<h2>${T('pause')}</h2><div class="row"><button class="btn alt" data-a="q">${T('restart')}</button><button class="btn" data-a="r">${T('resume')}</button></div>`,{r:()=>{paused=false;hideOv();},q:()=>{paused=false;title();}});};
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&S&&S.run&&!paused)$('bPause').click();});
+function pauseOv(){paused=true;showOv(`<h2>${T('pause')}</h2><div class="row"><button class="btn alt" data-a="q">Home</button><button class="btn" data-a="r">${T('resume')}</button></div>`,{r:()=>{paused=false;hideOv();},q:()=>{paused=false;title();}});}
+$('bHome').onclick=()=>{if(!S)return;if(S.run){paused=true;showOv(`<h2>Go back home?</h2><p>You will leave Day ${S.d+1} and today's sales will be lost. Days you already finished stay saved.</p><div class="row"><button class="btn alt" data-a="r">Keep playing</button><button class="btn" data-a="q">Home</button></div>`,{r:()=>{paused=false;hideOv();},q:()=>{paused=false;title();}});}else title();};
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&S&&S.run&&!paused)pauseOv();});
 title();
 }
 </script>
