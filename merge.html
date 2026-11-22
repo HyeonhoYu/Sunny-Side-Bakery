@@ -34,7 +34,7 @@
 .gen:active{transform:translateY(3px);box-shadow:0 1px 0 #8a5634}
 .gen :is(svg,.art){width:52px;height:38px}
 .gen.lock{opacity:.5;filter:grayscale(1)}
-.bar{display:flex;align-items:center;gap:10px;width:min(100%,480px);font:15px Jua,sans-serif;color:#fff;text-shadow:0 1px 2px #000a;background:#5a3420cc;padding:6px 10px;border-radius:14px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;width:min(100%,480px);font:15px Jua,sans-serif;color:#fff;text-shadow:0 1px 2px #000a;background:#5a3420cc;padding:6px 10px;border-radius:14px}
 .energy{flex:1;height:16px;background:#0004;border-radius:9px;overflow:hidden}
 .energy i{display:block;height:100%;background:linear-gradient(90deg,#9ee08f,#5aa05a);transition:width .3s}
 .trash{display:flex;align-items:center;gap:6px;padding:0 12px;height:40px;border-radius:12px;background:#fffdf6;color:var(--cocoa);box-shadow:0 3px 0 #8a5634;font:14px Jua,sans-serif;text-shadow:none}
@@ -53,7 +53,7 @@
 .chain span{display:flex;align-items:center;gap:2px;background:#fff;border-radius:12px;padding:2px 8px;font:13px Jua,sans-serif;color:var(--cocoa2)}
 .chain :is(svg,.art){width:30px;height:22px}
 .hero{display:block;width:150px;height:110px;margin:0 auto}
-@media(max-width:560px){.board{gap:4px;padding:7px}.cell{border-radius:10px}.gen{width:60px}.gen :is(svg,.art){width:44px;height:32px}.order{gap:5px;padding:4px 6px 4px 4px;min-height:64px}.order img{width:40px;height:50px}.order :is(svg,.art){width:38px;height:28px}.order .want b{font-size:13px}.order .want small{font-size:12px}.order .want small:last-child{display:none}}
+@media(max-width:560px){.energy{flex:1 1 100%;order:3}.bar>span:first-child{order:1}#enT{order:2;margin-right:auto}#coffee{order:4}#trash{order:5}.board{gap:4px;padding:7px}.cell{border-radius:10px}.gen{width:60px}.gen :is(svg,.art){width:44px;height:32px}.order{gap:5px;padding:4px 6px 4px 4px;min-height:64px}.order img{width:40px;height:50px}.order :is(svg,.art){width:38px;height:28px}.order .want b{font-size:13px}.order .want small{font-size:12px}.order .want small:last-child{display:none}}
 </style>
 </head>
 <body>
@@ -69,7 +69,7 @@
   <div class="rule">Drag two things together. Matching pairs and good combos make something new!</div>
   <div class="orders" id="orders"></div>
   <div class="boardwrap">
-   <div class="bar"><span>Energy</span><div class="energy"><i id="en"></i></div><span id="enT"></span><button class="trash" id="trash"><svg viewBox="0 0 20 20"><path d="M4 6H16L15 18H5Z" fill="#9aa3ad"/><rect x="3" y="3" width="14" height="3" rx="1" fill="#6c7077"/></svg>Toss</button></div>
+   <div class="bar"><span>Energy</span><div class="energy"><i id="en"></i></div><span id="enT"></span><button class="trash" id="coffee" title="Refill energy">Coffee break</button><button class="trash" id="trash"><svg viewBox="0 0 20 20"><path d="M4 6H16L15 18H5Z" fill="#9aa3ad"/><rect x="3" y="3" width="14" height="3" rx="1" fill="#6c7077"/></svg>Toss</button></div>
    <div class="board" id="board"></div>
    <div class="gens" id="gens"></div>
   </div>
@@ -101,11 +101,11 @@ const BUD={
  pie:{n:'Apple Annie',r:['dough','apple'],pay:30,line:'Cool me on the windowsill, please.'}};
 const ORDER=Object.keys(BUD);
 const PEOPLE=[['grandma','Grandma Rose'],['walter','Mr. Walter'],['lily','Little Lily'],['maria','Maria'],['c1','Jess'],['c2','Ken'],['c3','Max'],['c4','Dot'],['c5','Sam'],['c6','Mrs. Hale']];
-const CELLS=36,MAXE=30;
+const CELLS=36,MAXE=20,REGEN=8000,BOOST=4,COFFEE=25;
 const fresh=()=>({board:Array(CELLS).fill(null),energy:MAXE,coins:0,found:[],orders:[null,null],t:Date.now(),done:false});
 let S=store.get('buddies')||fresh();
 const save=()=>{S.t=Date.now();store.set('buddies',S);};
-{const gain=Math.floor((Date.now()-(S.t||Date.now()))/2500);S.energy=Math.min(MAXE,S.energy+gain);}
+{const gain=Math.floor((Date.now()-(S.t||Date.now()))/REGEN);S.energy=Math.min(MAXE,S.energy+gain);}
 const isBud=k=>!!BUD[k];
 const art=k=>isBud(k)?ART.buddy(k):ART.item(k);
 const key=(a,b)=>[a,b].sort().join('+');
@@ -116,7 +116,7 @@ function render(){
  popAt=-1;
  const n=S.found.length;
  $('gens').innerHTML=GENS.map(([k,need,lab])=>`<button class="gen ${n<need?'lock':''}" data-g="${k}">${ART.item(k)}${n<need?`${need} ${need>1?'buddies':'buddy'}`:lab}</button>`).join('');
- $('en').style.width=S.energy/MAXE*100+'%';$('enT').textContent=`${S.energy}/${MAXE}`;
+ energyUI();
  $('hFound').textContent=`Buddies found: ${n} / 8`;$('hCoins').textContent=`Coins: ${S.coins}`;
  renderOrders();}
 function renderOrders(){
@@ -126,7 +126,7 @@ function newOrder(i){const pool=S.found.length?S.found:['loaf','cro'];const b=po
 function fillOrders(){S.orders.forEach((o,i)=>{if(!o)newOrder(i);});}
 
 function spawn(k){const empty=S.board.map((v,i)=>v?-1:i).filter(i=>i>=0);if(!empty.length){toast('The board is full! Merge or toss something.');snd('bad');return;}
- if(S.energy<=0){toast('Out of energy. It refills over time.');snd('bad');return;}
+ if(S.energy<=0){toast(S.coins>=COFFEE?'Out of energy! Take a coffee break, or wait for it to refill.':'Out of energy! Deliver a buddy or wait for it to refill.');snd('bad');$('coffee').classList.add('shake');setTimeout(()=>$('coffee').classList.remove('shake'),450);return;}
  const i=empty[Math.floor(Math.random()*empty.length)];S.board[i]=k;S.energy--;popAt=i;snd('pop');save();render();}
 function act(from,to){if(from===to){sel=-1;render();return;}
  const a=S.board[from],b=S.board[to];
@@ -138,7 +138,7 @@ function act(from,to){if(from===to){sel=-1;render();return;}
  [S.board[from],S.board[to]]=[b,a];sel=-1;snd('tap');save();render();}
 function deliver(i,cell){const o=S.orders[i];if(!o)return;const at=cell>=0&&S.board[cell]===o.b?cell:S.board.indexOf(o.b);
  if(at<0){toast(`Make ${BUD[o.b].n} first. Check the buddy book for the recipe.`);snd('bad');return;}
- S.board[at]=null;S.coins+=BUD[o.b].pay;S.orders[i]=null;sel=-1;snd('coin');toast(`+${BUD[o.b].pay} coins! ${PEOPLE[o.p][1]} is happy.`);save();render();
+ S.board[at]=null;S.coins+=BUD[o.b].pay;S.energy=Math.min(MAXE,S.energy+BOOST);S.orders[i]=null;sel=-1;snd('coin');toast(`+${BUD[o.b].pay} coins and +${BOOST} energy! ${PEOPLE[o.p][1]} is happy.`);save();render();
  setTimeout(()=>{newOrder(i);save();renderOrders();},1500);}
 function meet(k){const B=BUD[k];const n=S.found.length;const oi=S.orders[0]&&S.orders[1]?Math.floor(Math.random()*2):S.orders[0]?1:0;S.orders[oi]={p:Math.floor(Math.random()*PEOPLE.length),b:k};save();renderOrders();
  const unlock=GENS.find(g=>g[1]===n);
@@ -147,7 +147,7 @@ function finale(){showOv(`<h2>You met all 8 Bake Buddies!</h2><div style="displa
 function book(){showOv(`<h2>Buddy book</h2><p>Make the in-between ingredients first:</p><div class="chain">${Object.entries(RULES).filter(([,v])=>!isBud(v)).map(([k,v])=>{const[a,b]=k.split('+');return`<span>${ART.item(a)}+${ART.item(b)}=${ART.item(v)}</span>`;}).join('')}</div><div class="bk">${ORDER.map(k=>{const f=S.found.includes(k),B=BUD[k];return`<div class="bc ${f?'':'lock'}">${ART.buddy(k,'big')}<b>${f?B.n:'???'}</b><div class="eq">${ART.item(B.r[0])}+${ART.item(B.r[1])}</div></div>`;}).join('')}</div><div class="row"><button class="btn" data-a="c">Close</button></div>`,{c:hideOv});}
 function showOv(h,acts){$('card').innerHTML=h;$('ov').classList.add('on');$('card').querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{snd('tap');acts[b.dataset.a]&&acts[b.dataset.a](b);});const f=$('card').querySelector('.row .btn:last-child');f&&f.focus({preventScroll:true});}
 const hideOv=()=>$('ov').classList.remove('on');
-function intro(){showOv(`<h2>Welcome to Bake Buddies!</h2>${ART.buddy('loaf','hero')}<p>Tap the helpers at the bottom to get ingredients. Then <b>drag two matching things together</b> to make something new.</p><p>Two Wheat make Flour. Flour and Water make Dough. Two Dough make your first buddy!</p><p>You can also tap one thing, then tap another. Deliver buddies to customers for coins.</p><div class="row"><button class="btn" data-a="c">Let's bake</button></div>`,{c:()=>{hideOv();S.seen=true;save();}});}
+function intro(){showOv(`<h2>Welcome to Bake Buddies!</h2>${ART.buddy('loaf','hero')}<p>Tap the helpers at the bottom to get ingredients. Then <b>drag two matching things together</b> to make something new.</p><p>Two Wheat make Flour. Flour and Water make Dough. Two Dough make your first buddy!</p><p>You can also tap one thing, then tap another.</p><p><b>Energy:</b> each tap on a helper uses 1 energy, and it refills slowly. Merge wisely! Delivering a buddy gives you coins and +4 energy, and a coffee break refills it all for 25 coins.</p><div class="row"><button class="btn" data-a="c">Let's bake</button></div>`,{c:()=>{hideOv();S.seen=true;save();}});}
 
 /* input: tap or drag */
 let drag=null;
@@ -164,8 +164,10 @@ $('board').addEventListener('click',e=>{if(suppress)return;const c=e.target.clos
 $('orders').addEventListener('click',e=>{const o=e.target.closest('.order');if(o&&o.dataset.o!==undefined)deliver(+o.dataset.o,sel);});
 function toss(i){if(i<0||!S.board[i]){toast('Tap something on the board first, then tap Toss.');return;}S.board[i]=null;sel=-1;snd('tap');save();render();}
 $('trash').onclick=()=>toss(sel);
+function energyUI(){$('en').style.width=S.energy/MAXE*100+'%';$('enT').textContent=`${S.energy}/${MAXE}`;const c=$('coffee');c.textContent=`Coffee break: ${COFFEE} coins`;c.disabled=S.coins<COFFEE||S.energy>=MAXE;}
+$('coffee').onclick=()=>{if(S.coins<COFFEE){toast(`You need ${COFFEE} coins. Deliver buddies to customers!`);snd('bad');return;}if(S.energy>=MAXE){toast('Your energy is already full.');return;}S.coins-=COFFEE;S.energy=MAXE;snd('coin');toast('Ahh, coffee! Energy is full again.');save();render();};
 $('gens').addEventListener('click',e=>{const g=e.target.closest('.gen');if(!g)return;const k=g.dataset.g,G=GENS.find(x=>x[0]===k);if(S.found.length<G[1]){toast(`Meet ${G[1]} ${G[1]>1?'buddies':'buddy'} to unlock the ${G[2]}.`);snd('bad');return;}spawn(k);});
-setInterval(()=>{if(S.energy<MAXE){S.energy++;save();$('en').style.width=S.energy/MAXE*100+'%';$('enT').textContent=`${S.energy}/${MAXE}`;}},2500);
+setInterval(()=>{if(S.energy<MAXE){S.energy++;save();energyUI();}},REGEN);
 $('bBook').onclick=()=>{snd('tap');book();};
 const sndLab=()=>$('bSnd').textContent=muted?'Sound off':'Sound on';sndLab();
 $('bSnd').onclick=()=>{muted=!muted;store.set('muted',muted);sndLab();snd('tap');};

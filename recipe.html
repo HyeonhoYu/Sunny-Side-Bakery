@@ -38,7 +38,6 @@
 .ask{font-size:18px;max-width:580px;margin:0}
 .ask b{font-family:Jua,sans-serif;font-weight:400;color:var(--berry)}
 .mrow{display:flex;gap:22px;align-items:center;flex-wrap:wrap;justify-content:center}
-.jug{width:150px;height:230px}
 .scoops{display:grid;gap:10px}
 .tile{min-height:52px;padding:0 18px;border-radius:16px;background:#fff;box-shadow:0 4px 0 #c9a77e;font:18px Jua,sans-serif;color:var(--cocoa)}
 .tile:active{transform:translateY(3px);box-shadow:0 1px 0 #c9a77e}
@@ -47,8 +46,6 @@
 .garden{display:grid;grid-template-columns:repeat(3,minmax(0,96px));gap:14px;justify-content:center}
 .fl{position:relative;width:96px;height:96px;border-radius:26px;background:#e3f2d6;box-shadow:0 4px 0 #9cc98a;transition:transform .15s,background .15s}
 .fl.lit{background:#fff6a8;transform:scale(1.08)}
-.fl svg.f{width:78px;height:78px}
-.fl .bee{position:absolute;right:-6px;top:-10px;width:44px;height:36px}
 .opts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .tile.ico{display:flex;align-items:center;gap:8px;padding:6px 14px 6px 8px;text-align:left}
 .tile.ico .art{width:40px;height:44px;flex:none}
@@ -62,8 +59,6 @@
 .meter{position:relative;width:min(440px,92%);height:36px;background:#eadfcb;border-radius:18px;overflow:hidden;box-shadow:inset 0 2px 4px #0002}
 .zone{position:absolute;top:0;bottom:0;background:#9ee08f}
 .needle{position:absolute;top:-2px;bottom:-2px;width:8px;margin-left:-4px;background:var(--berry);border-radius:4px}
-.churn{width:150px;height:170px}
-.churn .plunger{transition:transform .12s}
 .prog{width:min(300px,80%);height:14px;background:#eadfcb;border-radius:8px;overflow:hidden}
 .prog i{display:block;height:100%;background:#f5d04a;transition:width .3s}
 .stalls{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;width:100%;max-width:660px}
@@ -77,8 +72,6 @@
 .total{font:22px Jua,sans-serif;margin:0}
 .total.over{color:var(--berry)}
 .choices{display:grid;gap:10px;width:min(440px,100%)}
-.bal{width:min(440px,100%);height:auto}
-.bal .beam{transition:transform .5s cubic-bezier(.3,1.5,.5,1);transform-origin:220px 70px}
 .wts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .steps{display:grid;gap:8px;width:min(540px,100%)}
 .step{min-height:50px;border-radius:14px;background:#fff;box-shadow:0 4px 0 #c9a77e;text-align:left;padding:8px 14px;display:flex;gap:10px;align-items:center;font-size:16px;color:var(--ink)}
@@ -95,7 +88,26 @@
 .rc .ing :is(svg,.art){width:34px;height:26px}
 .rc.lock{opacity:.55}.rc.lock :is(svg,.art){filter:grayscale(1)}
 .letter{background:#fffdf3;border:2px dashed #d9c39a;border-radius:14px;padding:12px 14px;font-style:italic;margin:6px 0}
-@media(max-width:560px){.loc{width:100px}.badge{width:42px;height:42px}.badge :is(svg,.art){width:34px;height:28px}.loc .nm{font-size:11px;padding:1px 6px}.mark{width:18px;height:18px}.mark svg{width:11px;height:11px}.garden{grid-template-columns:repeat(3,minmax(0,84px))}.fl{width:84px;height:84px}.fl svg.f{width:66px;height:66px}}
+@media(max-width:560px){.loc{width:100px}.badge{width:42px;height:42px}.badge :is(svg,.art){width:34px;height:28px}.loc .nm{font-size:11px;padding:1px 6px}.mark{width:18px;height:18px}.mark svg{width:11px;height:11px}.garden{grid-template-columns:repeat(3,minmax(0,84px))}.fl{width:84px;height:84px}.fl .f{width:68px;height:68px}}
+.jugbox{position:relative;width:176px;height:178px;flex:none}
+.jugbox>.art{width:100%;height:100%}
+.jugbox svg{position:absolute;inset:0;width:100%;height:100%}
+.jl{position:absolute;left:58%;transform:translateY(-55%);font:12px Jua,sans-serif;color:var(--cocoa);text-shadow:0 0 3px #fff,0 0 3px #fff}
+.fl .f{width:80px;height:80px}
+.fl .bee{position:absolute;right:-12px;top:-14px;width:54px;height:54px}
+.churnbox{position:relative;display:flex;align-items:flex-end;gap:10px;height:190px}
+.churnimg{height:180px;width:auto}
+.bbowl{height:84px;width:auto;transition:opacity .3s,transform .4s cubic-bezier(.3,1.6,.5,1);transform-origin:bottom center}
+.balbox{position:relative;width:min(320px,86%);aspect-ratio:311/300}
+.balbox .lay{position:absolute;inset:0;width:100%;height:100%;transition:transform .5s cubic-bezier(.3,1.5,.5,1)}
+.balbox .lay>.art{width:100%;height:100%}
+.balbox .arms{transform-origin:50% 16.5%}
+.onpan{position:absolute;bottom:35%;transform:translateX(-50%);display:flex;align-items:flex-end;gap:1px}
+.parcel{position:relative;width:min(78px,22vw)}
+.parcel .art{width:100%;height:auto}
+.parcel b,.wt b{position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);font:12px Jua,sans-serif;color:#fff;background:#3a2214cc;padding:0 5px;border-radius:6px;white-space:nowrap}
+.wt{position:relative}.wt .art{height:auto}.wt.s .art{width:26px}.wt.l .art{width:34px}
+.wt b{top:62%;background:none;font-size:11px}
 </style>
 </head>
 <body>
@@ -200,15 +212,18 @@ function win(id){stop();P.done[id]=true;for(const g of LOC[id].gives)if(!P.items
 const gcd=(a,b)=>b?gcd(b,a%b):a;
 function fr(n){const w=Math.floor(n/8),r=n%8;if(!r)return`${w}`;const g=gcd(r,8);const f=`${r/g}/${8/g}`;return w?`${w} ${f}`:f;}
 function pMeasure(){const pb=panel('mill','Fill the cup with exactly the right amount');const T=[6,5,12];let r=0,have=0;
- const jug=()=>{const h=have/16*170;return`<svg class="jug" viewBox="0 0 150 230"><path d="M30 20H120L112 214Q111 222 103 222H47Q39 222 38 214Z" fill="#eaf6fb" stroke="#9cc6d8" stroke-width="4"/><clipPath id="jc"><path d="M30 20H120L112 214Q111 222 103 222H47Q39 222 38 214Z"/></clipPath><rect x="20" y="${220-h}" width="110" height="${h}" fill="#f6ecd6" clip-path="url(#jc)" style="transition:y .3s,height .3s"/><g font-family="Jua, sans-serif" font-size="13" fill="#5a3420">${[2,4,6,8,10,12,14,16].map(n=>{const y=220-n/16*170;return`<path d="M30 ${y}H${n%4?44:54}" stroke="#5a8aa0" stroke-width="2"/>${n%4?'':`<text x="58" y="${y+4}">${fr(n)}</text>`}`;}).join('')}</g><path d="M120 40Q144 46 140 90Q136 120 116 124" fill="none" stroke="#9cc6d8" stroke-width="6"/></svg>`;};
- const draw=()=>{pb.innerHTML=`<p class="ask">Round ${r+1} of 3: Gus's note says <b>${fr(T[r])} cup</b> of flour. Use the scoops to fill the cup exactly.</p><div class="mrow">${jug()}<div class="scoops">${[[4,'1/2'],[2,'1/4'],[1,'1/8']].map(([v,l])=>`<button class="tile" data-v="${v}">${l} cup scoop</button>`).join('')}<button class="btn alt" data-v="0">Pour it out</button></div></div><p class="now">In the cup: ${have?fr(have):'0'} cup</p>`;
+ const xl=y=>15+(y-15)/69*2,xr=y=>70-(y-15)/69*3;
+ const jug=()=>{const top=84-have/16*51;const path=have?`M${xl(top)} ${top}L${xr(top)} ${top}L${xr(84)} 84Q${xr(84)} 88 ${xr(84)-4} 88L${xl(84)+4} 88Q${xl(84)} 88 ${xl(84)} 84Z`:'';
+  return`<div class="jugbox"><img class="art" src="img/lab/jug.webp" alt="Measuring cup"><svg viewBox="0 0 100 100" preserveAspectRatio="none">${have?`<path d="${path}" fill="#f2e2c0" opacity=".93"/><path d="M${xl(top)} ${top}L${xr(top)} ${top}" stroke="#fffaf0" stroke-width="1.6" vector-effect="non-scaling-stroke"/>`:''}</svg>${[4,8,12,16].map(n=>`<span class="jl" style="top:${84-n/16*51}%">${fr(n)}</span>`).join('')}</div>`;};
+ const draw=()=>{pb.innerHTML=`<p class="ask">Round ${r+1} of 3: Gus's note says <b>${fr(T[r])} cup</b> of flour. Use the scoops to fill the cup exactly.</p><div class="mrow">${jug()}<div class="scoops">${[[4,'1/2 cup scoop','scoop-l'],[2,'1/4 cup scoop','scoop-m'],[1,'1/8 cup scoop','scoop-s']].map(([v,l,im])=>`<button class="tile ico" data-v="${v}"><img class="art" src="img/lab/${im}.webp" alt=""><span>${l}</span></button>`).join('')}<button class="btn alt" data-v="0">Pour it out</button></div></div><p class="now">In the cup: ${have?fr(have):'0'} cup</p>`;
   pb.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{const v=+b.dataset.v;if(!v){have=0;snd('tap');draw();return;}have+=v;
    if(have===T[r]){snd('good');draw();toast('Exactly right!');r++;later(()=>{have=0;r<3?draw():win('mill');},900);}
    else if(have>T[r]){snd('bad');toast('Oops, too much! The flour spilled.');draw();later(()=>{have=0;draw();},700);}else{snd('tap');draw();}});};draw();}
-function flower(c){return`<svg class="f" viewBox="0 0 80 80">${[0,72,144,216,288].map(a=>`<ellipse cx="40" cy="20" rx="12" ry="17" fill="${c}" transform="rotate(${a} 40 40)"/>`).join('')}<circle cx="40" cy="40" r="11" fill="#ffd36e" stroke="#e0a020" stroke-width="2"/></svg>`;}
-const BEE='<svg class="bee" viewBox="0 0 44 36"><ellipse cx="14" cy="10" rx="9" ry="7" fill="#dff3ff" opacity=".9"/><ellipse cx="26" cy="9" rx="9" ry="7" fill="#dff3ff" opacity=".9"/><ellipse cx="22" cy="22" rx="14" ry="10" fill="#ffc83d"/><path d="M18 13V31M26 13V31" stroke="#3a2214" stroke-width="4"/><circle cx="34" cy="20" r="2" fill="#3a2214"/></svg>';
-function pBees(){const pb=panel('apiary','Copy the bee dance');const COLS=['#f59ab8','#b07ad6','#6aa8d8','#ff9a3c','#e4505b','#fff'];let r=0,seq=[],pos=0,busy=true;
- pb.innerHTML=`<p class="ask" id="bmsg"></p><div class="garden">${COLS.map((c,i)=>`<button class="fl" data-i="${i}" aria-label="Flower ${i+1}">${flower(c)}</button>`).join('')}</div><button class="btn alt" id="replay">Watch again</button>`;
+const FL=[['pink',''],['purple',''],['blue',''],['pink','hue-rotate(-38deg) saturate(1.7)'],['blue','hue-rotate(175deg) saturate(1.4)'],['purple','saturate(0) brightness(1.55)']];
+function flower(i){const[b,f]=FL[i];return`<img class="art f" src="img/lab/fl-${b}.webp" alt="" style="filter:${f||'none'}">`;}
+const BEE='<img class="art bee" src="img/lab/bee.webp" alt="">';
+function pBees(){const pb=panel('apiary','Copy the bee dance');const COLS=[0,1,2,3,4,5];let r=0,seq=[],pos=0,busy=true;
+ pb.innerHTML=`<p class="ask" id="bmsg"></p><div class="garden">${COLS.map(i=>`<button class="fl" data-i="${i}" aria-label="Flower ${i+1}">${flower(i)}</button>`).join('')}</div><button class="btn alt" id="replay">Watch again</button>`;
  const fls=[...pb.querySelectorAll('.fl')],msg=pb.querySelector('#bmsg');
  const lit=(i,on)=>{fls[i].classList.toggle('lit',on);const b=fls[i].querySelector('.bee');if(on&&!b)fls[i].insertAdjacentHTML('beforeend',BEE);if(!on&&b)b.remove();};
  const watch=()=>{busy=true;pos=0;msg.innerHTML=`Round ${r+1} of 3: watch where the bee lands (${seq.length} flowers).`;seq.forEach((f,k)=>{later(()=>{lit(f,true);snd('buzz');},600+k*700);later(()=>lit(f,false),600+k*700+450);});later(()=>{busy=false;msg.innerHTML='Your turn! Tap the flowers in the same order.';},600+seq.length*700);};
@@ -226,12 +241,13 @@ function pYeast(){const pb=panel('cellar','Wake up the yeast');let temp=null,foo
   pb.querySelector('#mix').onclick=()=>{const[res,t,ok]=RES[temp+'-'+food];draw('flat','Waiting while the yeast works...','wait');pb.querySelector('#mix').disabled=true;
    later(()=>{draw(res,t,'grow');if(ok){snd('good');const m=pb.querySelector('#mix');m.textContent='Take the yeast';m.disabled=false;m.onclick=()=>win('cellar');}else snd('bad');},2200);};};draw();}
 function pChurn(){const pb=panel('dairy','Churn the cream into butter');let hits=0,w=26,t=0,last=performance.now();const NEED=6;
- pb.innerHTML=`<p class="ask">Tap <b>Churn!</b> when the red marker is in the green zone. You need ${NEED} good churns.</p><svg class="churn" viewBox="0 0 150 170"><g class="plunger" id="pl"><rect x="71" y="2" width="8" height="90" rx="3" fill="#a66a3c"/><rect x="50" y="86" width="50" height="8" rx="3" fill="#8a5634"/></g><path d="M35 60H115L108 160Q107 166 100 166H50Q43 166 42 160Z" fill="#c98a52" stroke="#8a5634" stroke-width="4"/><path d="M40 90H110M38 130H112" stroke="#8a5634" stroke-width="5"/><ellipse cx="75" cy="60" rx="40" ry="8" fill="#fff6dc"/></svg><div class="meter"><span class="zone" id="zone"></span><span class="needle" id="needle"></span></div><div class="prog"><i id="prog" style="width:0"></i></div><button class="btn leaf" id="churn" style="min-width:180px">Churn!</button>`;
- const zone=pb.querySelector('#zone'),needle=pb.querySelector('#needle');let x=0;
+ pb.innerHTML=`<p class="ask">Tap <b>Churn!</b> when the red marker is in the green zone. You need ${NEED} good churns.</p><div class="churnbox"><img class="art churnimg" id="cimg" src="img/lab/churn-up.webp" alt="Butter churn"><img class="art bbowl" id="bb" src="img/lab/butter-bowl.webp" alt="Butter" style="opacity:0;transform:scale(.55)"></div><div class="meter"><span class="zone" id="zone"></span><span class="needle" id="needle"></span></div><div class="prog"><i id="prog" style="width:0"></i></div><button class="btn leaf" id="churn" style="min-width:180px">Churn!</button>`;
+ new Image().src='img/lab/churn-down.webp';
+ const zone=pb.querySelector('#zone'),needle=pb.querySelector('#needle'),cimg=pb.querySelector('#cimg'),bb=pb.querySelector('#bb');let x=0;
  const place=()=>{zone.style.left=(50-w/2)+'%';zone.style.width=w+'%';};place();
  const loop=n=>{t+=(n-last)/1000*(1.6+hits*.12);last=n;x=(Math.sin(t*2)+1)/2*100;needle.style.left=x+'%';raf=requestAnimationFrame(loop);};raf=requestAnimationFrame(loop);
- const go=()=>{const pl=pb.querySelector('#pl');pl.style.transform='translateY(26px)';later(()=>pl.style.transform='',130);
-  if(Math.abs(x-50)<=w/2){hits++;w=Math.max(12,w-2.5);place();snd('good');pb.querySelector('#prog').style.width=hits/NEED*100+'%';toast(hits<NEED?`Good churn! ${NEED-hits} to go.`:'Butter!');if(hits>=NEED){cancelAnimationFrame(raf);later(()=>win('dairy'),700);}}
+ const go=()=>{cimg.src='img/lab/churn-down.webp';later(()=>cimg.src='img/lab/churn-up.webp',160);
+  if(Math.abs(x-50)<=w/2){hits++;w=Math.max(12,w-2.5);place();snd('good');pb.querySelector('#prog').style.width=hits/NEED*100+'%';bb.style.opacity=hits/NEED;bb.style.transform=`scale(${.55+.45*hits/NEED})`;toast(hits<NEED?`Good churn! ${NEED-hits} to go.`:'Butter!');if(hits>=NEED){cancelAnimationFrame(raf);later(()=>win('dairy'),700);}}
   else{snd('bad');toast(x<50?'A little too early!':'A little too late!');}};
  pb.querySelector('#churn').onclick=go;document.onkeydown=e=>{if(e.code==='Space'){e.preventDefault();go();}};}
 function pMarket(){const pb=panel('market','Shop for eggs, sugar, and milk with $8');
@@ -248,9 +264,18 @@ function pScale(){const pb=panel('orchard','Solve Gus\'s baking math');
  const draw=(hint='')=>{const[q,o]=Q[r];pb.innerHTML=`<p class="ask">Question ${r+1} of 3</p><p class="ask" style="font-size:20px">${q}</p><div class="choices">${o.map((x,i)=>`<button class="tile" data-i="${i}">${x}</button>`).join('')}</div>${hint?`<p class="now" style="font-size:17px">Hint: ${hint}</p>`:''}`;
   pb.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{if(+b.dataset.i===Q[r][2]){b.classList.add('on');snd('good');toast('Correct!');r++;later(()=>r<3?draw():win('orchard'),700);}else{snd('bad');b.classList.add('shake');later(()=>draw(Q[r][3]),450);}});};draw();}
 function pBalance(){const pb=panel('post','Balance the scale');const T=[5,7,11],W=[1,2,4,8];let r=0;const on=new Set();
- const draw=()=>{const right=[...on].reduce((a,b)=>a+b,0),left=T[r];const ang=Math.max(-14,Math.min(14,(right-left)*2.5));
-  pb.innerHTML=`<p class="ask">Round ${r+1} of 3: The package weighs <b>${left} pounds</b>. Add weights to the right side until the scale balances.</p><svg class="bal" viewBox="0 0 440 250"><rect x="212" y="70" width="16" height="150" fill="#8a5634"/><path d="M160 230H280L262 214H178Z" fill="#7a4a2c"/><g class="beam" style="transform:rotate(${ang}deg)"><rect x="60" y="64" width="320" height="12" rx="6" fill="#b77a4c"/><path d="M80 76L60 150M80 76L100 150M360 76L340 150M360 76L380 150" stroke="#5a3420" stroke-width="2"/><path d="M44 150H116Q110 168 80 168Q50 168 44 150Z" fill="#c9a46a"/><path d="M324 150H396Q390 168 360 168Q330 168 324 150Z" fill="#c9a46a"/><g transform="translate(56 106)"><rect width="48" height="44" rx="4" fill="#d9a066"/><path d="M0 14H48M24 0V44" stroke="#a87440" stroke-width="3"/><rect x="10" y="20" width="28" height="14" rx="2" fill="#fff"/><text x="24" y="31" text-anchor="middle" font-family="Jua, sans-serif" font-size="11" fill="#3a2214">${left} lb</text></g><g>${[...on].sort((a,b)=>b-a).map((v,i)=>`<g transform="translate(${336+(i%2)*26-(i>1?0:0)} ${136-Math.floor(i/2)*16})"><rect width="24" height="14" rx="3" fill="#6c7077"/><text x="12" y="11" text-anchor="middle" font-family="Jua, sans-serif" font-size="10" fill="#fff">${v}</text></g>`).join('')}</g></g><circle cx="220" cy="70" r="9" fill="#ffd36e" stroke="#8a5634" stroke-width="3"/></svg><div class="wts">${W.map(v=>`<button class="tile ${on.has(v)?'on':''}" data-w="${v}">${v} lb</button>`).join('')}</div><p class="now">Right side: ${right} lb</p>`;
-  pb.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{const v=+b.dataset.w;on.has(v)?on.delete(v):on.add(v);snd('tap');draw();const tot=[...on].reduce((a,b)=>a+b,0);if(tot===T[r]){snd('good');toast('Balanced!');r++;later(()=>{on.clear();r<3?draw():win('post');},1000);}});};draw();}
+ const L='img/lab/';
+ const build=()=>{pb.innerHTML=`<p class="ask" id="bq"></p><div class="balbox" id="bal"><div class="lay" id="lyL"><img class="art" src="${L}scale-panL.webp" alt=""><div class="onpan" style="left:17.5%"><span class="parcel"><img class="art" src="${L}parcel.webp" alt="Parcel"><b id="ptag"></b></span></div></div><div class="lay" id="lyR"><img class="art" src="${L}scale-panR.webp" alt=""><div class="onpan" id="wts" style="left:82.5%"></div></div><img class="art lay" src="${L}scale-stand.webp" alt=""><img class="art lay arms" id="arms" src="${L}scale-arms.webp" alt="Balance scale"></div><div class="wts">${W.map(v=>`<button class="tile ico" data-w="${v}"><img class="art" src="${L}weight-${v>2?'l':'s'}.webp" alt="" style="height:${v>2?44:32}px"><span>${v} lb</span></button>`).join('')}</div><p class="now" id="rs"></p>`;
+  pb.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{const v=+b.dataset.w;on.has(v)?on.delete(v):on.add(v);snd('tap');update();const tot=[...on].reduce((a,b)=>a+b,0);if(tot===T[r]){snd('good');toast('Balanced!');r++;later(()=>{on.clear();if(r<3)update();else win('post');},1100);}});update();};
+ const update=()=>{const right=[...on].reduce((a,b)=>a+b,0),left=T[r];const ang=Math.max(-12,Math.min(12,(right-left)*2.5));
+  pb.querySelector('#bq').innerHTML=`Round ${r+1} of 3: The package weighs <b>${left} pounds</b>. Add weights to the right side until the scale balances.`;
+  pb.querySelector('#ptag').textContent=`${left} lb`;
+  pb.querySelector('#wts').innerHTML=[...on].sort((a,b)=>b-a).map(v=>`<span class="wt ${v>2?'l':'s'}"><img class="art" src="${L}weight-${v>2?'l':'s'}.webp" alt=""><b>${v}</b></span>`).join('');
+  const bal=pb.querySelector('#bal'),Wd=bal.clientWidth,dy=0.325*Wd*Math.sin(ang*Math.PI/180);
+  pb.querySelector('#arms').style.transform=`rotate(${ang}deg)`;pb.querySelector('#lyL').style.transform=`translateY(${-dy}px)`;pb.querySelector('#lyR').style.transform=`translateY(${dy}px)`;
+  pb.querySelectorAll('[data-w]').forEach(b=>b.classList.toggle('on',on.has(+b.dataset.w)));
+  pb.querySelector('#rs').textContent=`Right side: ${right} lb`;};
+ build();}
 function pSteps(c){const R=RECIPES[c];const pb=panel('bakery',`Bake recipe page ${c+1}: ${R.name}`);const order=R.steps.map((s,i)=>i).sort(()=>Math.random()-.5);let next=0;
  const draw=()=>{pb.innerHTML=`<p class="ask">Tap Gus's steps in the right order, from first to last.</p><div class="steps">${order.map(i=>`<button class="step ${i<next?'done':''}" data-i="${i}" ${i<next?'disabled':''}><span class="n">${i<next?i+1:''}</span>${R.steps[i]}</button>`).join('')}</div>`;
   pb.querySelectorAll('.step').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(i===next){next++;snd('good');draw();if(next===R.steps.length)later(()=>bake(c),600);}else{snd('bad');b.classList.add('shake');later(()=>b.classList.remove('shake'),400);toast('Not yet! Think about what comes first.');}});};draw();}
