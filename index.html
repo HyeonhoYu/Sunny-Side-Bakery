@@ -59,8 +59,8 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 @keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 .cust.yay .face{animation:hop .45s}
 @keyframes hop{50%{transform:translateY(-12px)}}
-.cast{display:flex;justify-content:center;gap:4px;margin:-46px 0 6px;position:relative}
-.cast img{height:120px;width:auto}
+.cast{display:flex;justify-content:center;gap:4px;margin:-40px 0 4px;position:relative}
+.cast img{height:100px;width:auto}
 .tag{position:absolute;top:-22px;background:var(--berry);color:#fff;font:13px Jua,sans-serif;padding:1px 9px;border-radius:9px;white-space:nowrap}
 .pat{width:74px;height:8px;background:#0002;border-radius:6px;overflow:hidden;margin-top:2px}
 .pat i{display:block;height:100%;background:var(--leaf);border-radius:6px}
@@ -129,7 +129,14 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .up b{font:18px Jua,sans-serif;font-weight:400;color:var(--cocoa)}
 .up small{display:block;color:var(--cocoa2)}
 .up .btn{min-height:44px;font-size:16px;padding:0 14px;gap:4px}
-.hero{display:block;width:100%;height:auto;max-height:230px;margin:-6px 0 10px}
+.hero{display:block;width:100%;height:auto;max-height:170px;margin:-6px 0 6px}
+.more{font:17px Jua,sans-serif;color:var(--cocoa2);margin:16px 0 6px}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.mode{display:flex;gap:10px;align-items:center;background:#fff;border-radius:16px;padding:10px;box-shadow:0 4px 0 #e6cfa8;text-decoration:none;color:var(--ink)}
+.mode:hover{transform:translateY(-2px)}
+.mode svg{width:60px;height:44px;flex:none}
+.mode b{display:block;font:17px Jua,sans-serif;font-weight:400;color:var(--cocoa)}
+.mode small{display:block;font-size:13px;color:var(--cocoa2);line-height:1.3}
 .cof{display:block;text-align:center;margin-top:14px;font-size:14px;color:var(--cocoa2)}
 .newb{display:flex;align-items:center;gap:10px;background:var(--honey);border-radius:14px;padding:8px 12px;margin-bottom:10px}
 .newb svg{width:56px;height:40px}
@@ -339,7 +346,7 @@ function showOv(h,acts){$('card').innerHTML=h;$('ov').classList.add('on');$('car
 function hideOv(){$('ov').classList.remove('on');}
 function title(){S=null;applyLang();$('street').innerHTML='';$('tray').innerHTML='';$('doughs').innerHTML='';$('ovens').innerHTML='';$('hDay').textContent='';$('hGoal').textContent='';$('hWallet').innerHTML='';
  const sv=store.get('save');
- showOv(`${hero}<div class="cast">${['grandma','park','jiu','mina'].map(k=>face(k)).join('')}</div><h2>${T('title')}</h2><p>${T('sub')}</p><div class="row">${sv&&sv.day>0&&sv.day<5?`<button class="btn alt" data-a="cont">${T('cont')(sv.day+1)}</button>`:''}<button class="btn" data-a="new">${T('start')}</button></div><a class="cof" href="https://buymeacoffee.com/henryyu" target="_blank" rel="noopener">${T('cof')}</a>`,
+ showOv(`${hero}<div class="cast">${['grandma','park','jiu','mina'].map(k=>face(k)).join('')}</div><h2>${T('title')}</h2><p>${T('sub')}</p><div class="row">${sv&&sv.day>0&&sv.day<5?`<button class="btn alt" data-a="cont">${T('cont')(sv.day+1)}</button>`:''}<button class="btn" data-a="new">${T('start')}</button></div><p class="more">More to play on Main Street</p><div class="modes"><a class="mode" href="recipe.html">${bread('pie','gold')}<span><b>Secret Recipe Hunt</b><small>Explore town and solve puzzles to find Old Gus's lost recipes.</small></span></a><a class="mode" href="merge.html">${bread('donut','gold')}<span><b>Bake Buddies</b><small>Merge ingredients to meet 8 cute bread buddies.</small></span></a></div><a class="cof" href="https://buymeacoffee.com/henryyu" target="_blank" rel="noopener">${T('cof')}</a>`,
  {new:()=>{G={day:0,coins:0,up:{},stars:[]};story('intro',()=>dayCard());},cont:()=>{G=sv;dayCard();}});}
 function story(key,cb){const lines=STORY[key];let i=0;
  const show=()=>{const[w,ko,en,md]=lines[i];const who=w==='narr'?'':NAMES[w][lang];

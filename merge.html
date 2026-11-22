@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bake Buddies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="mode.css">
+<style>
+.rule{background:var(--cream);padding:8px 14px;font:16px Jua,sans-serif;color:var(--cocoa);text-align:center;border-bottom:3px solid #e2b465}
+.orders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:10px 12px;background:linear-gradient(#fbe4a8,#f3cf82)}
+.order{display:flex;align-items:center;gap:8px;background:#fffdf6;border-radius:18px;padding:6px 10px 6px 6px;box-shadow:0 4px 0 #c9a77e;border:3px solid transparent;min-height:78px;text-align:left;color:var(--ink)}
+.order.ready{border-color:var(--leaf);animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:scale(1.03)}}
+.order img{width:56px;height:66px;object-fit:cover;object-position:top;border-radius:12px;background:var(--honey);flex:none}
+.order .want{display:flex;flex-direction:column;line-height:1.15;flex:1}
+.order .want b{font:15px Jua,sans-serif;font-weight:400}
+.order .want small{color:var(--cocoa2);font-size:13px}
+.order svg{width:54px;height:40px;flex:none}
+.order.empty{justify-content:center;color:var(--cocoa2);font-size:14px}
+.boardwrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;padding:14px 10px;background:radial-gradient(120% 80% at 50% 0%,#fff8,#0000 60%),repeating-linear-gradient(90deg,#c98f5c 0 60px,#c4895a 60px 62px),#c98f5c}
+.board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;width:min(100%,480px);padding:10px;border-radius:22px;background:#8a5634;box-shadow:inset 0 4px 10px #0005,0 6px 0 #5a3420}
+.cell{position:relative;aspect-ratio:1;border-radius:14px;background:radial-gradient(circle at 40% 30%,#fffaf0,#f1e2c4);box-shadow:inset 0 -3px 0 #d9c39a;display:grid;place-items:center;padding:0;touch-action:none}
+.cell svg{width:92%;height:auto;pointer-events:none}
+.cell.sel{background:radial-gradient(circle at 40% 30%,#fffbd0,#ffe27a);box-shadow:0 0 0 3px var(--berry)}
+.cell.hint{box-shadow:0 0 0 3px var(--leaf)}
+.cell.pop svg{animation:popin .4s cubic-bezier(.3,1.6,.5,1)}
+@keyframes popin{from{transform:scale(.3)}}
+.cell .tier{position:absolute;right:4px;bottom:2px;width:9px;height:9px;border-radius:50%;background:var(--leaf)}
+.cell.bud::after{content:"";position:absolute;inset:3px;border-radius:12px;box-shadow:0 0 0 2px #ffd36e;pointer-events:none}
+.gens{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:min(100%,560px)}
+.gen{display:flex;flex-direction:column;align-items:center;width:72px;padding:6px 2px;border-radius:16px;background:#fffdf6;box-shadow:0 4px 0 #8a5634;font:13px Jua,sans-serif;color:var(--cocoa)}
+.gen:active{transform:translateY(3px);box-shadow:0 1px 0 #8a5634}
+.gen svg{width:52px;height:38px}
+.gen.lock{opacity:.5;filter:grayscale(1)}
+.bar{display:flex;align-items:center;gap:10px;width:min(100%,480px);font:15px Jua,sans-serif;color:#fff;text-shadow:0 1px 0 #0005}
+.energy{flex:1;height:16px;background:#0004;border-radius:9px;overflow:hidden}
+.energy i{display:block;height:100%;background:linear-gradient(90deg,#9ee08f,#5aa05a);transition:width .3s}
+.trash{display:flex;align-items:center;gap:6px;padding:0 12px;height:40px;border-radius:12px;background:#fffdf6;color:var(--cocoa);box-shadow:0 3px 0 #8a5634;font:14px Jua,sans-serif;text-shadow:none}
+.trash svg{width:20px;height:20px}
+.ghost{position:fixed;width:64px;height:48px;pointer-events:none;z-index:50;transform:translate(-50%,-60%) scale(1.15);filter:drop-shadow(0 6px 6px #0004)}
+.bk{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.bc{background:#fff;border-radius:16px;padding:8px;text-align:center;box-shadow:0 3px 0 #e6cfa8}
+.bc svg.big{width:90px;height:66px}
+.bc b{display:block;font:16px Jua,sans-serif;font-weight:400;color:var(--cocoa)}
+.bc .eq{display:flex;align-items:center;justify-content:center;gap:2px;font:14px Jua,sans-serif;color:var(--cocoa2)}
+.bc .eq svg{width:34px;height:26px}
+.bc.lock svg.big{filter:brightness(0) opacity(.25)}
+.chain{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chain span{display:flex;align-items:center;gap:2px;background:#fff;border-radius:12px;padding:2px 8px;font:13px Jua,sans-serif;color:var(--cocoa2)}
+.chain svg{width:30px;height:22px}
+.hero{display:block;width:150px;height:110px;margin:0 auto}
+@media(max-width:560px){.board{gap:4px;padding:7px}.cell{border-radius:10px}.gen{width:60px}.gen svg{width:44px;height:32px}.order{gap:5px;padding:4px 6px 4px 4px;min-height:64px}.order img{width:40px;height:50px}.order svg{width:38px;height:28px}.order .want b{font-size:13px}.order .want small{font-size:12px}.order .want small:last-child{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="top">
+  <h1>Bake Buddies</h1>
+  <button class="ib" id="bBook">Buddy book</button>
+  <button class="ib" id="bSnd">Sound on</button>
+  <a class="ib" href="index.html">Main Street</a>
+ </div>
+ <div class="game" id="game">
+  <div class="hud"><span id="hFound"></span><span class="grow"></span><span id="hCoins"></span></div>
+  <div class="rule">Drag two things together. Matching pairs and good combos make something new!</div>
+  <div class="orders" id="orders"></div>
+  <div class="boardwrap">
+   <div class="bar"><span>Energy</span><div class="energy"><i id="en"></i></div><span id="enT"></span><button class="trash" id="trash"><svg viewBox="0 0 20 20"><path d="M4 6H16L15 18H5Z" fill="#9aa3ad"/><rect x="3" y="3" width="14" height="3" rx="1" fill="#6c7077"/></svg>Toss</button></div>
+   <div class="board" id="board"></div>
+   <div class="gens" id="gens"></div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <div class="ov" id="ov"><div class="card" id="card"></div></div>
+ </div>
+</div>
+<script src="art.js"></script>
+<script>
+{
+const $=id=>document.getElementById(id);
+const store={get(k){try{return JSON.parse(localStorage.getItem('sunbake_'+k))}catch(e){return null}},set(k,v){try{localStorage.setItem('sunbake_'+k,JSON.stringify(v))}catch(e){}}};
+let muted=!!store.get('muted');
+let AC;function snd(k){if(muted)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const seq={tap:[[420,.05]],pop:[[520,.05],[780,.08]],merge:[[600,.06],[900,.1]],buddy:[[523,.1],[659,.1],[784,.1],[1047,.2]],coin:[[988,.06],[1319,.12]],bad:[[180,.18]]}[k];let t=AC.currentTime;for(const[f,d]of seq){const o=AC.createOscillator(),g=AC.createGain();o.type=k==='bad'?'sawtooth':'triangle';o.frequency.value=f;g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d+.02);t+=d*.85;}}catch(e){}}
+let tt;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),1600);}
+
+const NAME={wheat:'Wheat',water:'Water',milk:'Milk',egg:'Egg',cane:'Sugarcane',berry:'Blueberries',apple:'Apple',flour:'Flour',butter:'Butter',sugar:'Sugar',dough:'Dough',sweet:'Sweet dough',batter:'Batter'};
+const GENS=[['wheat',0,'Field'],['water',0,'Well'],['milk',0,'Cow'],['egg',1,'Hen'],['cane',2,'Cane'],['berry',3,'Bush'],['apple',4,'Tree']];
+const RULES={'wheat+wheat':'flour','milk+milk':'butter','cane+cane':'sugar','flour+water':'dough','dough+sugar':'sweet','egg+flour':'batter',
+ 'dough+dough':'loaf','butter+dough':'cro','sweet+sweet':'donut','batter+berry':'muffin','apple+dough':'pie','butter+sweet':'roll','batter+batter':'pancake','batter+sugar':'cake'};
+const BUD={
+ loaf:{n:'Loafy Lou',r:['dough','dough'],pay:10,line:'I rise to every occasion!'},
+ cro:{n:'Crescent Cleo',r:['dough','butter'],pay:15,line:'Flaky? Me? Only in the best way.'},
+ pancake:{n:'Stacky Jack',r:['batter','batter'],pay:15,line:'Stack me high and pour on the syrup!'},
+ donut:{n:'Donna Donut',r:['sweet','sweet'],pay:20,line:'Sprinkles make everything better.'},
+ cake:{n:'Party Pat',r:['batter','sugar'],pay:20,line:'Is it somebody\'s birthday? It is now!'},
+ roll:{n:'Swirly Shelly',r:['sweet','butter'],pay:25,line:'I get a little dizzy, but I smell amazing.'},
+ muffin:{n:'Bluebell',r:['batter','berry'],pay:25,line:'I am berry happy to meet you!'},
+ pie:{n:'Apple Annie',r:['dough','apple'],pay:30,line:'Cool me on the windowsill, please.'}};
+const ORDER=Object.keys(BUD);
+const PEOPLE=[['grandma','Grandma Rose'],['walter','Mr. Walter'],['lily','Little Lily'],['maria','Maria'],['c1','Jess'],['c2','Ken'],['c3','Max'],['c4','Dot'],['c5','Sam'],['c6','Mrs. Hale']];
+const CELLS=36,MAXE=30;
+const fresh=()=>({board:Array(CELLS).fill(null),energy:MAXE,coins:0,found:[],orders:[null,null],t:Date.now(),done:false});
+let S=store.get('buddies')||fresh();
+const save=()=>{S.t=Date.now();store.set('buddies',S);};
+{const gain=Math.floor((Date.now()-(S.t||Date.now()))/2500);S.energy=Math.min(MAXE,S.energy+gain);}
+const isBud=k=>!!BUD[k];
+const art=k=>isBud(k)?ART.buddy(k):ART.item(k);
+const key=(a,b)=>[a,b].sort().join('+');
+
+let sel=-1,popAt=-1;
+function render(){
+ $('board').innerHTML=S.board.map((k,i)=>`<button class="cell ${i===sel?'sel':''} ${i===popAt?'pop':''} ${k&&isBud(k)?'bud':''}" data-i="${i}" aria-label="${k?(isBud(k)?BUD[k].n:NAME[k]):'Empty'}">${k?art(k):''}</button>`).join('');
+ popAt=-1;
+ const n=S.found.length;
+ $('gens').innerHTML=GENS.map(([k,need,lab])=>`<button class="gen ${n<need?'lock':''}" data-g="${k}">${ART.item(k)}${n<need?`${need} ${need>1?'buddies':'buddy'}`:lab}</button>`).join('');
+ $('en').style.width=S.energy/MAXE*100+'%';$('enT').textContent=`${S.energy}/${MAXE}`;
+ $('hFound').textContent=`Buddies found: ${n} / 8`;$('hCoins').textContent=`Coins: ${S.coins}`;
+ renderOrders();}
+function renderOrders(){
+ $('orders').innerHTML=S.orders.map((o,i)=>{if(!o)return`<div class="order empty">A customer is on the way...</div>`;const[p,nm]=PEOPLE[o.p];const ready=S.board.includes(o.b);
+  return`<button class="order ${ready?'ready':''}" data-o="${i}"><img src="img/${p}-${ready?'happy':'mid'}.webp" alt=""><span class="want"><b>${nm}</b><small>wants ${BUD[o.b].n}</small><small>${BUD[o.b].pay} coins</small></span>${ART.buddy(o.b)}</button>`;}).join('');}
+function newOrder(i){const pool=S.found.length?S.found:['loaf','cro'];const b=pool[Math.floor(Math.random()*pool.length)];S.orders[i]={p:Math.floor(Math.random()*PEOPLE.length),b};}
+function fillOrders(){S.orders.forEach((o,i)=>{if(!o)newOrder(i);});}
+
+function spawn(k){const empty=S.board.map((v,i)=>v?-1:i).filter(i=>i>=0);if(!empty.length){toast('The board is full! Merge or toss something.');snd('bad');return;}
+ if(S.energy<=0){toast('Out of energy. It refills over time.');snd('bad');return;}
+ const i=empty[Math.floor(Math.random()*empty.length)];S.board[i]=k;S.energy--;popAt=i;snd('pop');save();render();}
+function act(from,to){if(from===to){sel=-1;render();return;}
+ const a=S.board[from],b=S.board[to];
+ if(!b){S.board[to]=a;S.board[from]=null;sel=-1;snd('tap');save();render();return;}
+ const out=RULES[key(a,b)];
+ if(out){S.board[to]=out;S.board[from]=null;sel=-1;popAt=to;save();
+  if(isBud(out)&&!S.found.includes(out)){S.found.push(out);save();render();snd('buddy');meet(out);}else{snd('merge');render();}return;}
+ if(a===b&&isBud(a)){toast('Buddies just want to hang out together!');}else toast('Those two do not mix. Try something else!');
+ [S.board[from],S.board[to]]=[b,a];sel=-1;snd('tap');save();render();}
+function deliver(i,cell){const o=S.orders[i];if(!o)return;const at=cell>=0&&S.board[cell]===o.b?cell:S.board.indexOf(o.b);
+ if(at<0){toast(`Make ${BUD[o.b].n} first. Check the buddy book for the recipe.`);snd('bad');return;}
+ S.board[at]=null;S.coins+=BUD[o.b].pay;S.orders[i]=null;sel=-1;snd('coin');toast(`+${BUD[o.b].pay} coins! ${PEOPLE[o.p][1]} is happy.`);save();render();
+ setTimeout(()=>{newOrder(i);save();renderOrders();},1500);}
+function meet(k){const B=BUD[k];const n=S.found.length;const oi=S.orders[0]&&S.orders[1]?Math.floor(Math.random()*2):S.orders[0]?1:0;S.orders[oi]={p:Math.floor(Math.random()*PEOPLE.length),b:k};save();renderOrders();
+ const unlock=GENS.find(g=>g[1]===n);
+ showOv(`<h2>New buddy: ${B.n}!</h2>${ART.buddy(k,'hero')}<p style="text-align:center;font-size:18px">"${B.line}"</p><p style="text-align:center">${NAME[B.r[0]]} + ${NAME[B.r[1]]}</p>${unlock?`<p style="text-align:center"><b>New helper unlocked: the ${unlock[2]}!</b> It gives you ${NAME[unlock[0]]}.</p>`:''}<div class="row"><button class="btn" data-a="c">${n===8?'See the finale':'Keep baking'}</button></div>`,{c:()=>{hideOv();if(n===8&&!S.done){S.done=true;save();finale();}}});}
+function finale(){showOv(`<h2>You met all 8 Bake Buddies!</h2><div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px">${ORDER.map(k=>ART.buddy(k)).join('').replace(/<svg class=""/g,'<svg style="width:70px;height:52px"')}</div><p>Every buddy is in your book. Customers will keep coming, so keep baking as long as you like!</p><div class="row"><button class="btn alt" data-a="r">Start a new board</button><button class="btn" data-a="c">Keep playing</button></div>`,{c:hideOv,r:()=>{S=fresh();fillOrders();save();hideOv();render();intro();}});}
+function book(){showOv(`<h2>Buddy book</h2><p>Make the in-between ingredients first:</p><div class="chain">${Object.entries(RULES).filter(([,v])=>!isBud(v)).map(([k,v])=>{const[a,b]=k.split('+');return`<span>${ART.item(a)}+${ART.item(b)}=${ART.item(v)}</span>`;}).join('')}</div><div class="bk">${ORDER.map(k=>{const f=S.found.includes(k),B=BUD[k];return`<div class="bc ${f?'':'lock'}">${ART.buddy(k,'big')}<b>${f?B.n:'???'}</b><div class="eq">${ART.item(B.r[0])}+${ART.item(B.r[1])}</div></div>`;}).join('')}</div><div class="row"><button class="btn" data-a="c">Close</button></div>`,{c:hideOv});}
+function showOv(h,acts){$('card').innerHTML=h;$('ov').classList.add('on');$('card').querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{snd('tap');acts[b.dataset.a]&&acts[b.dataset.a](b);});const f=$('card').querySelector('.row .btn:last-child');f&&f.focus({preventScroll:true});}
+const hideOv=()=>$('ov').classList.remove('on');
+function intro(){showOv(`<h2>Welcome to Bake Buddies!</h2>${ART.buddy('loaf','hero')}<p>Tap the helpers at the bottom to get ingredients. Then <b>drag two matching things together</b> to make something new.</p><p>Two Wheat make Flour. Flour and Water make Dough. Two Dough make your first buddy!</p><p>You can also tap one thing, then tap another. Deliver buddies to customers for coins.</p><div class="row"><button class="btn" data-a="c">Let's bake</button></div>`,{c:()=>{hideOv();S.seen=true;save();}});}
+
+/* input: tap or drag */
+let drag=null;
+$('board').addEventListener('pointerdown',e=>{const c=e.target.closest('.cell');if(!c)return;const i=+c.dataset.i;if(!S.board[i])return;drag={i,x:e.clientX,y:e.clientY,g:null};});
+addEventListener('pointermove',e=>{if(!drag)return;if(!drag.g&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>8){drag.g=document.createElement('div');drag.g.className='ghost';drag.g.innerHTML=art(S.board[drag.i]);document.body.appendChild(drag.g);sel=drag.i;$('board').children[drag.i].classList.add('sel');}
+ if(drag.g){drag.g.style.left=e.clientX+'px';drag.g.style.top=e.clientY+'px';}});
+addEventListener('pointerup',e=>{if(!drag)return;const d=drag;drag=null;if(!d.g)return;d.g.remove();
+ const el=document.elementFromPoint(e.clientX,e.clientY);const c=el&&el.closest('.cell'),o=el&&el.closest('.order'),tr=el&&el.closest('#trash');
+ if(c)act(d.i,+c.dataset.i);else if(o)deliver(+o.dataset.o,d.i);else if(tr)toss(d.i);else{sel=-1;render();}
+ suppress=true;setTimeout(()=>suppress=false,0);});
+let suppress=false;
+$('board').addEventListener('click',e=>{if(suppress)return;const c=e.target.closest('.cell');if(!c)return;const i=+c.dataset.i;
+ if(sel<0){if(S.board[i]){sel=i;snd('tap');render();}return;}act(sel,i);});
+$('orders').addEventListener('click',e=>{const o=e.target.closest('.order');if(o&&o.dataset.o!==undefined)deliver(+o.dataset.o,sel);});
+function toss(i){if(i<0||!S.board[i]){toast('Tap something on the board first, then tap Toss.');return;}S.board[i]=null;sel=-1;snd('tap');save();render();}
+$('trash').onclick=()=>toss(sel);
+$('gens').addEventListener('click',e=>{const g=e.target.closest('.gen');if(!g)return;const k=g.dataset.g,G=GENS.find(x=>x[0]===k);if(S.found.length<G[1]){toast(`Meet ${G[1]} ${G[1]>1?'buddies':'buddy'} to unlock the ${G[2]}.`);snd('bad');return;}spawn(k);});
+setInterval(()=>{if(S.energy<MAXE){S.energy++;save();$('en').style.width=S.energy/MAXE*100+'%';$('enT').textContent=`${S.energy}/${MAXE}`;}},2500);
+$('bBook').onclick=()=>{snd('tap');book();};
+const sndLab=()=>$('bSnd').textContent=muted?'Sound off':'Sound on';sndLab();
+$('bSnd').onclick=()=>{muted=!muted;store.set('muted',muted);sndLab();snd('tap');};
+fillOrders();save();render();if(!S.seen)intro();
+}
+</script>
+</body>
+</html>
