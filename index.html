@@ -35,8 +35,8 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .coin{display:inline-grid;place-items:center;width:20px;height:20px;flex:none;border-radius:50%;background:#7fb069;color:#fff;font:13px/1 Jua,sans-serif;vertical-align:-3px}
 .shop{position:relative;padding:58px 12px 0;background:radial-gradient(120% 90% at 50% 0%,#fff1c4,#f3cf82 70%,#e2b465);box-shadow:inset 0 -18px 30px -18px #7a4a2c88}
 .win{position:absolute;left:6%;right:6%;top:64px;bottom:18px;border-radius:20px 20px 0 0;overflow:hidden;border:10px solid #8a5634;border-bottom:0;box-shadow:inset 0 0 0 3px #b77a4c,inset 0 10px 24px #0004,0 6px 0 #6b3f22,0 10px 20px #7a4a2c55;background:linear-gradient(#a4d4ee,#fff2d6)}
-.win::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0000 55%,#fde8b833);pointer-events:none}
-.scene{position:absolute;inset:0;width:100%;height:100%;display:block}
+.win::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,#ffffff38 0 9%,#0000 9% 15%,#ffffff22 15% 19%,#0000 19% 70%,#ffffff1c 70% 74%,#0000 74%),linear-gradient(180deg,#0000 55%,#fde8b833);pointer-events:none}
+.scene{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:50% 72%}
 .awning{position:absolute;inset:0 0 auto;height:46px;background:repeating-linear-gradient(90deg,var(--berry) 0 44px,var(--cream) 44px 88px);
  -webkit-mask:radial-gradient(circle 22px at 22px 24px,#000 98%,transparent) 0 22px/44px 46px repeat-x,linear-gradient(#000,#000) 0 0/100% 24px no-repeat;
  mask:radial-gradient(circle 22px at 22px 24px,#000 98%,transparent) 0 22px/44px 46px repeat-x,linear-gradient(#000,#000) 0 0/100% 24px no-repeat}
@@ -59,7 +59,7 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 @keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 .cust.yay .face{animation:hop .45s}
 @keyframes hop{50%{transform:translateY(-12px)}}
-.cast{display:flex;justify-content:center;gap:4px;margin:-40px 0 4px;position:relative}
+.cast{display:flex;justify-content:center;gap:4px;margin:-96px 0 4px;position:relative}
 .cast img{height:100px;width:auto}
 .tag{position:absolute;top:-22px;background:var(--berry);color:#fff;font:13px Jua,sans-serif;padding:1px 9px;border-radius:9px;white-space:nowrap}
 .pat{width:74px;height:8px;background:#0002;border-radius:6px;overflow:hidden;margin-top:2px}
@@ -74,8 +74,8 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .ti.e{background:#ffffff14;border:2px dashed #fff4;box-shadow:none}
 .ti svg{width:52px;height:36px}
 .ti.pf::after{content:"";position:absolute;top:3px;right:4px;width:9px;height:9px;background:#fff6a8;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
-.kitchen{flex:1;padding:16px 12px 14px;background:radial-gradient(120% 80% at 50% 0%,#fff8,#0000 60%),linear-gradient(#0000 70%,#7a4a2c22),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='%23f7f1e8' stroke='%23d8cbb8' stroke-width='2'%3E%3Crect x='1' y='1' width='62' height='30' rx='4'/%3E%3Crect x='-31' y='33' width='62' height='30' rx='4'/%3E%3Crect x='33' y='33' width='62' height='30' rx='4'/%3E%3C/g%3E%3C/svg%3E") 0 0/64px 64px,#efe5d6;box-shadow:inset 0 10px 16px -8px #0004}
-.kitchen .lab{color:var(--cocoa2);text-shadow:0 1px 0 #fff}
+.kitchen{flex:1;padding:16px 12px 14px;background:linear-gradient(#fff8ec66,#fff8ec99),url("img/bg-kitchen.webp") 50% 30%/cover,#efe5d6;box-shadow:inset 0 10px 16px -8px #0004}
+.kitchen .lab{display:inline-block;color:var(--cocoa);background:#fff8ecd9;padding:1px 8px;border-radius:8px}
 .krow{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:12px}
 .doughs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-content:start}
 .dough{background:radial-gradient(120% 90% at 50% 0%,#fffdf6,#f5e7c9);border-radius:16px;padding:6px 4px 8px;box-shadow:0 4px 0 #c9a77e,0 8px 14px #7a4a2c33,inset 0 1px 0 #fff;display:flex;flex-direction:column;align-items:center;min-height:96px}
@@ -111,7 +111,8 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .card h2{font:32px/1.05 Jua,sans-serif;margin:0 0 8px;color:var(--cocoa);text-wrap:balance}
 .card p{margin:0 0 12px}
 .story{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:start}
-.duo{display:block;width:100%;max-height:240px;object-fit:contain;margin:-8px auto 10px}
+.fest{display:flex;justify-content:center;align-items:flex-end;height:250px;margin:-8px 0 12px;border-radius:18px;overflow:hidden;background:url('img/bg-festival.webp') 50% 45%/cover}
+.duo{display:block;height:92%;width:auto;max-width:100%;object-fit:contain}
 .story.wide{grid-template-columns:minmax(0,1fr)}
 .story .who{font:17px Jua,sans-serif;color:var(--berry);margin-bottom:4px}
 .story .txt{font-size:17px;min-height:78px}
@@ -129,7 +130,7 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
 .up b{font:18px Jua,sans-serif;font-weight:400;color:var(--cocoa)}
 .up small{display:block;color:var(--cocoa2)}
 .up .btn{min-height:44px;font-size:16px;padding:0 14px;gap:4px}
-.hero{display:block;width:100%;height:auto;max-height:170px;margin:-6px 0 6px}
+.hero{display:block;width:100%;height:210px;object-fit:cover;object-position:50% 40%;border-radius:18px;margin:-6px 0 6px;box-shadow:0 4px 0 #e6cfa8}
 .more{font:17px Jua,sans-serif;color:var(--cocoa2);margin:16px 0 6px}
 .modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
 .mode{display:flex;gap:10px;align-items:center;background:#fff;border-radius:16px;padding:10px;box-shadow:0 4px 0 #e6cfa8;text-decoration:none;color:var(--ink)}
@@ -168,7 +169,7 @@ button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
   </div>
   <section class="shop">
    <div class="awning"></div><div class="sign" id="sign">Sunny Side Bakery</div>
-   <div class="win"><svg class="scene" viewBox="0 0 800 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd3f0"/><stop offset=".7" stop-color="#dff1f7"/><stop offset="1" stop-color="#fff2d6"/></linearGradient><linearGradient id="brick" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c4613f"/><stop offset=".85" stop-color="#a94d31"/><stop offset="1" stop-color="#8a3c26"/></linearGradient><linearGradient id="creamB" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f5e6c8"/><stop offset=".85" stop-color="#e6d2ab"/><stop offset="1" stop-color="#cdb68d"/></linearGradient><linearGradient id="tealB" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5fa6a0"/><stop offset=".85" stop-color="#4b8d88"/><stop offset="1" stop-color="#3a726e"/></linearGradient><linearGradient id="mustB" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e3b04b"/><stop offset=".85" stop-color="#cf9a35"/><stop offset="1" stop-color="#b07f24"/></linearGradient><linearGradient id="win" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9f6fb"/><stop offset=".5" stop-color="#9cc6d8"/><stop offset="1" stop-color="#6f9fb6"/></linearGradient><radialGradient id="leafO" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#ffc96b"/><stop offset=".6" stop-color="#e8862f"/><stop offset="1" stop-color="#b9561c"/></radialGradient><radialGradient id="leafY" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fff0a0"/><stop offset=".6" stop-color="#f2c444"/><stop offset="1" stop-color="#c8901d"/></radialGradient><linearGradient id="road" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8b8f96"/><stop offset="1" stop-color="#6c7077"/></linearGradient><linearGradient id="walk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2d7c6"/><stop offset="1" stop-color="#c9bba5"/></linearGradient><g id="w"><rect width="26" height="34" rx="3" fill="#f7efe0"/><rect x="3" y="3" width="20" height="28" rx="2" fill="url(#win)"/><path d="M13 3V31M3 17H23" stroke="#f7efe0" stroke-width="2"/></g><g id="tree"><rect x="-5" y="20" width="10" height="60" rx="4" fill="#6b4329"/><circle cx="-22" cy="10" r="26" fill="url(#leafO)"/><circle cx="20" cy="6" r="28" fill="url(#leafY)"/><circle cx="0" cy="-16" r="30" fill="url(#leafO)"/></g></defs><rect width="800" height="260" fill="url(#sky)"/><ellipse cx="120" cy="40" rx="60" ry="16" fill="#fff" opacity=".75"/><ellipse cx="160" cy="34" rx="40" ry="14" fill="#fff" opacity=".75"/><ellipse cx="610" cy="56" rx="70" ry="15" fill="#fff" opacity=".6"/><rect x="10" y="60" width="190" height="140" fill="url(#brick)"/><rect x="4" y="52" width="202" height="12" rx="3" fill="#7a3422"/><rect x="200" y="86" width="170" height="114" fill="url(#creamB)"/><rect x="194" y="78" width="182" height="12" rx="3" fill="#b89c6c"/><rect x="370" y="46" width="200" height="154" fill="url(#tealB)"/><rect x="364" y="38" width="212" height="12" rx="3" fill="#2f5f5b"/><rect x="570" y="76" width="230" height="124" fill="url(#mustB)"/><rect x="564" y="68" width="236" height="12" rx="3" fill="#94681c"/><g><use href="#w" x="30" y="78"/><use href="#w" x="80" y="78"/><use href="#w" x="130" y="78"/><use href="#w" x="225" y="100"/><use href="#w" x="275" y="100"/><use href="#w" x="325" y="100"/><use href="#w" x="395" y="62"/><use href="#w" x="445" y="62"/><use href="#w" x="495" y="62"/><use href="#w" x="600" y="92"/><use href="#w" x="650" y="92"/><use href="#w" x="700" y="92"/><use href="#w" x="750" y="92"/></g><g><rect x="30" y="140" width="150" height="60" fill="#5a2a1a" opacity=".35"/><path d="M24 132H186L180 148H30Z" fill="#2f7d5b"/><path d="M24 132H186" stroke="#1f5c42" stroke-width="3"/><rect x="390" y="128" width="160" height="72" fill="#1f3e3c" opacity=".3"/><path d="M384 120H556L548 138H392Z" fill="#e8d9b8"/><g fill="#d24e4e"><path d="M392 120h20l-2 18h-16z"/><path d="M432 120h20l-1 18h-18z"/><path d="M472 120h20v18h-19z"/><path d="M512 120h20l1 18h-19z"/></g><rect x="595" y="140" width="190" height="60" fill="#5a3a10" opacity=".3"/><path d="M588 132H792L786 150H594Z" fill="#3c5fa0"/></g><rect y="196" width="800" height="16" fill="url(#walk)"/><rect y="212" width="800" height="48" fill="url(#road)"/><path d="M0 236H800" stroke="#f4e3a1" stroke-width="3" stroke-dasharray="34 26"/><use href="#tree" x="235" y="128"/><use href="#tree" x="610" y="124"/><g><rect x="402" y="120" width="6" height="80" fill="#2f3a3f"/><circle cx="405" cy="116" r="9" fill="#fff4c2" stroke="#2f3a3f" stroke-width="3"/></g><path d="M0 0L90 0L0 140Z M140 0H200L40 260H0Z" fill="#fff" opacity=".18"/><path d="M520 0H560L400 260H360Z" fill="#fff" opacity=".12"/></svg></div>
+   <div class="win"><img class="scene" src="img/bg-street.webp" alt=""></div>
    <div class="street" id="street"></div>
   </section>
   <section class="counter">
@@ -265,7 +266,7 @@ function bread(type,st){const c=COL[st],raw=st==='raw',bt=st==='burnt',hl=bt?'#6
  return`<svg viewBox="0 0 64 46"><ellipse cx="32" cy="42" rx="27" ry="3" fill="#0002"/><path d="M5 26L10 38Q32 44 54 38L59 26Z" fill="#cfd8e0"/><ellipse cx="32" cy="26" rx="27" ry="12" fill="${c}"/><ellipse cx="32" cy="25" rx="21" ry="8.5" fill="${bt?'#3a2010':raw?'#e8c98a':'#c8682a'}"/><g stroke="${c}" stroke-width="4" stroke-linecap="round"><path d="M18 18L28 33M28 17L38 33M38 17L46 30M14 24L20 32"/><path d="M14 27L28 17M20 32L40 17M32 33L48 21"/></g>${bt?'':'<g stroke="'+hl+'" stroke-width="1.4" opacity=".7"><path d="M19 19L27 31M29 18L37 31"/></g>'}</svg>`;}
 const IMG={grandma:'grandma',me:'me',park:'walter',jiu:'lily',mina:'maria'};
 function face(k,mood){const m=mood==='sad'||mood==='mid'?mood:'happy';return`<img class="pt" src="img/${IMG[k]||k}-${m}.webp" alt="" draggable="false">`;}
-const duo='<img class="duo" src="img/ending-couple.webp" alt="Grandma Rose laughing as Mr. Walter offers her yellow roses">';
+const duo='<div class="fest"><img class="duo" src="img/ending-couple.webp" alt="Grandma Rose laughing as Mr. Walter offers her yellow roses"></div>';
 ['happy','mid','sad'].forEach(m=>['walter','lily','maria','c1','c2','c3','c4','c5','c6'].forEach(n=>{const i=new Image();i.src=`img/${n}-${m}.webp`;}));
 const coin='<span class="coin">$</span>';
 const star=on=>`<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.6 1.5 6.8L12 17l-6.1 3.4 1.5-6.8L2.2 9l6.9-.7z" fill="${on?'#ffc83d':'#e6d7bd'}" stroke="${on?'#c98a10':'#cbb995'}" stroke-width="1.2" stroke-linejoin="round"/></svg>`;
@@ -346,7 +347,7 @@ function showOv(h,acts){$('card').innerHTML=h;$('ov').classList.add('on');$('car
 function hideOv(){$('ov').classList.remove('on');}
 function title(){S=null;applyLang();$('street').innerHTML='';$('tray').innerHTML='';$('doughs').innerHTML='';$('ovens').innerHTML='';$('hDay').textContent='';$('hGoal').textContent='';$('hWallet').innerHTML='';
  const sv=store.get('save');
- showOv(`${hero}<div class="cast">${['grandma','park','jiu','mina'].map(k=>face(k)).join('')}</div><h2>${T('title')}</h2><p>${T('sub')}</p><div class="row">${sv&&sv.day>0&&sv.day<5?`<button class="btn alt" data-a="cont">${T('cont')(sv.day+1)}</button>`:''}<button class="btn" data-a="new">${T('start')}</button></div><p class="more">More to play on Main Street</p><div class="modes"><a class="mode" href="recipe.html">${bread('pie','gold')}<span><b>Secret Recipe Hunt</b><small>Explore town and solve puzzles to find Old Gus's lost recipes.</small></span></a><a class="mode" href="merge.html">${bread('donut','gold')}<span><b>Bake Buddies</b><small>Merge ingredients to meet 8 cute bread buddies.</small></span></a></div><a class="cof" href="https://buymeacoffee.com/henryyu" target="_blank" rel="noopener">${T('cof')}</a>`,
+ showOv(`<img class="hero" src="img/bg-storefront.webp" alt="Sunny Side Bakery on Main Street"><div class="cast">${['grandma','park','jiu','mina'].map(k=>face(k)).join('')}</div><h2>${T('title')}</h2><p>${T('sub')}</p><div class="row">${sv&&sv.day>0&&sv.day<5?`<button class="btn alt" data-a="cont">${T('cont')(sv.day+1)}</button>`:''}<button class="btn" data-a="new">${T('start')}</button></div><p class="more">More to play on Main Street</p><div class="modes"><a class="mode" href="recipe.html">${bread('pie','gold')}<span><b>Secret Recipe Hunt</b><small>Explore town and solve puzzles to find Old Gus's lost recipes.</small></span></a><a class="mode" href="merge.html">${bread('donut','gold')}<span><b>Bake Buddies</b><small>Merge ingredients to meet 8 cute bread buddies.</small></span></a></div><a class="cof" href="https://buymeacoffee.com/henryyu" target="_blank" rel="noopener">${T('cof')}</a>`,
  {new:()=>{G={day:0,coins:0,up:{},stars:[]};story('intro',()=>dayCard());},cont:()=>{G=sv;dayCard();}});}
 function story(key,cb){const lines=STORY[key];let i=0;
  const show=()=>{const[w,ko,en,md]=lines[i];const who=w==='narr'?'':NAMES[w][lang];
